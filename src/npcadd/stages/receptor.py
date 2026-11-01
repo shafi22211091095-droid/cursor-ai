@@ -175,14 +175,39 @@ class PreparedReceptor:
         return record
 
 
-def normalise_atom_order(pdb_text: str) -> tuple[str, int, int]:
-    """Group each residue's atoms contiguously and renumber serials.
+def _residue_sort_key(key: tuple[str, str, str]) -> tuple[str, int, str]:
+    """Sort key for a residue: chain, then numeric sequence number, then icode."""
+    chain, resseq, icode = key
+    try:
+        number = int(resseq)
+    except ValueError:
+        # Non-numeric sequence numbers do occur in hand-edited files. Push them
+        # to the end rather than crashing, and keep them mutually ordered.
+        return (chain, 10**9, resseq + icode)
+    return (chain, number, icode)
 
-    Residues keep their order of first appearance and atoms keep their original
-    order within a residue, so the transformation is a stable permutation that
-    changes no coordinate. It exists because a single out-of-place atom record
-    makes polymer parsers (Meeko, PDBFixer) reject the whole file with
-    "interrupted residues", and such files do occur in practice.
+
+def normalise_atom_order(pdb_text: str) -> tuple[str, int, int]:
+    """Group each residue's atoms contiguously, in true sequence order.
+
+    Two things happen here, and the second one matters chemically.
+
+    **Contiguity.** A single out-of-place atom record makes polymer parsers
+    (Meeko, MDAnalysis) reject the whole file with "interrupted residues". The
+    bundled sample structure has exactly this defect: one atom of SER A 438
+    appears at line 2, far from the rest of its residue.
+
+    **Sequence ordering.** Residues are emitted ordered by (chain, residue
+    number, insertion code) rather than by order of first appearance. This is
+    not cosmetic. If the stray SER A 438 atom is allowed to make residue 438 the
+    first residue in the file, PDB2PQR identifies it as the chain's N-terminus
+    and builds a charged NH3+ group on a residue that sits in the middle of the
+    kinase domain -- inventing a formal charge that is not in the protein, and
+    producing a molecule RDKit rejects outright for impossible hydrogen valence.
+    Ordering by sequence number makes the real termini the termini.
+
+    Atom order *within* a residue is preserved, and no coordinate is altered, so
+    the transformation is a pure permutation plus serial renumbering.
 
     Returns:
         ``(normalised_text, n_atoms, n_residues)``.
@@ -201,8 +226,8 @@ def normalise_atom_order(pdb_text: str) -> tuple[str, int, int]:
 
     out: list[str] = list(preamble)
     serial = 0
-    for lines in groups.values():
-        for line in lines:
+    for key in sorted(groups, key=_residue_sort_key):
+        for line in groups[key]:
             serial += 1
             # Columns 7-11 are the atom serial; everything else is untouched.
             out.append(f"{line[:6]}{serial:5d}{line[11:]}")

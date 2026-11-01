@@ -6,5 +6,5 @@ Campesterol,CC(C)C(C)CCC(C)C1CCC2(C)C1CCC1C2CC=C2CC(O)CCC21C,other,9.501,13.64,C
 Vanillin,COc1cc(C=O)ccc1O,phenolic,8.822,24.10,C8H8O3,152.0473,SYNTHETIC_PLACEHOLDER
 "Sodium acetate (salt, should be rejected: too few heavy atoms)",CC(=O)[O-].[Na+],other,0.100,2.00,C2H3NaO2,82.0030,SYNTHETIC_PLACEHOLDER
 Unparseable entry (should be rejected),C1=CC=CC=C1(,other,0.050,2.50,n/a,0.0000,SYNTHETIC_PLACEHOLDER
-Ferrocene-like organometallic (should be rejected: element filter),[Fe]1(C2=CC=CC2)C2=CC=CC12,other,0.020,9.90,n/a,0.0000,SYNTHETIC_PLACEHOLDER
+Phenylboronic acid (should be rejected: element filter),OB(O)c1ccccc1,other,0.020,9.90,C6H7BO2,122.0539,SYNTHETIC_PLACEHOLDER
 Loliolide duplicate under a second library name,CC1(C)CC(O)CC2(C)OC(=O)C=C12,terpenoid,0.300,18.10,C11H16O3,196.1099,SYNTHETIC_PLACEHOLDER

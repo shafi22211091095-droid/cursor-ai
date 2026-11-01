@@ -51,6 +51,8 @@ class LigandRecord:
     protonation_method: str
     protonation_version: str
     ph: float
+    protonation_state_uncertain: bool
+    protonation_uncertainty_detail: str
     n_conformers: int
     n_embedded: int
     min_energy_kcal: float
@@ -60,7 +62,18 @@ class LigandRecord:
     stripped_fragments: int
     changed_by_standardisation: bool
     pdbqt_path: str
+    """Path to the exported PDBQT, **relative to the run directory**.
+
+    Deliberately relative. An absolute path would embed the run directory and
+    the machine's filesystem layout into the manifest, so the manifest's bytes
+    would differ between two otherwise identical runs -- which the golden
+    determinism test correctly rejects. Resolve it against the run directory to
+    get a usable path.
+    """
+
     sdf_path: str
+    """Conformer SDF path, relative to the run directory. See ``pdbqt_path``."""
+
     pdbqt_sha256: str
 
     def as_record(self) -> dict[str, Any]:
@@ -77,6 +90,7 @@ class LigandPrepSummary:
     rejection_counts: dict[str, int] = field(default_factory=dict)
     n_with_unspecified_stereo: int = 0
     n_charged_at_ph: int = 0
+    n_uncertain_protonation: int = 0
     manifest_path: str = ""
     rejected_path: str = ""
     protonation_limitation: str = ""
@@ -89,6 +103,7 @@ class LigandPrepSummary:
             "rejection_counts": self.rejection_counts,
             "n_with_unspecified_stereo": self.n_with_unspecified_stereo,
             "n_charged_at_ph": self.n_charged_at_ph,
+            "n_uncertain_protonation": self.n_uncertain_protonation,
         }
 
 
@@ -324,6 +339,8 @@ def prepare_ligands(cfg: Config, out_dir: Path) -> tuple[list[LigandRecord], Lig
                 protonation_method=dominant.method,
                 protonation_version=dominant.method_version,
                 ph=dominant.ph,
+                protonation_state_uncertain=dominant.state_uncertain,
+                protonation_uncertainty_detail=dominant.uncertainty_detail,
                 n_conformers=conformers.n_conformers,
                 n_embedded=conformers.n_embedded,
                 min_energy_kcal=round(conformers.min_energy_kcal, 6),
@@ -332,8 +349,8 @@ def prepare_ligands(cfg: Config, out_dir: Path) -> tuple[list[LigandRecord], Lig
                 n_unspecified_stereocentres=result.n_unspecified_stereocentres,
                 stripped_fragments=result.stripped_fragments,
                 changed_by_standardisation=result.changed,
-                pdbqt_path=pdbqt_path.as_posix(),
-                sdf_path=sdf_path.as_posix(),
+                pdbqt_path=pdbqt_path.relative_to(out_dir).as_posix(),
+                sdf_path=sdf_path.relative_to(out_dir).as_posix(),
                 pdbqt_sha256=hash_file(pdbqt_path),
             )
         )
@@ -357,6 +374,7 @@ def prepare_ligands(cfg: Config, out_dir: Path) -> tuple[list[LigandRecord], Lig
         rejection_counts=dict(sorted(counts.items())),
         n_with_unspecified_stereo=sum(1 for r in accepted if r.n_unspecified_stereocentres > 0),
         n_charged_at_ph=sum(1 for r in accepted if r.formal_charge != 0),
+        n_uncertain_protonation=sum(1 for r in accepted if r.protonation_state_uncertain),
         manifest_path=manifest_path.as_posix(),
         rejected_path=rejected_run_path.as_posix(),
         protonation_limitation=protonator.limitation(),

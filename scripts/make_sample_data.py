@@ -222,13 +222,13 @@ def main() -> int:
             "data_provenance": SYNTHETIC_FLAG,
         },
         {
-            "name": "Ferrocene-like organometallic (should be rejected: element filter)",
-            "smiles": "[Fe]1(C2=CC=CC2)C2=CC=CC12",
+            "name": "Phenylboronic acid (should be rejected: element filter)",
+            "smiles": "OB(O)c1ccccc1",
             "compound_class": "other",
             "area_percent": "0.020",
             "retention_time_min": "9.90",
-            "molecular_formula": "n/a",
-            "monoisotopic_mass": "0.0000",
+            "molecular_formula": "C6H7BO2",
+            "monoisotopic_mass": "122.0539",
             "data_provenance": SYNTHETIC_FLAG,
         },
         {

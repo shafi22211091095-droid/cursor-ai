@@ -1,0 +1,44 @@
+%% npcadd pipeline. Render with: make docs  (requires mermaid-cli)
+flowchart TD
+    CFG["config.yaml<br/><i>Pydantic-validated, hashed<br/>into every output directory</i>"]
+
+    subgraph PREP["Preparation"]
+        L1["1. prepare-ligands<br/>standardise → pKa @ pH 7.4<br/>→ ETKDGv3 + MMFF94 → prune<br/>→ PDBQT (Meeko)"]
+        R1["2. prepare-receptor<br/>fetch/cache (checksummed)<br/>→ normalise atom order<br/>→ strip solvent, keep cofactors<br/>→ PDB2PQR + PROPKA<br/>→ PDBQT, derive box"]
+    end
+
+    subgraph VAL["3. validate-docking — MANDATORY GATE"]
+        V1["Redock co-crystal ligand<br/><b>in-place</b> RMSD vs crystal"]
+        V2["Property-matched decoys<br/>ROC-AUC · BEDROC · EF"]
+        V3["Random-ligand null set<br/>z-score · empirical p"]
+        GATE{"RMSD ≤ 2.0 Å?"}
+    end
+
+    HALT["⛔ HALT<br/>screening does not run"]
+
+    D["4. dock<br/>Vina, seeded, parallel, resumable<br/>+ ProLIF interaction fingerprints"]
+    A["5. admet<br/>RDKit descriptors · 6 rule sets<br/>PAINS/Brenk · QSPR + applicability domain"]
+    RK["6. rank<br/><b>never by raw affinity</b><br/>LE · LLE · LELP · fit quality<br/>multi-criteria + weight sensitivity"]
+    REP["7. report<br/>XLSX · 300 dpi vector figures<br/>VALIDATION.md · SI.md"]
+
+    EXT["external_tools/<br/>paste-ready batches +<br/>validated paste-back schema<br/><i>never scraped</i>"]
+    REJ[("data/interim/<br/>rejected_ligands.csv<br/><i>every discard, with a reason</i>")]
+    PROV[("provenance.json<br/>git SHA · config hash<br/>SHA256 of every file<br/>versions · OS · CPU · seeds")]
+
+    CFG --> L1 & R1
+    L1 --> REJ
+    L1 & R1 --> V1 & V2 & V3
+    V1 --> GATE
+    GATE -- no --> HALT
+    GATE -- yes --> D
+    V3 -. "calibrates every affinity" .-> D
+    D --> A --> RK --> REP
+    A --> EXT
+    REP --> PROV
+
+    classDef gate fill:#D55E00,stroke:#8a3d00,color:#fff
+    classDef halt fill:#8a0000,stroke:#5a0000,color:#fff
+    classDef store fill:#F2F2F2,stroke:#888,color:#000
+    class GATE gate
+    class HALT halt
+    class REJ,PROV,EXT store

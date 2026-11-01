@@ -1,0 +1,175 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Interpreter and BLAS determinism, matching the Dockerfile.
+  PYTHONHASHSEED: '0'
+  OMP_NUM_THREADS: '1'
+  OPENBLAS_NUM_THREADS: '1'
+  MKL_NUM_THREADS: '1'
+  MPLBACKEND: Agg
+  UV_SYSTEM_PYTHON: '0'
+
+jobs:
+  lint:
+    name: Lint and type-check
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: '0.9.7'
+          enable-cache: true
+      - name: Install from the lockfile
+        run: |
+          uv venv -p 3.11 .venv
+          uv sync --frozen --extra dev
+      - name: ruff lint
+        run: .venv/bin/ruff check src tests scripts
+      - name: ruff format check
+        run: .venv/bin/ruff format --check src tests scripts
+      - name: mypy --strict
+        run: .venv/bin/mypy
+
+  test:
+    name: Test suite
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: '0.9.7'
+          enable-cache: true
+      - name: Install from the lockfile
+        run: |
+          uv venv -p 3.11 .venv
+          uv sync --frozen --extra dev
+      - name: pytest with coverage
+        run: |
+          .venv/bin/pytest -m "not slow and not network" \
+            --cov=npcadd --cov-report=term-missing --cov-report=xml \
+            --cov-fail-under=80
+      - name: Upload coverage
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage.xml
+          if-no-files-found: ignore
+
+  reproducibility:
+    name: Sample data and determinism
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: '0.9.7'
+          enable-cache: true
+      - run: |
+          uv venv -p 3.11 .venv
+          uv sync --frozen --extra dev
+      - name: Sample data regenerates byte-identically
+        run: |
+          # The generator validates every SMILES against its published formula
+          # and is seeded, so regenerating must change nothing in git.
+          .venv/bin/python scripts/make_sample_data.py
+          git diff --exit-code -- data/sample/ || {
+            echo "::error::Regenerating the sample data changed it. Either the"
+            echo "generator is not deterministic, or data/sample was hand-edited."
+            exit 1
+          }
+      - name: Golden-file determinism test
+        run: .venv/bin/pytest tests/test_determinism.py -v -m "not slow"
+      - name: Documentation consistency
+        run: .venv/bin/python scripts/check_docs.py
+
+  smoke:
+    name: End-to-end smoke run
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: '0.9.7'
+          enable-cache: true
+      - run: |
+          uv venv -p 3.11 .venv
+          uv sync --frozen --extra dev
+      - name: Run the full pipeline on the smoke config
+        run: |
+          # Offline by construction (allow_network: false). Exercises ligand
+          # prep, receptor prep, the redocking gate, screening, ADMET, ranking
+          # and reporting.
+          .venv/bin/npcadd run-all --config config.smoke.yaml
+      - name: The redocking gate must have passed
+        run: |
+          python - <<'PY'
+          import json, pathlib, sys
+          runs = sorted(pathlib.Path("runs").glob("*/provenance.json"))
+          if not runs:
+              sys.exit("no provenance.json was written")
+          record = json.loads(runs[-1].read_text())
+          stages = {s["stage"]: s["metrics"] for s in record["stages"]}
+          validation = stages.get("validate-docking", {})
+          passed = validation.get("n_redock_passed", 0)
+          performed = validation.get("n_redock_performed", 0)
+          print("redock passed:", passed, "of", performed)
+          print("rmsds:", validation.get("redock_rmsds"))
+          if performed == 0:
+              sys.exit("no redocking control was performed")
+          if passed != performed:
+              sys.exit(f"redocking gate failed: {passed}/{performed}")
+          PY
+      - name: Every expected output exists
+        run: |
+          set -eu
+          test -f reports/VALIDATION.md
+          test -f reports/SUPPLEMENTARY_INFORMATION.md
+          test -f reports/npcadd_smoke.xlsx
+          test -n "$(ls reports/figures/*.pdf)"
+          test -f data/interim/rejected_ligands.csv
+          echo "All expected outputs present."
+      - name: Provenance self-verification
+        run: |
+          run_id=$(basename "$(dirname "$(ls -t runs/*/provenance.json | head -1)")")
+          .venv/bin/npcadd verify-provenance "runs/$run_id/provenance.json"
+      - name: Upload run outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-outputs
+          path: |
+            reports/
+            runs/*/provenance.json
+            runs/*/run.jsonl
+          if-no-files-found: warn
+
+  docker:
+    name: Container build
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build the analysis image
+        run: docker build -t npcadd:ci .
+      - name: The image can run the CLI
+        run: docker run --rm npcadd:ci version
+      - name: Warn if the base image is not digest-pinned
+        run: |
+          if make docker-check-pinned; then
+            echo "Base image is digest-pinned."
+          else
+            echo "::warning::The Dockerfile base image is not digest-pinned, so"
+            echo "::warning::'make reproduce' is not reproducible across time."
+            echo "::warning::Run 'make docker-pin'. See LIMITATIONS.md."
+          fi

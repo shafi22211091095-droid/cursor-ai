@@ -59,6 +59,8 @@ class ProtonationResult:
     ph: float
     is_dominant: bool
     note: str = ""
+    state_uncertain: bool = False
+    uncertainty_detail: str = ""
 
 
 @runtime_checkable
@@ -78,6 +80,13 @@ class Protonator(Protocol):
 
     def protonate(self, mol: Chem.Mol, ph: float, max_variants: int = 1) -> list[ProtonationResult]:
         """Return protonation states at ``ph``, most-dominant first."""
+        ...
+
+    def state_is_uncertain(self, mol: Chem.Mol, ph: float, window: float = 1.0) -> tuple[bool, str]:
+        """Whether the dominant state flips within +/- ``window`` pH units.
+
+        A backend that applies no pKa model returns ``(False, "")``.
+        """
         ...
 
 
@@ -101,6 +110,15 @@ class NullProtonator:
             "function. Affinities for such compounds must not be compared with those of "
             "non-ionisable compounds."
         )
+
+    def state_is_uncertain(
+        self,
+        mol: Chem.Mol,  # noqa: ARG002 - interface compliance
+        ph: float,  # noqa: ARG002 - interface compliance
+        window: float = 1.0,  # noqa: ARG002 - interface compliance
+    ) -> tuple[bool, str]:
+        """Always False: no pKa model is applied, so nothing can flip."""
+        return False, ""
 
     def protonate(
         self,
@@ -160,6 +178,56 @@ class DimorphiteProtonator:
             "states should be docked."
         )
 
+    def state_is_uncertain(self, mol: Chem.Mol, ph: float, window: float = 1.0) -> tuple[bool, str]:
+        """Detect an ionisable group whose dominant state flips near ``ph``.
+
+        The backend does not expose the pKa it matched, so proximity is probed
+        empirically: the dominant state is computed at ``ph - window`` and at
+        ``ph + window``. If the formal charge differs between them, some group
+        has a pKa inside the window and the state at ``ph`` is not well
+        determined -- both states should be docked, and the compound is flagged
+        so the report can say so instead of presenting one state as settled.
+
+        Vanillin is the worked example: its phenol pKa is close to 7.4, so it is
+        deprotonated at pH 7.4 by a hair, and that is a modelling choice rather
+        than a fact about the molecule.
+        """
+        parent = Chem.MolToSmiles(mol)
+        try:
+            low = self._backend.protonate_smiles(
+                parent,
+                ph_min=ph - window,
+                ph_max=ph - window,
+                precision=0.0,
+                max_variants=1,
+            )
+            high = self._backend.protonate_smiles(
+                parent,
+                ph_min=ph + window,
+                ph_max=ph + window,
+                precision=0.0,
+                max_variants=1,
+            )
+        except (ValueError, RuntimeError, KeyError):  # pragma: no cover - defensive
+            return False, ""
+        if not low or not high:  # pragma: no cover - defensive
+            return False, ""
+
+        low_mol = Chem.MolFromSmiles(low[0])
+        high_mol = Chem.MolFromSmiles(high[0])
+        if low_mol is None or high_mol is None:  # pragma: no cover - defensive
+            return False, ""
+        low_charge = Chem.GetFormalCharge(low_mol)
+        high_charge = Chem.GetFormalCharge(high_mol)
+        if low_charge == high_charge:
+            return False, ""
+        return True, (
+            f"formal charge changes from {low_charge:+d} at pH {ph - window:g} to "
+            f"{high_charge:+d} at pH {ph + window:g}, so at least one ionisable group "
+            f"has a pKa within {window:g} unit(s) of pH {ph:g} and the dominant state "
+            f"at pH {ph:g} is not well determined"
+        )
+
     def protonate(self, mol: Chem.Mol, ph: float, max_variants: int = 1) -> list[ProtonationResult]:
         if max_variants < 1:
             raise ValueError("max_variants must be >= 1")
@@ -188,6 +256,8 @@ class DimorphiteProtonator:
                 f"dimorphite-dl returned no protonation state for {parent_smiles!r}"
             )
 
+        uncertain, detail = self.state_is_uncertain(mol, ph)
+
         results: list[ProtonationResult] = []
         for rank, smi in enumerate(states[:max_variants]):
             protonated = Chem.MolFromSmiles(smi)
@@ -206,6 +276,8 @@ class DimorphiteProtonator:
                     method_version=self.version,
                     ph=ph,
                     is_dominant=rank == 0,
+                    state_uncertain=uncertain,
+                    uncertainty_detail=detail,
                 )
             )
 

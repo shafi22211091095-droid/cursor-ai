@@ -1,0 +1,143 @@
+# npcadd — CI SMOKE configuration
+#
+# Purpose: prove in CI that every code path executes end to end. It is NOT a
+# scientific configuration.
+#
+# What is reduced relative to config.sample.yaml, and what is deliberately NOT:
+#   reduced     3 ligands, 2 conformers, 10 null ligands, smaller decoy pool
+#   NOT reduced docking.exhaustiveness (32) and the search box
+#
+# Exhaustiveness is not reduced because validation and screening must share
+# docking parameters, and because at exhaustiveness 8 the redocking gate on this
+# receptor FAILS (12.3 A vs 0.24 A at 32). A smoke config that lowered it would
+# either fail the gate or, with the gate disabled, prove nothing about the code
+# path that matters most.
+
+project: npcadd
+study: "SMOKE — CI software test on synthetic abundances"
+description: >-
+  Minimal end-to-end run used by CI. Numbers from this configuration are not
+  scientifically meaningful; the small null set cannot support a p-value below
+  1/11.
+
+allow_network: false
+
+paths:
+  raw: data/raw
+  sample: data/sample
+  interim: data/interim
+  processed: data/processed
+  receptor_cache: data/raw/pdb_cache
+  runs: runs
+  reports: reports
+  figures: reports/figures
+
+ligands:
+  input_csv: data/sample/gcms_smoke_SYNTHETIC.csv
+  smiles_column: smiles
+  name_column: name
+  area_column: area_percent
+  class_column: compound_class
+  ph: 7.4
+  protonation_method: dimorphite_dl
+  max_protonation_variants: 1
+  strip_salts: true
+  neutralise: true
+  canonical_tautomer: true
+  max_tautomers: 1000
+  embed_seed: 12648430
+  n_conformers: 2
+  mmff_max_iters: 400
+  energy_window_kcal: 10.0
+  prune_rms_thresh: 0.5
+  min_heavy_atoms: 6
+  max_heavy_atoms: 60
+  allowed_elements: [C, H, N, O, S, P, F, Cl, Br, I]
+
+receptors:
+  - id: abl1
+    pdb_id: 1IEP
+    activity: cytotoxic
+    target_name: "ABL1 tyrosine-protein kinase, kinase domain"
+    uniprot: P00519
+    chain: A
+    local_structure: data/sample/receptors/1IEP_abl1_receptor_protonated.pdb
+    cocrystal_ligand: STI
+    cocrystal_reference_sdf: data/sample/receptors/1IEP_cocrystal_STI_imatinib.sdf
+    grid:
+      mode: cocrystal
+      padding: 5.0
+      min_size: [20.0, 20.0, 20.0]
+    keep_hetatms: []
+    phenotype_direction: inhibition
+    structure_is_inhibitor_bound: true
+    notes: "AutoDock Vina reference redocking system."
+
+docking:
+  engine: vina
+  seed: 20240617
+  exhaustiveness: 32
+  n_poses: 5
+  max_evals: 0
+  workers: 2
+  cpu_per_worker: 1
+  scoring: vina
+  resume: true
+  interaction_fingerprints: true
+  prolif_interactions: [Hydrophobic, HBAcceptor, HBDonor, PiStacking]
+
+validation:
+  enabled: true
+  redock_rmsd_threshold: 2.0
+  halt_on_failure: true
+  decoys_per_active: 5
+  decoy_seed: 1234
+  decoy_property_tolerance:
+    mw: 25.0
+    clogp: 1.0
+    tpsa: 20.0
+    rotatable_bonds: 2.0
+    hbd: 1.0
+    hba: 2.0
+    formal_charge: 0.0
+  bedroc_alpha: 20.0
+  ef_fractions: [0.01, 0.1]
+  null_set_size: 10          # the configured floor; cannot support p < 1/11
+  null_seed: 99
+  known_actives_csv: null
+
+admet:
+  rule_sets: [lipinski, veber, egan, ghose, muegge, pfizer_3_75]
+  structural_alerts: [pains, brenk]
+  lipinski_max_violations: 1
+  ml_predictors:
+    - name: esol_delaney2004
+      enabled: true
+      applicability_domain: knn_tanimoto
+      ad_threshold: 1.0
+      ad_neighbours: 5
+  external_tools: [swissadme]
+  external_batch_size: 100
+
+ranking:
+  weights:
+    ligand_efficiency: 0.40
+    admet_pass_rate: 0.35
+    gcms_area: 0.25
+  reference_temperature_k: 298.15
+  area_highlight_threshold: 2.0
+  sensitivity_n_samples: 64
+  sensitivity_seed: 7
+  sensitivity_dirichlet_alpha: 4.0
+  min_ligand_efficiency: null
+
+report:
+  dpi: 300
+  formats: [pdf, png]
+  palette: okabe_ito
+  font_family: DejaVu Sans
+  base_font_size: 9.0
+  figure_width_in: 7.0
+  caption_includes_versions: true
+  xlsx_name: npcadd_smoke.xlsx
+  top_n_table: 10

@@ -1,0 +1,78 @@
+# Install with: make hooks
+#
+# These hooks are the same checks CI runs, so a clean commit is a green build.
+default_language_version:
+  python: python3.11
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+        exclude: '\.(pdbqt|pdb|sdf|mol2)$'
+      - id: end-of-file-fixer
+        exclude: '\.(pdbqt|pdb|sdf|mol2)$'
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: check-added-large-files
+        args: ['--maxkb=2048']
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+        args: ['--fix=lf']
+      - id: no-commit-to-branch
+        args: ['--branch', 'main', '--branch', 'master']
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.3
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v2.4.1
+    hooks:
+      - id: mypy
+        files: ^src/npcadd/
+        additional_dependencies:
+          - pydantic==2.14.2
+          - types-PyYAML==6.0.12.20261030
+          - types-requests==2.32.4.20250913
+          - pandas-stubs==3.1.0.261029
+        args: [--strict, --ignore-missing-imports]
+
+  - repo: local
+    hooks:
+      # data/raw is read-only by convention; the hook makes the convention real.
+      - id: no-raw-data-writes
+        name: refuse commits that modify data/raw
+        entry: >-
+          bash -c 'files=$(git diff --cached --name-only --diff-filter=M | grep "^data/raw/" || true);
+          if [ -n "$files" ]; then
+            echo "data/raw is read-only by convention. Modified: $files";
+            echo "Add new raw inputs as new files; never edit existing ones in place.";
+            exit 1;
+          fi'
+        language: system
+        pass_filenames: false
+
+      # A synthetic-data marker must never be silently removed: that is how a
+      # demonstration run gets mistaken for a real one.
+      - id: synthetic-data-marker
+        name: sample data keeps its SYNTHETIC_PLACEHOLDER marker
+        entry: >-
+          bash -c 'for f in data/sample/*.csv; do
+            [ -e "$f" ] || continue;
+            head -1 "$f" | grep -q "data_provenance" || { echo "$f lost its data_provenance column"; exit 1; };
+            grep -q "SYNTHETIC_PLACEHOLDER" "$f" || { echo "$f lost its SYNTHETIC_PLACEHOLDER marker"; exit 1; };
+          done'
+        language: system
+        pass_filenames: false
+
+      - id: pytest-fast
+        name: fast test suite
+        entry: .venv/bin/pytest -q -m "not slow and not network" -x
+        language: system
+        pass_filenames: false
+        stages: [pre-push]

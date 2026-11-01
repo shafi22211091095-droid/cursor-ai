@@ -102,6 +102,7 @@ def build_pool(
     *,
     min_heavy_atoms: int = 8,
     max_heavy_atoms: int = 45,
+    max_rotatable_bonds: int = 10,
 ) -> list[PoolMolecule]:
     """Enumerate the bundled building blocks into a deterministic molecule pool.
 
@@ -115,6 +116,14 @@ def build_pool(
         max_size: Stop after this many accepted molecules.
         min_heavy_atoms: Reject fragments too small to be plausible ligands.
         max_heavy_atoms: Reject products too large.
+        max_rotatable_bonds: Reject products more flexible than this. The cap
+            serves two purposes. Scientifically, it keeps the null set
+            comparable in character to a drug-like screening set, matching
+            Veber's rotatable-bond criterion; practically, docking cost grows
+            steeply with torsional degrees of freedom, and a handful of highly
+            flexible pool members can dominate the wall-clock of an entire run
+            (observed: minutes each at exhaustiveness 32 in a ~12,500 A^3 box,
+            against ~6-30 s for a typical natural product).
 
     Raises:
         DecoyGenerationError: if the pool comes out empty.
@@ -138,6 +147,8 @@ def build_pool(
         try:
             descriptors = compute_descriptors(result.mol)
         except (ValueError, RuntimeError):  # pragma: no cover - defensive
+            continue
+        if descriptors["rotatable_bonds"] > max_rotatable_bonds:
             continue
         pool.append(
             PoolMolecule(

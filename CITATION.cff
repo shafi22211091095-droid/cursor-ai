@@ -1,0 +1,173 @@
+cff-version: 1.2.0
+title: "npcadd: a reproducible computational pipeline for natural-product drug discovery"
+message: >-
+  If you use this software, please cite it using these metadata, and also cite
+  the underlying scientific tools listed under references below — they did the
+  scientific work.
+type: software
+authors:
+  - name: "npcadd contributors"
+repository-code: "https://github.com/shafi22211091095-droid/cursor-ai"
+abstract: >-
+  npcadd is a pip-installable, fully configuration-driven pipeline that takes a
+  GC-MS-derived phytochemical set from SMILES to a validated, ranked,
+  publication-ready result. It enforces a mandatory docking-validation gate
+  (co-crystal redocking with in-place RMSD, property-matched decoy enrichment,
+  and a random-ligand null distribution) before any screening runs, and it
+  refuses to rank compounds by raw docking affinity because that score scales
+  with molecular size. Every run records complete provenance: git commit,
+  configuration hash, SHA256 of every input and output, resolved package
+  versions, platform, and all random seeds. No GUI tool appears in the critical
+  path.
+keywords:
+  - cheminformatics
+  - molecular docking
+  - natural products
+  - virtual screening
+  - ADMET
+  - reproducible research
+license: MIT
+version: 0.1.0
+date-released: "2026-11-01"
+references:
+  - type: article
+    title: "AutoDock Vina 1.2.0: New Docking Methods, Expanded Force Field, and Python Bindings"
+    authors:
+      - family-names: Eberhardt
+        given-names: Jerome
+      - family-names: Santos-Martins
+        given-names: Diogo
+      - family-names: Tillack
+        given-names: Andreas F.
+      - family-names: Forli
+        given-names: Stefano
+    journal: "Journal of Chemical Information and Modeling"
+    year: 2021
+    volume: 61
+    start: 3891
+    end: 3898
+    doi: 10.1021/acs.jcim.1c00203
+  - type: article
+    title: "AutoDock Vina: improving the speed and accuracy of docking with a new scoring function, efficient optimization, and multithreading"
+    authors:
+      - family-names: Trott
+        given-names: Oleg
+      - family-names: Olson
+        given-names: Arthur J.
+    journal: "Journal of Computational Chemistry"
+    year: 2010
+    volume: 31
+    start: 455
+    end: 461
+    doi: 10.1002/jcc.21334
+  - type: article
+    title: "ProLIF: a library to encode molecular interactions as fingerprints"
+    authors:
+      - family-names: Bouysset
+        given-names: Cédric
+      - family-names: Fiorucci
+        given-names: Sébastien
+    journal: "Journal of Cheminformatics"
+    year: 2021
+    volume: 13
+    start: 72
+    doi: 10.1186/s13321-021-00548-6
+  - type: article
+    title: "PDB2PQR: an automated pipeline for the setup of Poisson-Boltzmann electrostatics calculations"
+    authors:
+      - family-names: Dolinsky
+        given-names: Todd J.
+      - family-names: Nielsen
+        given-names: Jens E.
+      - family-names: McCammon
+        given-names: J. Andrew
+      - family-names: Baker
+        given-names: Nathan A.
+    journal: "Nucleic Acids Research"
+    year: 2004
+    volume: 32
+    start: W665
+    end: W667
+    doi: 10.1093/nar/gkh381
+  - type: article
+    title: "PROPKA3: Consistent Treatment of Internal and Surface Residues in Empirical pKa Predictions"
+    authors:
+      - family-names: Olsson
+        given-names: Mats H. M.
+      - family-names: Søndergaard
+        given-names: Chresten R.
+      - family-names: Rostkowski
+        given-names: Michał
+      - family-names: Jensen
+        given-names: Jan H.
+    journal: "Journal of Chemical Theory and Computation"
+    year: 2011
+    volume: 7
+    start: 525
+    end: 537
+    doi: 10.1021/ct100578z
+  - type: article
+    title: "Dimorphite-DL: an open-source program for enumerating the ionization states of drug-like small molecules"
+    authors:
+      - family-names: Ropp
+        given-names: Patrick J.
+      - family-names: Kaminsky
+        given-names: Jesse C.
+      - family-names: Yablonski
+        given-names: Sara
+      - family-names: Durrant
+        given-names: Jacob D.
+    journal: "Journal of Cheminformatics"
+    year: 2019
+    volume: 11
+    start: 14
+    doi: 10.1186/s13321-019-0336-9
+  - type: article
+    title: "ESOL: Estimating Aqueous Solubility Directly from Molecular Structure"
+    authors:
+      - family-names: Delaney
+        given-names: John S.
+    journal: "Journal of Chemical Information and Computer Sciences"
+    year: 2004
+    volume: 44
+    start: 1000
+    end: 1005
+    doi: 10.1021/ci034243x
+  - type: article
+    title: "Evaluating Virtual Screening Methods: Good and Bad Metrics for the Early Recognition Problem"
+    authors:
+      - family-names: Truchon
+        given-names: Jean-François
+      - family-names: Bayly
+        given-names: Christopher I.
+    journal: "Journal of Chemical Information and Modeling"
+    year: 2007
+    volume: 47
+    start: 488
+    end: 508
+    doi: 10.1021/ci600426e
+  - type: article
+    title: "The Role of Molecular Size in Ligand Efficiency"
+    authors:
+      - family-names: Reynolds
+        given-names: Charles H.
+      - family-names: Tounge
+        given-names: Brett A.
+      - family-names: Bembenek
+        given-names: Scott D.
+    journal: "Journal of Medicinal Chemistry"
+    year: 2008
+    volume: 51
+    start: 2432
+    end: 2438
+    doi: 10.1021/jm701255b
+  - type: software
+    title: "RDKit: Open-source cheminformatics"
+    authors:
+      - name: "RDKit contributors"
+    url: "https://www.rdkit.org"
+  - type: software
+    title: "Meeko: preparation of small molecules for AutoDock"
+    authors:
+      - name: "Forli Lab"
+    url: "https://github.com/forlilab/Meeko"
