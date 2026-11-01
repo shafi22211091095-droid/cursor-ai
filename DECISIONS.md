@@ -115,14 +115,14 @@ Measured on this repository's own sample run, at identical settings:
 
 | Compound | Heavy atoms | Vina score (kcal/mol) | LE (kcal/mol/HA) |
 |---|---|---|---|
-| Loliolide | 14 | −6.86 | **0.490** |
-| Spathulenol | 16 | −4.86 | 0.304 |
+| Loliolide | 14 | −7.58 | **0.542** |
+| Spathulenol | 16 | −5.15 | 0.322 |
 | Imatinib (reference) | 37 | −13.28 | 0.359 |
 
 Imatinib wins decisively on raw score — and it is a genuine nanomolar inhibitor
 of this target, so in that case the score is earned. But loliolide, a molecule
 less than half its size, is the **more efficient** binder per heavy atom. Rank
-by raw score and loliolide disappears; rank by efficiency and it is top. The
+by raw score and loliolide disappears; rank by efficiency and it moves from the bottom of the raw-score order to second of five. The
 ordering is not a detail, it is the result.
 
 **Metrics used, and why each.**

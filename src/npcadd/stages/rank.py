@@ -10,7 +10,7 @@ raw score therefore ranks it largely by molecular weight, and the "top hits"
 are simply the biggest molecules present.
 
 Measured on the bundled sample: loliolide (14 heavy atoms) scores
--6.86 kcal/mol and spathulenol (16 heavy atoms) scores -4.86. Imatinib (37
+-7.58 kcal/mol and spathulenol (16 heavy atoms) scores -5.15. Imatinib (37
 heavy atoms) scores -13.28. Imatinib is a real nanomolar inhibitor of this
 target so its score is earned, but the ordering of the two terpenoids inverts
 once size is accounted for, and that is the general case rather than the

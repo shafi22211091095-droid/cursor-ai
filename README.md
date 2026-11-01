@@ -148,14 +148,16 @@ Ile313, Phe317, Leu370 and Phe382.
 
 | Compound | Heavy atoms | Vina score | Ligand efficiency |
 |---|---|---|---|
-| Loliolide | 14 | −6.86 | **0.490** |
-| Spathulenol | 16 | −4.86 | 0.304 |
+| Loliolide | 14 | −7.58 | **0.542** |
+| Spathulenol | 16 | −5.15 | 0.322 |
 | Imatinib (reference) | 37 | **−13.28** | 0.359 |
+
+*Numbers are from the `config.smoke.yaml` run (exhaustiveness 32, seed 20240617, 2 conformers per ligand); imatinib is the redocking control. Docking scores of this precision vary with conformer set and seed, which is itself a reminder that differences of ~1 kcal/mol are noise.*
 
 Imatinib wins on raw score — deservedly, it is a real nanomolar inhibitor of
 this target. But loliolide, less than half its size, is the more efficient
 binder per heavy atom. Rank by raw score and loliolide vanishes; rank by
-efficiency and it is top. See [`DECISIONS.md`](DECISIONS.md) D-003.
+efficiency and it moves from the bottom of the raw-score order to near the top (second of five, behind the smaller vanillin). See [`DECISIONS.md`](DECISIONS.md) D-003.
 
 ---
 

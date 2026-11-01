@@ -140,6 +140,7 @@ def profile_interactions(
         One :class:`InteractionProfile` per pose, in pose order (rank 1 first).
     """
     import prolif
+    from rdkit import Chem
 
     n_conf = ligand_mol.GetNumConformers()
     if n_conf == 0:
@@ -157,7 +158,10 @@ def profile_interactions(
     profiles: list[InteractionProfile] = []
     for index in range(limit):
         try:
-            pose = prolif.Molecule.from_rdkit(ligand_mol, conf_id=index)
+            # ProLIF's from_rdkit has no conformer selector (it reads conformer
+            # 0), so each pose is isolated as its own single-conformer molecule.
+            single = Chem.Mol(ligand_mol, confId=index)
+            pose = prolif.Molecule.from_rdkit(single)
             fingerprint.run_from_iterable([pose], protein, progress=False)
             frame = fingerprint.to_dataframe()
         except Exception as exc:  # noqa: BLE001 - ProLIF raises library-specific types

@@ -307,3 +307,25 @@ def test_grid_from_real_cocrystal_pose() -> None:
     mol = Chem.MolFromMolFile(str(SAMPLE_SDF), removeHs=True)
     box = derive_box(GridBox(mode="cocrystal"), np.asarray(mol.GetConformer().GetPositions()))
     assert box.center == pytest.approx((15.614, 53.38, 15.455), abs=0.01)
+
+
+def test_interaction_profiles_use_each_conformer_not_just_the_first() -> None:
+    """Regression: ProLIF's from_rdkit reads conformer 0 only, so a multi-pose
+    ligand must be split per pose or every pose gets the first pose's contacts
+    (originally it crashed outright on the unsupported conf_id argument)."""
+    from rdkit import Chem
+
+    from npcadd.docking.interactions import load_protein, profile_interactions
+
+    protein = load_protein(REPO_ROOT / "data/sample/receptors/1IEP_abl1_receptor_protonated.pdb")
+    ligand = Chem.MolFromMolFile(str(SAMPLE_SDF), removeHs=False)
+    far = Chem.Mol(ligand)
+    conf = far.GetConformer()
+    for i in range(far.GetNumAtoms()):
+        p = conf.GetAtomPosition(i)
+        conf.SetAtomPosition(i, (p.x + 60.0, p.y, p.z))  # well outside the protein
+    ligand.AddConformer(Chem.Conformer(far.GetConformer()), assignId=True)
+
+    near, away = profile_interactions(protein, ligand, "sti", "abl1", ["Hydrophobic", "HBDonor"])
+    assert near.n_contacts > 0
+    assert away.n_contacts == 0

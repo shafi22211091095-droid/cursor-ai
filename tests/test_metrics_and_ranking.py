@@ -247,7 +247,7 @@ class TestEfficiencyMetrics:
 
     def test_equal_le_for_different_sizes_shows_why_raw_score_misleads(self) -> None:
         """A big weak binder can beat a small efficient one on raw score."""
-        small, big = -6.86, -13.28  # measured: loliolide, imatinib
+        small, big = -7.58, -13.28  # smoke run: loliolide, imatinib redock
         assert big < small  # imatinib wins on raw score
         le_small = ligand_efficiency(small, 14)
         le_big = ligand_efficiency(big, 37)
