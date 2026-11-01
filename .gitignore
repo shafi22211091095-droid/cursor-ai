@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Run outputs: regenerable by `make reproduce`, never committed.
+runs/
+data/interim/*
+!data/interim/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+reports/figures/*
+!reports/figures/.gitkeep
+reports/*.xlsx
+reports/VALIDATION.md
+reports/SUPPLEMENTARY_INFORMATION.md
+
+# Fetched structures are cached, checksummed and regenerable.
+data/raw/pdb_cache/*
+!data/raw/pdb_cache/.gitkeep
+
+# OS
+.DS_Store

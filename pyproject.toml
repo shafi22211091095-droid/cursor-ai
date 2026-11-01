@@ -1,0 +1,129 @@
+[project]
+name = "npcadd"
+version = "0.1.0"
+description = "Reproducible computational pipeline for natural-product computer-aided drug discovery (CADD)"
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+license = { text = "MIT" }
+authors = [{ name = "NPCADD contributors" }]
+keywords = ["cheminformatics", "docking", "natural products", "ADMET", "reproducibility"]
+classifiers = [
+  "Programming Language :: Python :: 3.11",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Chemistry",
+]
+
+dependencies = [
+  "rdkit==2026.9.1",
+  "meeko==0.8.0",
+  "vina==1.2.7",
+  "prolif==2.2.3",
+  "gemmi==0.7.5",
+  "dimorphite-dl==2.1.0",
+  "pdb2pqr==3.8.0",
+  "propka==3.5.1",
+  "pdbfixer==1.12.0",
+  "openmm==8.6.1",
+  "pydantic==2.14.2",
+  "typer==0.27.3",
+  "pyyaml==6.0.3",
+  "pandas==3.1.0",
+  "numpy==2.4.6",
+  "scipy==1.17.1",
+  "scikit-learn==1.9.1",
+  "matplotlib==3.11.2",
+  "openpyxl==3.1.5",
+  "requests==2.34.2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==9.2.0",
+  "pytest-cov==7.1.0",
+  "hypothesis==6.170.14",
+  "mypy==2.4.1",
+  "ruff==0.17.3",
+  "pre-commit==4.7.0",
+  "pandas-stubs==3.1.0.261029",
+  "types-PyYAML==6.0.12.20261030",
+  "types-requests==2.32.4.20250913",
+]
+
+[project.scripts]
+npcadd = "npcadd.cli:app"
+
+[build-system]
+requires = ["hatchling==1.28.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/npcadd"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+  "E", "F", "W",      # pycodestyle / pyflakes
+  "I",                 # isort
+  "UP",                # pyupgrade
+  "B",                 # bugbear
+  "C4",                # comprehensions
+  "SIM",               # simplify
+  "RET",               # return
+  "PTH",               # use pathlib
+  "N",                 # pep8-naming
+  "ARG",               # unused arguments
+  "TRY",               # tryceratops (no bare except, raise discipline)
+  "BLE",               # blind except
+  "RUF",
+]
+ignore = [
+  "TRY003",  # long messages outside exception class: we want informative errors
+  "N803", "N806",  # scientific single-capital names (MW, TPSA, X, Y)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["ARG001", "ARG002"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unreachable = true
+disallow_any_generics = true
+files = ["src/npcadd"]
+plugins = ["pydantic.mypy"]
+
+# RDKit and the docking stack ship partial or absent type stubs. Following them
+# under --strict produces hundreds of false "module has no attribute" errors on
+# functions that demonstrably exist at runtime. Skipping the import makes these
+# modules Any, so our own code is still fully type-checked while third-party
+# surface is not asserted against incomplete stubs.
+[[tool.mypy.overrides]]
+module = [
+  "rdkit.*", "meeko.*", "vina.*", "prolif.*", "gemmi.*", "dimorphite_dl.*",
+  "pdbfixer.*", "openmm.*", "pdb2pqr.*", "propka.*", "MDAnalysis.*",
+  "matplotlib.*", "sklearn.*", "scipy.*", "openpyxl.*",
+]
+ignore_missing_imports = true
+follow_imports = "skip"
+follow_imports_for_stubs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+markers = [
+  "slow: tests that invoke docking and take minutes",
+  "network: tests that require outbound network access (RCSB)",
+]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.coverage.run]
+source = ["npcadd"]
+omit = ["*/cli.py", "*/report/figures.py"]
+
+[tool.coverage.report]
+exclude_lines = ["pragma: no cover", "raise NotImplementedError", "if TYPE_CHECKING:"]

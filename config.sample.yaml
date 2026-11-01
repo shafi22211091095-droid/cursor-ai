@@ -1,0 +1,160 @@
+# npcadd — OFFLINE SAMPLE configuration
+#
+# This config runs the whole pipeline end to end with no network access, using
+# the bundled sample data. It is what `make smoke` and CI run.
+#
+#   !! The ligand abundances in data/sample/ are FABRICATED. See
+#   !! data/sample/README.md. Results from this config are a demonstration
+#   !! that the software works, not a scientific finding.
+#
+# The receptor, by contrast, is a real experimental structure (ABL1 + imatinib),
+# so the redocking validation gate is a genuine test. See
+# data/sample/receptors/PROVENANCE.md.
+
+project: npcadd
+study: "SAMPLE — offline demonstration run on synthetic abundances"
+description: >-
+  Five-ligand smoke configuration. Exercises ligand preparation, receptor
+  preparation, redocking validation, docking, ADMET, ranking and reporting
+  without any outbound network access.
+
+# No stage may reach the network. A cache miss is a loud error, not a silent
+# fallback.
+allow_network: false
+
+paths:
+  raw: data/raw
+  sample: data/sample
+  interim: data/interim
+  processed: data/processed
+  receptor_cache: data/raw/pdb_cache
+  runs: runs
+  reports: reports
+  figures: reports/figures
+
+ligands:
+  input_csv: data/sample/gcms_with_rejects_SYNTHETIC.csv
+  smiles_column: smiles
+  name_column: name
+  area_column: area_percent
+  class_column: compound_class
+
+  ph: 7.4
+  protonation_method: dimorphite_dl
+  max_protonation_variants: 1
+
+  strip_salts: true
+  neutralise: true
+  canonical_tautomer: true
+  max_tautomers: 1000
+
+  embed_seed: 12648430          # 0xC0FFEE
+  n_conformers: 4               # small, for a fast smoke run
+  mmff_max_iters: 500
+  energy_window_kcal: 10.0
+  prune_rms_thresh: 0.5
+
+  min_heavy_atoms: 6
+  max_heavy_atoms: 100
+  allowed_elements: [C, H, N, O, S, P, F, Cl, Br, I]
+
+receptors:
+  - id: abl1
+    pdb_id: 1IEP
+    activity: cytotoxic
+    target_name: "ABL1 tyrosine-protein kinase, kinase domain"
+    uniprot: P00519
+    chain: A
+    # Offline: use the bundled prepared structure rather than fetching.
+    # Its header is stripped, so resolution and R-free will be reported as
+    # 'unavailable' — see data/sample/receptors/PROVENANCE.md.
+    local_structure: data/sample/receptors/1IEP_abl1_receptor_protonated.pdb
+    cocrystal_ligand: STI
+    cocrystal_reference_sdf: data/sample/receptors/1IEP_cocrystal_STI_imatinib.sdf
+    grid:
+      # Derived from the co-crystal ligand, not transcribed by hand.
+      mode: cocrystal
+      padding: 5.0
+      min_size: [20.0, 20.0, 20.0]
+    keep_hetatms: []
+    phenotype_direction: inhibition
+    structure_is_inhibitor_bound: true
+    notes: >-
+      Inhibitor-bound (imatinib) and the desired phenotype is inhibition, so
+      there is no directionality conflict here. This is the AutoDock Vina
+      reference redocking system.
+
+docking:
+  engine: vina
+  seed: 20240617
+  exhaustiveness: 8             # low for speed; raise to >=32 for real runs
+  n_poses: 5
+  max_evals: 0
+  workers: 2
+  cpu_per_worker: 1
+  scoring: vina
+  resume: true
+  interaction_fingerprints: true
+  prolif_interactions:
+    - Hydrophobic
+    - HBAcceptor
+    - HBDonor
+    - PiStacking
+    - Anionic
+    - Cationic
+
+validation:
+  enabled: true
+  redock_rmsd_threshold: 2.0
+  halt_on_failure: true
+  decoys_per_active: 10         # small for speed
+  decoy_seed: 1234
+  decoy_property_tolerance:
+    mw: 25.0
+    clogp: 1.0
+    tpsa: 20.0
+    rotatable_bonds: 2.0
+    hbd: 1.0
+    hba: 2.0
+    formal_charge: 0.0
+  bedroc_alpha: 20.0
+  ef_fractions: [0.01, 0.05, 0.10]
+  null_set_size: 20             # small for speed; >=100 for real runs
+  null_seed: 99
+  known_actives_csv: null
+
+admet:
+  rule_sets: [lipinski, veber, egan, ghose, muegge, pfizer_3_75]
+  structural_alerts: [pains, brenk]
+  lipinski_max_violations: 1
+  ml_predictors:
+    - name: esol_delaney2004
+      enabled: true
+      applicability_domain: knn_tanimoto
+      ad_threshold: 1.0
+      ad_neighbours: 5
+  external_tools: [swissadme, pkcsm, protox_iii]
+  external_batch_size: 100
+
+ranking:
+  weights:
+    ligand_efficiency: 0.40
+    admet_pass_rate: 0.35
+    gcms_area: 0.25
+  reference_temperature_k: 298.15
+  area_highlight_threshold: 2.0
+  sensitivity_n_samples: 128
+  sensitivity_seed: 7
+  sensitivity_dirichlet_alpha: 4.0
+  min_ligand_efficiency: null
+
+report:
+  dpi: 300
+  formats: [pdf, png]
+  palette: okabe_ito
+  font_family: DejaVu Sans
+  base_font_size: 9.0
+  figure_width_in: 7.0
+  caption_includes_versions: true
+  xlsx_name: npcadd_results.xlsx
+  top_n_table: 25
