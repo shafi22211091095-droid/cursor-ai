@@ -49,7 +49,7 @@ ligands:
   max_tautomers: 1000
 
   embed_seed: 12648430          # 0xC0FFEE
-  n_conformers: 4               # small, for a fast smoke run
+  n_conformers: 4               # small, for a fast sample run
   mmff_max_iters: 500
   energy_window_kcal: 10.0
   prune_rms_thresh: 0.5
@@ -87,8 +87,13 @@ receptors:
 docking:
   engine: vina
   seed: 20240617
-  exhaustiveness: 8             # low for speed; raise to >=32 for real runs
-  n_poses: 5
+  # 32 is not arbitrary. Redocking imatinib into this receptor reproduces the
+  # crystallographic pose to 0.26 A RMSD at exhaustiveness 32, but FAILS at
+  # exhaustiveness 8 (12.3 A - right pocket, wrong orientation). See
+  # reports/VALIDATION.md and DECISIONS.md. Validation and screening must use
+  # identical docking parameters, and npcadd enforces that.
+  exhaustiveness: 32
+  n_poses: 9
   max_evals: 0
   workers: 2
   cpu_per_worker: 1
