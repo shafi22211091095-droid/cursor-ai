@@ -54,9 +54,7 @@ def _run_deterministic_stages(out_dir: Path) -> dict[str, str]:
 
 
 class TestGoldenFileDeterminism:
-    def test_pipeline_run_twice_produces_identical_output_hashes(
-        self, tmp_path: Path
-    ) -> None:
+    def test_pipeline_run_twice_produces_identical_output_hashes(self, tmp_path: Path) -> None:
         """The golden-file determinism test: two full runs, identical hashes."""
         first = _run_deterministic_stages(tmp_path / "run_a")
         second = _run_deterministic_stages(tmp_path / "run_b")
@@ -81,12 +79,8 @@ class TestGoldenFileDeterminism:
         assert files_a and len(files_a) == len(files_b)
 
         for path_a, path_b in zip(files_a, files_b, strict=True):
-            lines_a = [
-                line for line in path_a.read_text().splitlines() if line.startswith("ATOM")
-            ]
-            lines_b = [
-                line for line in path_b.read_text().splitlines() if line.startswith("ATOM")
-            ]
+            lines_a = [line for line in path_a.read_text().splitlines() if line.startswith("ATOM")]
+            lines_b = [line for line in path_b.read_text().splitlines() if line.startswith("ATOM")]
             assert lines_a == lines_b, f"coordinates drifted in {path_a.name}"
 
     def test_a_changed_seed_changes_the_output(self, tmp_path: Path) -> None:
@@ -110,9 +104,9 @@ class TestGoldenFileDeterminism:
         }
 
         assert set(baseline_hashes) == set(changed_hashes)
-        assert any(
-            baseline_hashes[k] != changed_hashes[k] for k in baseline_hashes
-        ), "changing the embedding seed must change the coordinates"
+        assert any(baseline_hashes[k] != changed_hashes[k] for k in baseline_hashes), (
+            "changing the embedding seed must change the coordinates"
+        )
 
     def test_config_hash_is_recorded_and_changes_with_the_seed(self) -> None:
         cfg = load_config(SMOKE_CONFIG)
@@ -122,9 +116,7 @@ class TestGoldenFileDeterminism:
 
 
 class TestStageIdempotence:
-    def test_rerunning_ligand_prep_into_the_same_directory_is_stable(
-        self, tmp_path: Path
-    ) -> None:
+    def test_rerunning_ligand_prep_into_the_same_directory_is_stable(self, tmp_path: Path) -> None:
         """Re-running a stage must overwrite cleanly, not append or drift."""
         cfg = load_config(SMOKE_CONFIG)
         out_dir = tmp_path / "run"

@@ -49,8 +49,11 @@ REQUIRED_COMMANDS = [
 
 
 def check_required_files() -> list[str]:
-    return [f"missing required file: {name}" for name in REQUIRED_FILES
-            if not (REPO_ROOT / name).exists()]
+    return [
+        f"missing required file: {name}"
+        for name in REQUIRED_FILES
+        if not (REPO_ROOT / name).exists()
+    ]
 
 
 def check_cli_commands() -> list[str]:

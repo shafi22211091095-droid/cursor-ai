@@ -306,9 +306,7 @@ class TestEfficiencyMetrics:
         heavy_atoms=st.integers(min_value=6, max_value=60),
         clogp=st.floats(min_value=-3.0, max_value=8.0),
     )
-    def test_efficiency_invariants(
-        self, affinity: float, heavy_atoms: int, clogp: float
-    ) -> None:
+    def test_efficiency_invariants(self, affinity: float, heavy_atoms: int, clogp: float) -> None:
         metrics = compute_efficiency(affinity, heavy_atoms, clogp, 298.15)
         assert metrics.ligand_efficiency > 0
         assert metrics.pkd_estimate > 0

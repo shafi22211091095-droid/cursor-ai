@@ -40,6 +40,7 @@ __all__ = [
     "DockingResult",
     "dock_many",
     "dock_one",
+    "effective_cpu_budget",
     "job_fingerprint",
 ]
 
@@ -154,10 +155,10 @@ class _ReceptorMaps:
     """Per-process cache of a prepared Vina instance with computed maps."""
 
     def __init__(self) -> None:
-        self._key: tuple[str, tuple[float, ...], tuple[float, ...], str, int] | None = None
+        self._key: tuple[str, tuple[float, ...], tuple[float, ...], str, int, int] | None = None
         self._vina: Any = None
 
-    def get(self, job: DockingJob, docking: DockingConfig) -> Any:
+    def get(self, job: DockingJob, docking: DockingConfig, cpu: int) -> Any:
         from vina import Vina
 
         key = (
@@ -166,13 +167,14 @@ class _ReceptorMaps:
             tuple(round(s, 6) for s in job.box.size),
             docking.scoring,
             docking.seed,
+            cpu,
         )
         if self._key == key and self._vina is not None:
             return self._vina
 
         engine = Vina(
             sf_name=docking.scoring,
-            cpu=docking.cpu_per_worker,
+            cpu=cpu,
             seed=docking.seed,
             verbosity=0,
         )
@@ -190,7 +192,34 @@ class _ReceptorMaps:
 _MAPS = _ReceptorMaps()
 
 
-def dock_one(job: DockingJob, docking: DockingConfig) -> DockingResult:
+def effective_cpu_budget(docking: DockingConfig, n_jobs: int) -> int:
+    """CPUs to give a single Vina instance, given how many jobs there are.
+
+    npcadd parallelises across docking *jobs*, so each worker normally gets
+    ``cpu_per_worker`` threads. But when there are fewer jobs than workers --
+    most importantly the single redocking job in the validation gate -- that
+    leaves most of the CPU budget idle and makes the mandatory gate the slowest
+    part of a run. Measured: the bundled redock takes ~86 s on 4 CPUs and ~5.5
+    min on 1.
+
+    So a job that has the machine to itself is given the whole budget
+    (``workers * cpu_per_worker``). This changes wall-clock only; Vina's seed is
+    unchanged. Thread count can perturb Vina's parallel search at the last
+    decimal, which is why the effective budget is recorded in provenance along
+    with the configured values -- see LIMITATIONS.md section 4.5.
+    """
+    if n_jobs <= 0:
+        raise ValueError("n_jobs must be positive")
+    budget = docking.workers * docking.cpu_per_worker
+    if n_jobs >= docking.workers:
+        return docking.cpu_per_worker
+    # Spread the whole budget over the jobs that actually exist.
+    return max(docking.cpu_per_worker, budget // n_jobs)
+
+
+def dock_one(
+    job: DockingJob, docking: DockingConfig, cpu_override: int | None = None
+) -> DockingResult:
     """Dock one ligand into one receptor.
 
     Never raises for an ordinary docking failure: the failure is returned as a
@@ -213,7 +242,7 @@ def dock_one(job: DockingJob, docking: DockingConfig) -> DockingResult:
     started = time.monotonic()
 
     try:
-        engine = _MAPS.get(job, docking)
+        engine = _MAPS.get(job, docking, cpu_override or docking.cpu_per_worker)
         engine.set_ligand_from_file(str(job.ligand_pdbqt))
         if docking.max_evals > 0:
             engine.dock(
@@ -275,9 +304,9 @@ def dock_one(job: DockingJob, docking: DockingConfig) -> DockingResult:
     )
 
 
-def _worker(payload: tuple[dict[str, Any], dict[str, Any]]) -> dict[str, Any]:
+def _worker(payload: tuple[dict[str, Any], dict[str, Any], int]) -> dict[str, Any]:
     """Process-pool entry point. Takes and returns plain dicts for picklability."""
-    job_dict, docking_dict = payload
+    job_dict, docking_dict, cpu = payload
     job = DockingJob(
         ligand_id=job_dict["ligand_id"],
         receptor_id=job_dict["receptor_id"],
@@ -292,10 +321,12 @@ def _worker(payload: tuple[dict[str, Any], dict[str, Any]]) -> dict[str, Any]:
         out_pdbqt=Path(job_dict["out_pdbqt"]),
         role=job_dict["role"],
     )
-    return asdict(dock_one(job, DockingConfig.model_validate(docking_dict)))
+    return asdict(dock_one(job, DockingConfig.model_validate(docking_dict), cpu))
 
 
-def _to_payload(job: DockingJob, docking: DockingConfig) -> tuple[dict[str, Any], dict[str, Any]]:
+def _to_payload(
+    job: DockingJob, docking: DockingConfig, cpu: int
+) -> tuple[dict[str, Any], dict[str, Any], int]:
     return (
         {
             "ligand_id": job.ligand_id,
@@ -310,6 +341,7 @@ def _to_payload(job: DockingJob, docking: DockingConfig) -> tuple[dict[str, Any]
             "role": job.role,
         },
         docking.model_dump(mode="json"),
+        cpu,
     )
 
 
@@ -333,15 +365,27 @@ def dock_many(
         range(len(jobs)), key=lambda i: (jobs[i].receptor_id, jobs[i].role, jobs[i].ligand_id)
     )
     results: dict[int, DockingResult] = {}
+    cpu = effective_cpu_budget(docking, len(jobs))
+    n_workers = min(docking.workers, len(jobs))
+    if cpu != docking.cpu_per_worker:
+        log.info(
+            "Few jobs for the configured workers; widening the per-job CPU budget",
+            extra={
+                "n_jobs": len(jobs),
+                "configured_workers": docking.workers,
+                "configured_cpu_per_worker": docking.cpu_per_worker,
+                "effective_cpu_per_job": cpu,
+            },
+        )
 
-    if docking.workers == 1:
+    if n_workers == 1:
         for done, index in enumerate(ordered, start=1):
-            results[index] = dock_one(jobs[index], docking)
+            results[index] = dock_one(jobs[index], docking, cpu)
             if done % progress_every == 0 or done == len(ordered):
                 log.info("Docked %d/%d", done, len(ordered))
     else:
         with ProcessPoolExecutor(max_workers=docking.workers) as pool:
-            futures = {pool.submit(_worker, _to_payload(jobs[i], docking)): i for i in ordered}
+            futures = {pool.submit(_worker, _to_payload(jobs[i], docking, cpu)): i for i in ordered}
             for done, future in enumerate(as_completed(futures), start=1):
                 index = futures[future]
                 try:

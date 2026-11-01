@@ -29,7 +29,9 @@ def raw_config() -> dict[str, Any]:
 
 def write_config(tmp_path: Path, data: dict[str, Any]) -> Path:
     """Write a config next to the repo so relative paths still resolve."""
-    path = REPO_ROOT / f"_test_config_{abs(hash(json.dumps(data, sort_keys=True, default=str)))}.yaml"
+    path = (
+        REPO_ROOT / f"_test_config_{abs(hash(json.dumps(data, sort_keys=True, default=str)))}.yaml"
+    )
     path.write_text(yaml.safe_dump(data), encoding="utf-8")
     return path
 
@@ -82,9 +84,7 @@ class TestConfigValidation:
         assert cfg.activities == ["cytotoxic"]
 
     def test_config_hash_is_stable_across_loads(self) -> None:
-        assert load_config(SAMPLE_CONFIG).config_hash() == load_config(
-            SAMPLE_CONFIG
-        ).config_hash()
+        assert load_config(SAMPLE_CONFIG).config_hash() == load_config(SAMPLE_CONFIG).config_hash()
 
     def test_config_hash_changes_with_any_parameter(
         self, tmp_path: Path, raw_config: dict[str, Any]
@@ -208,9 +208,7 @@ class TestGridBox:
         with pytest.raises(ValueError, match="shape"):
             derive_box(GridBox(mode="cocrystal"), np.array([1.0, 2.0, 3.0]))
         with pytest.raises(ValueError, match="non-finite"):
-            derive_box(
-                GridBox(mode="cocrystal"), np.array([[0.0, 0.0, 0.0], [np.nan, 0.0, 0.0]])
-            )
+            derive_box(GridBox(mode="cocrystal"), np.array([[0.0, 0.0, 0.0], [np.nan, 0.0, 0.0]]))
 
     def test_derived_box_exceeding_max_edge_raises(self) -> None:
         coords = np.array([[0.0, 0.0, 0.0], [50.0, 0.0, 0.0]])
@@ -218,26 +216,20 @@ class TestGridBox:
             derive_box(GridBox(mode="cocrystal", padding=5.0), coords)
 
     def test_explicit_mode_passes_values_through(self) -> None:
-        box = derive_box(
-            GridBox(mode="explicit", center=(1.0, 2.0, 3.0), size=(20.0, 20.0, 20.0))
-        )
+        box = derive_box(GridBox(mode="explicit", center=(1.0, 2.0, 3.0), size=(20.0, 20.0, 20.0)))
         assert box.center == (1.0, 2.0, 3.0)
         assert box.mode == "explicit"
         assert "verbatim" in box.derivation
 
     def test_point_in_box(self) -> None:
-        box = derive_box(
-            GridBox(mode="explicit", center=(0.0, 0.0, 0.0), size=(20.0, 20.0, 20.0))
-        )
+        box = derive_box(GridBox(mode="explicit", center=(0.0, 0.0, 0.0), size=(20.0, 20.0, 20.0)))
         assert point_in_box(np.array([0.0, 0.0, 0.0]), box)
         assert point_in_box(np.array([10.0, 0.0, 0.0]), box)
         assert not point_in_box(np.array([11.0, 0.0, 0.0]), box)
         assert point_in_box(np.array([11.0, 0.0, 0.0]), box, tolerance=2.0)
 
     def test_box_volume_and_record(self) -> None:
-        box = derive_box(
-            GridBox(mode="explicit", center=(0.0, 0.0, 0.0), size=(10.0, 20.0, 30.0))
-        )
+        box = derive_box(GridBox(mode="explicit", center=(0.0, 0.0, 0.0), size=(10.0, 20.0, 30.0)))
         assert box.volume_a3 == pytest.approx(6000.0)
         record = box.as_record()
         assert record["box_size_y"] == 20.0

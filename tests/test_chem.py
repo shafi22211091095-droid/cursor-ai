@@ -49,9 +49,7 @@ class TestStandardiser:
 
     def test_strips_counter_ion_and_keeps_the_organic_fragment(self) -> None:
         # Sodium benzoate: the salt must be stripped, leaving benzoic acid.
-        result = Standardiser(min_heavy_atoms=5).standardise_smiles(
-            "[Na+].[O-]C(=O)c1ccccc1"
-        )
+        result = Standardiser(min_heavy_atoms=5).standardise_smiles("[Na+].[O-]C(=O)c1ccccc1")
         assert result.ok
         assert "Na" not in (result.standard_smiles or "")
         assert result.stripped_fragments >= 1
@@ -72,9 +70,7 @@ class TestStandardiser:
             ("C", RejectionReason.TOO_FEW_HEAVY_ATOMS),
         ],
     )
-    def test_rejects_with_the_specific_reason(
-        self, smiles: str, reason: RejectionReason
-    ) -> None:
+    def test_rejects_with_the_specific_reason(self, smiles: str, reason: RejectionReason) -> None:
         result = Standardiser().standardise_smiles(smiles)
         assert not result.ok
         assert result.reason == reason
