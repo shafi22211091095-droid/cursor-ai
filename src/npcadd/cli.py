@@ -116,6 +116,11 @@ def _fail(message: str, code: int = 1) -> None:
 @app.callback()
 def main() -> None:
     """npcadd command-line interface."""
+    from rdkit import RDLogger
+
+    # Third-party imports re-enable RDKit's C++ logger; npcadd reports
+    # rejections through its own structured log with reasons attached.
+    RDLogger.DisableLog("rdApp.*")
 
 
 @app.command()

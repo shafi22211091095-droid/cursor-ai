@@ -30,7 +30,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 import numpy as np
-from rdkit import Chem, DataStructs
+from rdkit import Chem, DataStructs, RDLogger
 from rdkit.Chem import rdFingerprintGenerator
 
 from ..chem.descriptors import compute_descriptors
@@ -48,6 +48,11 @@ __all__ = [
 ]
 
 log = get_logger("docking.decoys")
+
+# Enumerated products are routinely chemically invalid (e.g. a hydroxyl
+# substituent on an ester oxygen). Rejecting those is the expected path, so
+# RDKit's per-molecule C++ error spam is silenced; rejections are counted below.
+RDLogger.DisableLog("rdApp.*")
 
 #: Properties compared when matching a decoy to an active.
 MATCH_PROPERTIES = ("mw", "clogp", "tpsa", "rotatable_bonds", "hbd", "hba", "formal_charge")
