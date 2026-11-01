@@ -156,8 +156,7 @@ Ile313, Phe317, Leu370 and Phe382.
 
 Imatinib wins on raw score — deservedly, it is a real nanomolar inhibitor of
 this target. But loliolide, less than half its size, is the more efficient
-binder per heavy atom. Rank by raw score and loliolide vanishes; rank by
-efficiency and it moves from the bottom of the raw-score order to near the top (second of five, behind the smaller vanillin). See [`DECISIONS.md`](DECISIONS.md) D-003.
+binder per heavy atom. In the smoke run the raw-score order is campesterol, loliolide, glycerol monostearate, vanillin, spathulenol, but the efficiency order is vanillin, loliolide, spathulenol, campesterol, glycerol monostearate: the largest molecules fall and the small ones rise. See [`DECISIONS.md`](DECISIONS.md) D-003.
 
 ---
 
