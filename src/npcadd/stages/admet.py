@@ -32,6 +32,7 @@ from rdkit import Chem
 from ..chem.admet_ml import get_ml_predictor
 from ..chem.alerts import screen_alerts
 from ..chem.descriptors import DESCRIPTOR_FIELDS, compute_descriptors
+from ..chem.np_likeness import np_likeness
 from ..chem.rules import apply_all_rules, pass_rate
 from ..config import Config
 from ..logging_utils import get_logger
@@ -109,6 +110,7 @@ class AdmetRow:
     admet_pass_rate: float = 0.0
     alerts: dict[str, Any] = field(default_factory=dict)
     ml_predictions: dict[str, Any] = field(default_factory=dict)
+    np_likeness: dict[str, Any] = field(default_factory=dict)
 
     def as_record(self) -> dict[str, Any]:
         record: dict[str, Any] = {
@@ -126,6 +128,7 @@ class AdmetRow:
         record["admet_pass_rate"] = round(self.admet_pass_rate, 4)
         record.update(self.alerts)
         record.update(self.ml_predictions)
+        record.update(self.np_likeness)
         return record
 
 
@@ -191,6 +194,12 @@ def run_admet(
             ml.update(predictions.as_record())
             ml[f"{spec.name}_citation"] = predictor.citation
 
+        np_record: dict[str, Any] = {}
+        if cfg.admet.np_likeness:
+            npl = np_likeness(mol)
+            if npl is not None:
+                np_record = npl.as_record()
+
         rows.append(
             AdmetRow(
                 ligand_id=ligand.ligand_id,
@@ -205,6 +214,7 @@ def run_admet(
                 admet_pass_rate=pass_rate(rules),
                 alerts=alerts.summary(),
                 ml_predictions=ml,
+                np_likeness=np_record,
             )
         )
 

@@ -293,6 +293,30 @@ class DockingConfig(Strict):
         default=0.0,
         description="Angstroms added to each box half-width when testing atom containment.",
     )
+    pose_consensus_top_n: int = Field(
+        default=3,
+        ge=1,
+        le=100,
+        description=(
+            "How many of a ligand's best returned poses to average into the "
+            "mean_top_affinity_kcal_mol consensus column (diagnostic only)."
+        ),
+    )
+    consensus_spread_warn_kcal: PositiveFloat = Field(
+        default=3.0,
+        description=(
+            "Flag (consensus_ok=False) a ligand whose returned-pose affinity spread "
+            "exceeds this, meaning the top pose is one of several comparable solutions. "
+            "Diagnostic only; never changes the ranking."
+        ),
+    )
+    pose_stability_check: bool = Field(
+        default=True,
+        description=(
+            "Record the alignment-free RMSD between the top two poses "
+            "(top2_pose_rmsd_a): small means the search converged on one placement."
+        ),
+    )
 
 
 class ValidationConfig(Strict):
@@ -373,6 +397,14 @@ class AdmetConfig(Strict):
         ),
     )
     external_batch_size: int = Field(default=100, ge=1)
+    np_likeness: bool = Field(
+        default=True,
+        description=(
+            "Compute the Ertl-Schuffenhauer natural-product-likeness score for each "
+            "ligand (offline RDKit NP_Score model). Descriptor only; it never filters "
+            "or ranks."
+        ),
+    )
 
 
 class RankingConfig(Strict):

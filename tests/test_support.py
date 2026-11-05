@@ -26,7 +26,13 @@ from npcadd.docking.decoys import (
     generate_null_set,
     pool_property_summary,
 )
-from npcadd.docking.poses import PoseLoadError, centroid_distance, in_place_rmsd, load_poses
+from npcadd.docking.poses import (
+    PoseLoadError,
+    centroid_distance,
+    conformer_pair_rmsd,
+    in_place_rmsd,
+    load_poses,
+)
 from npcadd.docking.vina_runner import effective_cpu_budget, job_fingerprint
 from npcadd.ioutils.rcsb import (
     StructureUnavailableError,
@@ -132,6 +138,23 @@ class TestPoses:
     def test_centroid_distance(self) -> None:
         d = centroid_distance(self._mol_with_shift(3.0), self._mol_with_shift(0.0))
         assert d == pytest.approx(3.0, abs=1e-3)
+
+    def test_conformer_pair_rmsd_measures_top_two_divergence(self) -> None:
+        from rdkit.Chem import AllChem
+
+        mol = Chem.AddHs(Chem.MolFromSmiles("CCO"))
+        AllChem.EmbedMolecule(mol, randomSeed=1)
+        base = mol.GetConformer(0)
+        shifted = Chem.Conformer(base)
+        for i in range(mol.GetNumAtoms()):
+            p = base.GetAtomPosition(i)
+            shifted.SetAtomPosition(i, (p.x + 2.0, p.y, p.z))
+        mol.AddConformer(shifted, assignId=True)
+        assert conformer_pair_rmsd(mol, 0, 1) == pytest.approx(2.0, abs=1e-3)
+
+    def test_conformer_pair_rmsd_requires_two_conformers(self) -> None:
+        with pytest.raises(ValueError, match="conformer"):
+            conformer_pair_rmsd(self._mol_with_shift(0.0), 0, 1)
 
     def test_different_molecules_raise(self) -> None:
         other = Chem.AddHs(Chem.MolFromSmiles("CCCCO"))

@@ -17,6 +17,7 @@ from npcadd.docking.metrics import (
     NullDistribution,
     bedroc,
     enrichment_factor,
+    pose_consensus,
     roc_auc,
     roc_curve,
 )
@@ -288,7 +289,7 @@ class TestEfficiencyMetrics:
         assert fit_quality(-12.0, 40) > 0
 
     def test_compute_efficiency_assembles_every_metric(self) -> None:
-        metrics = compute_efficiency(-8.5, 22, 2.5, 298.15)
+        metrics = compute_efficiency(-8.5, 22, 2.5, 300.0, 60.0, 298.15)
         record = metrics.as_record()
         for key in (
             "ligand_efficiency_kcal_mol_per_ha",
@@ -296,22 +297,72 @@ class TestEfficiencyMetrics:
             "lipophilic_efficiency_lle",
             "lelp",
             "fit_quality",
+            "binding_efficiency_index_bei",
+            "surface_efficiency_index_sei",
+            "size_independent_le_sile",
         ):
             assert key in record
         assert metrics.ligand_efficiency == pytest.approx(8.5 / 22)
+        # BEI = pKd/MW*1000; SEI = pKd/TPSA*100; SILE = pKd/HA**0.3.
+        assert metrics.binding_efficiency_index == pytest.approx(
+            metrics.pkd_estimate / 300.0 * 1000.0
+        )
+        assert metrics.surface_efficiency_index == pytest.approx(
+            metrics.pkd_estimate / 60.0 * 100.0
+        )
+        assert metrics.size_independent_le == pytest.approx(metrics.pkd_estimate / 22**0.3)
 
     @settings(max_examples=60, deadline=None, suppress_health_check=[HealthCheck.too_slow])
     @given(
         affinity=st.floats(min_value=-15.0, max_value=-1.0),
         heavy_atoms=st.integers(min_value=6, max_value=60),
         clogp=st.floats(min_value=-3.0, max_value=8.0),
+        mw=st.floats(min_value=80.0, max_value=900.0),
+        tpsa=st.floats(min_value=0.0, max_value=250.0),
     )
-    def test_efficiency_invariants(self, affinity: float, heavy_atoms: int, clogp: float) -> None:
-        metrics = compute_efficiency(affinity, heavy_atoms, clogp, 298.15)
+    def test_efficiency_invariants(
+        self, affinity: float, heavy_atoms: int, clogp: float, mw: float, tpsa: float
+    ) -> None:
+        metrics = compute_efficiency(affinity, heavy_atoms, clogp, mw, tpsa, 298.15)
         assert metrics.ligand_efficiency > 0
         assert metrics.pkd_estimate > 0
         assert math.isfinite(metrics.lipophilic_efficiency)
         assert metrics.fit_quality >= 0.0
+        assert metrics.binding_efficiency_index > 0  # MW is strictly positive here
+        assert metrics.size_independent_le > 0
+        if tpsa > 0:
+            assert metrics.surface_efficiency_index > 0
+        else:
+            assert math.isnan(metrics.surface_efficiency_index)
+
+
+class TestPoseConsensus:
+    def test_summarises_spread_and_top_mean(self) -> None:
+        pc = pose_consensus([-7.0, -6.5, -6.0, -3.0], top_n=3)
+        assert pc.n_poses == 4
+        assert pc.best == pytest.approx(-7.0)
+        assert pc.mean_top_n == pytest.approx((-7.0 - 6.5 - 6.0) / 3)
+        assert pc.top_n == 3
+        assert pc.spread == pytest.approx(4.0)  # -3.0 - (-7.0)
+        assert pc.as_record()["affinity_spread_kcal_mol"] == pytest.approx(4.0)
+
+    def test_order_independent_and_handles_single_pose(self) -> None:
+        a = pose_consensus([-5.0, -8.0, -6.0])
+        b = pose_consensus([-8.0, -6.0, -5.0])
+        assert a.mean_top_n == pytest.approx(b.mean_top_n)
+        one = pose_consensus([-7.3])
+        assert one.n_poses == 1
+        assert one.spread == 0.0
+        assert one.std == 0.0
+        assert one.mean_top_n == pytest.approx(-7.3)
+
+    def test_rejects_empty_and_nonfinite(self) -> None:
+        with pytest.raises(ValueError, match="at least one"):
+            pose_consensus([])
+        with pytest.raises(ValueError, match="non-finite"):
+            pose_consensus([float("nan"), -5.0])
+        with pytest.raises(ValueError, match="top_n"):
+            pose_consensus([-5.0], top_n=0)
 
 
 class TestRankingGuards:

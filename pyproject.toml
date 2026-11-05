@@ -106,7 +106,7 @@ plugins = ["pydantic.mypy"]
 module = [
   "rdkit.*", "meeko.*", "vina.*", "prolif.*", "gemmi.*", "dimorphite_dl.*",
   "pdbfixer.*", "openmm.*", "pdb2pqr.*", "propka.*", "MDAnalysis.*",
-  "matplotlib.*", "sklearn.*", "scipy.*", "openpyxl.*",
+  "matplotlib.*", "sklearn.*", "scipy.*", "openpyxl.*", "npscorer",
 ]
 ignore_missing_imports = true
 follow_imports = "skip"

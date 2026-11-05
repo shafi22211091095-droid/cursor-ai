@@ -49,11 +49,14 @@ __all__ = [
     "EfficiencyMetrics",
     "RankedRow",
     "RankingSummary",
+    "binding_efficiency_index",
     "fit_quality",
     "ligand_efficiency",
     "lipophilic_efficiency",
     "rank_compounds",
     "sensitivity_analysis",
+    "size_independent_ligand_efficiency",
+    "surface_efficiency_index",
 ]
 
 log = get_logger("stages.rank")
@@ -151,6 +154,55 @@ def fit_quality(affinity_kcal_mol: float, heavy_atoms: int) -> float:
     return max(0.0, ligand_efficiency(affinity_kcal_mol, heavy_atoms) / ceiling)
 
 
+def binding_efficiency_index(
+    affinity_kcal_mol: float, mw: float, temperature_k: float = 298.15
+) -> float:
+    """Binding efficiency index: ``BEI = pKd / (MW / 1000)``.
+
+    Potency per kilodalton of molecular weight. Abad-Zapatero & Metz,
+    *Drug Discov. Today* 2005, 10, 464-469. Reported for comparability with
+    ChEMBL, which curates BEI alongside its activities; as with every metric
+    here it is built on the docking-derived pKd estimate (a log-affinity-scaled
+    score, not a measured constant), not an experimental Kd.
+
+    Returns NaN for non-positive MW rather than raising.
+    """
+    if mw <= 0:
+        return float("nan")
+    return float(pkd_estimate(affinity_kcal_mol, temperature_k) / mw * 1000.0)
+
+
+def surface_efficiency_index(
+    affinity_kcal_mol: float, tpsa: float, temperature_k: float = 298.15
+) -> float:
+    """Surface efficiency index: ``SEI = pKd / (TPSA / 100)``.
+
+    Potency per 100 square-angstrom of polar surface. Abad-Zapatero & Metz,
+    *Drug Discov. Today* 2005. Read together with BEI it separates size- from
+    polarity-driven efficiency. Returns NaN for non-positive TPSA.
+    """
+    if tpsa <= 0:
+        return float("nan")
+    return float(pkd_estimate(affinity_kcal_mol, temperature_k) / tpsa * 100.0)
+
+
+def size_independent_ligand_efficiency(
+    affinity_kcal_mol: float, heavy_atoms: int, temperature_k: float = 298.15
+) -> float:
+    """Size-independent ligand efficiency: ``SILE = pKd / HA**0.3``.
+
+    Nissink, *J. Chem. Inf. Model.* 2009, 49, 1617-1622. Unlike plain LE, whose
+    expected value falls with size, SILE is designed to be roughly flat across a
+    size range, which makes it well suited to a GC-MS set spanning C6 to C30.
+
+    Raises:
+        ValueError: if ``heavy_atoms`` is not positive.
+    """
+    if heavy_atoms <= 0:
+        raise ValueError(f"heavy_atoms must be positive; got {heavy_atoms}")
+    return float(pkd_estimate(affinity_kcal_mol, temperature_k) / (float(heavy_atoms) ** 0.3))
+
+
 @dataclass(slots=True, frozen=True)
 class EfficiencyMetrics:
     """All size- and lipophilicity-corrected efficiency metrics for one row."""
@@ -158,38 +210,63 @@ class EfficiencyMetrics:
     affinity_kcal_mol: float
     heavy_atoms: int
     clogp: float
+    mw: float
+    tpsa: float
     ligand_efficiency: float
     pkd_estimate: float
     lipophilic_efficiency: float
     lelp: float
     fit_quality: float
+    binding_efficiency_index: float
+    surface_efficiency_index: float
+    size_independent_le: float
 
     def as_record(self) -> dict[str, Any]:
+        def _finite(value: float, ndigits: int) -> float | None:
+            return round(value, ndigits) if math.isfinite(value) else None
+
         return {
             "best_affinity_kcal_mol": round(self.affinity_kcal_mol, 3),
             "heavy_atoms": self.heavy_atoms,
+            "mw": round(self.mw, 2),
+            "tpsa": round(self.tpsa, 2),
             "clogp": round(self.clogp, 3),
             "ligand_efficiency_kcal_mol_per_ha": round(self.ligand_efficiency, 4),
             "pkd_estimate_from_score": round(self.pkd_estimate, 3),
             "lipophilic_efficiency_lle": round(self.lipophilic_efficiency, 3),
-            "lelp": round(self.lelp, 3) if math.isfinite(self.lelp) else None,
-            "fit_quality": round(self.fit_quality, 4) if math.isfinite(self.fit_quality) else None,
+            "lelp": _finite(self.lelp, 3),
+            "fit_quality": _finite(self.fit_quality, 4),
+            "binding_efficiency_index_bei": _finite(self.binding_efficiency_index, 3),
+            "surface_efficiency_index_sei": _finite(self.surface_efficiency_index, 3),
+            "size_independent_le_sile": _finite(self.size_independent_le, 4),
         }
 
 
 def compute_efficiency(
-    affinity_kcal_mol: float, heavy_atoms: int, clogp: float, temperature_k: float
+    affinity_kcal_mol: float,
+    heavy_atoms: int,
+    clogp: float,
+    mw: float,
+    tpsa: float,
+    temperature_k: float,
 ) -> EfficiencyMetrics:
     """Assemble every efficiency metric for one ligand-receptor result."""
     return EfficiencyMetrics(
         affinity_kcal_mol=affinity_kcal_mol,
         heavy_atoms=heavy_atoms,
         clogp=clogp,
+        mw=mw,
+        tpsa=tpsa,
         ligand_efficiency=ligand_efficiency(affinity_kcal_mol, heavy_atoms),
         pkd_estimate=pkd_estimate(affinity_kcal_mol, temperature_k),
         lipophilic_efficiency=lipophilic_efficiency(affinity_kcal_mol, clogp, temperature_k),
         lelp=lelp(affinity_kcal_mol, clogp, heavy_atoms),
         fit_quality=fit_quality(affinity_kcal_mol, heavy_atoms),
+        binding_efficiency_index=binding_efficiency_index(affinity_kcal_mol, mw, temperature_k),
+        surface_efficiency_index=surface_efficiency_index(affinity_kcal_mol, tpsa, temperature_k),
+        size_independent_le=size_independent_ligand_efficiency(
+            affinity_kcal_mol, heavy_atoms, temperature_k
+        ),
     )
 
 
@@ -355,6 +432,8 @@ def rank_compounds(
             screen.best_affinity_kcal_mol,
             heavy_atoms,
             admet.descriptors["clogp"],
+            admet.descriptors["mw"],
+            admet.descriptors["tpsa"],
             cfg.ranking.reference_temperature_k,
         )
 

@@ -34,6 +34,7 @@ __all__ = [
     "Pose",
     "PoseSet",
     "centroid_distance",
+    "conformer_pair_rmsd",
     "in_place_rmsd",
     "load_poses",
 ]
@@ -182,6 +183,37 @@ def in_place_rmsd(
             f"  probe:     {Chem.MolToSmiles(prb)}\n"
             f"  reference: {Chem.MolToSmiles(ref)}"
         ) from exc
+
+
+def conformer_pair_rmsd(
+    mol: Chem.Mol,
+    conf_i: int = 0,
+    conf_j: int = 1,
+    *,
+    heavy_atoms_only: bool = True,
+) -> float:
+    """Symmetry-corrected, alignment-free RMSD between two poses of one ligand.
+
+    The two best Vina poses are two conformers of the same molecule in the same
+    pocket frame. A small value means the search converged on one placement; a
+    large one means the top two solutions are structurally different and the
+    rank-1 pose is a coin-flip away from the rank-2 pose. No superposition is
+    performed, for the same reason as :func:`in_place_rmsd`: the question is
+    whether the two poses sit in the same place, not whether their internal
+    shapes match.
+
+    Raises:
+        ValueError: if ``mol`` is None or lacks the requested conformers.
+    """
+    if mol is None:
+        raise ValueError("conformer_pair_rmsd received None")
+    m = Chem.RemoveHs(Chem.Mol(mol)) if heavy_atoms_only else Chem.Mol(mol)
+    n = m.GetNumConformers()
+    if n <= max(conf_i, conf_j):
+        raise ValueError(
+            f"molecule has {n} conformer(s); conformers {conf_i} and {conf_j} were requested"
+        )
+    return float(rdMolAlign.CalcRMS(m, m, prbId=conf_i, refId=conf_j))
 
 
 def centroid_distance(

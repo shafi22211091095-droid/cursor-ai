@@ -14,6 +14,7 @@ instead of a bug.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 from typing import Any
 
@@ -24,8 +25,10 @@ from ..logging_utils import get_logger
 __all__ = [
     "EnrichmentReport",
     "NullDistribution",
+    "PoseConsensus",
     "bedroc",
     "enrichment_factor",
+    "pose_consensus",
     "roc_auc",
     "roc_curve",
 ]
@@ -291,3 +294,63 @@ class NullDistribution:
             "p95": round(float(quantiles[5]), 3),
             "smallest_supportable_p": round(self.resolution, 5),
         }
+
+
+@dataclass(slots=True, frozen=True)
+class PoseConsensus:
+    """Summary of the spread of a ligand's returned pose affinities.
+
+    Vina returns several poses with a score each. When those scores cluster
+    tightly, the search agrees with itself about where the ligand binds; when
+    they are spread out, the top pose is one of several comparable solutions and
+    its score should be read with more caution. This is a cheap, reference-free
+    confidence signal that complements the single best affinity, in the same
+    spirit as reporting a standard error beside a point estimate. It is
+    diagnostic only and never enters the ranking.
+    """
+
+    n_poses: int
+    best: float
+    mean_top_n: float
+    top_n: int
+    spread: float
+    std: float
+
+    def as_record(self) -> dict[str, Any]:
+        return {
+            "n_poses_returned": self.n_poses,
+            "mean_top_affinity_kcal_mol": round(self.mean_top_n, 3),
+            "n_poses_averaged": self.top_n,
+            "affinity_spread_kcal_mol": round(self.spread, 3),
+            "affinity_std_kcal_mol": round(self.std, 3),
+        }
+
+
+def pose_consensus(affinities: Sequence[float], top_n: int = 3) -> PoseConsensus:
+    """Summarise the agreement among a ligand's docked-pose affinities.
+
+    Args:
+        affinities: Per-pose affinities (kcal/mol, negative-is-better), in any
+            order; Vina's ranked order is accepted but not required.
+        top_n: How many of the best (most negative) poses to average.
+
+    Raises:
+        ValueError: if ``affinities`` is empty or non-finite, or ``top_n`` < 1.
+    """
+    a = np.asarray(list(affinities), dtype=np.float64).ravel()
+    if a.size == 0:
+        raise ValueError("pose_consensus requires at least one affinity")
+    if not np.isfinite(a).all():
+        raise ValueError("affinities contain non-finite values")
+    if top_n < 1:
+        raise ValueError(f"top_n must be >= 1; got {top_n}")
+    k = min(top_n, a.size)
+    best_k = np.sort(a)[:k]  # the k most favourable (most negative) scores
+    return PoseConsensus(
+        n_poses=int(a.size),
+        best=float(a.min()),
+        mean_top_n=float(best_k.mean()),
+        top_n=int(k),
+        spread=float(a.max() - a.min()),
+        std=float(a.std(ddof=1)) if a.size > 1 else 0.0,
+    )

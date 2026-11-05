@@ -47,6 +47,8 @@ def _rows(specs: list[tuple[str, float, float, int, float, float]]):
                 descriptors={
                     "heavy_atoms": float(ha),
                     "clogp": clogp,
+                    "mw": float(ha) * 13.0 + 20.0,
+                    "tpsa": float(ha) * 3.0,
                     "n_unspecified_stereocentres": 1.0,
                 },
                 admet_pass_rate=rate,

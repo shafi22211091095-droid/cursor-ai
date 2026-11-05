@@ -25,8 +25,8 @@ from ..docking.interactions import (
     load_protein,
     profile_interactions,
 )
-from ..docking.metrics import NullDistribution
-from ..docking.poses import PoseLoadError, load_poses
+from ..docking.metrics import NullDistribution, pose_consensus
+from ..docking.poses import PoseLoadError, conformer_pair_rmsd, load_poses
 from ..docking.vina_runner import DockingJob, DockingResult, dock_many
 from ..logging_utils import get_logger
 from .ligands import LigandRecord
@@ -64,6 +64,12 @@ class ScreenRow:
     pose_centroid_offset_a: float | None = None
     pose_centroid_offset_frac: float | None = None
     pose_max_atom_offset_frac: float | None = None
+    n_poses_returned: int | None = None
+    mean_top_affinity_kcal_mol: float | None = None
+    affinity_spread_kcal_mol: float | None = None
+    affinity_std_kcal_mol: float | None = None
+    consensus_ok: bool | None = None
+    top2_pose_rmsd_a: float | None = None
     pose_path: str = ""
     error: str = ""
 
@@ -92,6 +98,12 @@ class ScreenRow:
             "pose_centroid_offset_a": self.pose_centroid_offset_a,
             "pose_centroid_offset_frac": self.pose_centroid_offset_frac,
             "pose_max_atom_offset_frac": self.pose_max_atom_offset_frac,
+            "n_poses_returned": self.n_poses_returned,
+            "mean_top_affinity_kcal_mol": self.mean_top_affinity_kcal_mol,
+            "affinity_spread_kcal_mol": self.affinity_spread_kcal_mol,
+            "affinity_std_kcal_mol": self.affinity_std_kcal_mol,
+            "consensus_ok": self.consensus_ok,
+            "top2_pose_rmsd_a": self.top2_pose_rmsd_a,
             "pose_path": self.pose_path,
             "error": self.error,
         }
@@ -189,52 +201,60 @@ def _fingerprint_receptor(
     return profiles
 
 
-def _best_pose_heavy_coords(out_pdbqt: str) -> np.ndarray:
-    """Heavy-atom coordinates of a ligand's best (rank-1) docked pose."""
+def _load_pose_mol(out_pdbqt: str) -> Chem.Mol:
+    """Load a ligand's docked poses as a heavy-atom molecule with one conformer per pose."""
     mol = Chem.RemoveHs(load_poses(out_pdbqt))
     if mol.GetNumConformers() == 0:  # pragma: no cover - load_poses guarantees >=1
         raise PoseLoadError(f"No conformers parsed from {out_pdbqt}")
-    return np.asarray(mol.GetConformer(0).GetPositions(), dtype=np.float64)
+    return mol
 
 
-def _assess_placements(
+def _assess_pose_geometry(
     cfg: Config,
     receptors: dict[str, PreparedReceptor],
     results: list[DockingResult],
-) -> dict[tuple[str, str], PosePlacement]:
-    """Placement verdict for the best pose of every successful docking.
+) -> dict[tuple[str, str], tuple[PosePlacement | None, float | None]]:
+    """Per-result ``(placement verdict, top-2 pose RMSD)``, loading each pose once.
 
-    Independent of interaction fingerprinting so the check still runs when
-    fingerprints are disabled. Returns an empty mapping when the check is off.
+    Independent of interaction fingerprinting so the checks run when fingerprints
+    are disabled. Either element is ``None`` when its check is off or the pose
+    could not be read; the top-2 RMSD is also ``None`` when only one pose exists.
     """
-    if not cfg.docking.placement_check:
+    if not (cfg.docking.placement_check or cfg.docking.pose_stability_check):
         return {}
-    placements: dict[tuple[str, str], PosePlacement] = {}
+    out: dict[tuple[str, str], tuple[PosePlacement | None, float | None]] = {}
     for result in results:
         if not result.ok or not result.out_pdbqt:
             continue
         receptor = receptors.get(result.receptor_id)
         if receptor is None:  # pragma: no cover - results are built from receptors
             continue
+        placement: PosePlacement | None = None
+        top2_rmsd: float | None = None
         try:
-            coords = _best_pose_heavy_coords(result.out_pdbqt)
-            placements[(result.ligand_id, result.receptor_id)] = assess_placement(
-                coords,
-                receptor.box,
-                tolerance=cfg.docking.placement_box_tolerance_a,
-                min_fraction_inside=cfg.docking.placement_min_fraction_in_box,
-                max_centroid_offset_frac=cfg.docking.placement_max_centroid_offset_frac,
-            )
+            mol = _load_pose_mol(result.out_pdbqt)
+            if cfg.docking.placement_check:
+                coords = np.asarray(mol.GetConformer(0).GetPositions(), dtype=np.float64)
+                placement = assess_placement(
+                    coords,
+                    receptor.box,
+                    tolerance=cfg.docking.placement_box_tolerance_a,
+                    min_fraction_inside=cfg.docking.placement_min_fraction_in_box,
+                    max_centroid_offset_frac=cfg.docking.placement_max_centroid_offset_frac,
+                )
+            if cfg.docking.pose_stability_check and mol.GetNumConformers() >= 2:
+                top2_rmsd = conformer_pair_rmsd(mol, 0, 1)
         except (PoseLoadError, ValueError) as exc:
             log.warning(
-                "Could not assess pose placement",
+                "Could not assess pose geometry",
                 extra={
                     "ligand": result.ligand_id,
                     "receptor": result.receptor_id,
                     "error": str(exc),
                 },
             )
-    return placements
+        out[(result.ligand_id, result.receptor_id)] = (placement, top2_rmsd)
+    return out
 
 
 def run_docking(
@@ -279,7 +299,7 @@ def run_docking(
     for receptor_id, receptor_results in results_by_receptor.items():
         profiles.extend(_fingerprint_receptor(cfg, by_receptor[receptor_id], receptor_results))
     profile_index = {(p.ligand_id, p.receptor_id): p for p in profiles if p.pose_rank == 1}
-    placements = _assess_placements(cfg, by_receptor, results)
+    geometry = _assess_pose_geometry(cfg, by_receptor, results)
 
     rows: list[ScreenRow] = []
     for result in results:
@@ -312,7 +332,8 @@ def run_docking(
             row.contact_residues = ";".join(profile.residues)
             row.contacts = ";".join(f"{r}:{k}" for r, k in sorted(profile.contacts))
 
-        placement = placements.get((ligand.ligand_id, receptor.receptor_id))
+        geom = geometry.get((ligand.ligand_id, receptor.receptor_id))
+        placement = geom[0] if geom else None
         if placement is not None:
             row.placement_ok = placement.in_box
             row.placement_note = placement.note
@@ -321,6 +342,16 @@ def run_docking(
             row.pose_centroid_offset_a = round(placement.centroid_offset_a, 3)
             row.pose_centroid_offset_frac = round(placement.centroid_offset_frac, 4)
             row.pose_max_atom_offset_frac = round(placement.max_atom_offset_frac, 4)
+        if geom and geom[1] is not None:
+            row.top2_pose_rmsd_a = round(geom[1], 3)
+
+        if result.ok and result.affinities:
+            consensus = pose_consensus(result.affinities, top_n=cfg.docking.pose_consensus_top_n)
+            row.n_poses_returned = consensus.n_poses
+            row.mean_top_affinity_kcal_mol = round(consensus.mean_top_n, 3)
+            row.affinity_spread_kcal_mol = round(consensus.spread, 3)
+            row.affinity_std_kcal_mol = round(consensus.std, 3)
+            row.consensus_ok = consensus.spread <= cfg.docking.consensus_spread_warn_kcal
         rows.append(row)
 
     results_path = out_dir / "docking_results.csv"
@@ -352,6 +383,14 @@ def run_docking(
             "box); their affinities may reflect where the box was drawn rather than the "
             "pocket, and should not be trusted for ranking. See the placement_note column.",
             n_placement_flagged,
+        )
+    n_wide_spread = sum(1 for r in rows if r.consensus_ok is False)
+    if n_wide_spread:
+        log.info(
+            "%d pose set(s) have a wide affinity spread (> %.1f kcal/mol): the top pose "
+            "is one of several comparable solutions, so read its score with that in mind.",
+            n_wide_spread,
+            cfg.docking.consensus_spread_warn_kcal,
         )
     log.info("Screening complete", extra=summary.as_metrics())
     return rows, summary
