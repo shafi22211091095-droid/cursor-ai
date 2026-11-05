@@ -1,0 +1,1287 @@
+{
+  "generated_from": [
+    "opportunities.toml",
+    "evidence.toml"
+  ],
+  "monte_carlo": {
+    "iterations": 4000,
+    "seed": 20261105,
+    "score_noise": 1.0,
+    "penalty_noise": 0.25,
+    "weight_concentration": 60.0
+  },
+  "ranking": [
+    {
+      "rank": 1,
+      "id": "O01",
+      "name": "LabelLedger — reference-label change intelligence and generic label drift detection",
+      "sector": "pharma-regulatory",
+      "weighted": 7.35,
+      "penalty": 0.4,
+      "final": 6.95,
+      "penalties": {
+        "weak_differentiation": 0.3,
+        "unproven_demand": 0.1
+      },
+      "tags": [
+        "solo_friendly",
+        "ai_native",
+        "low_capital",
+        "fast_to_market",
+        "enterprise",
+        "infrastructure"
+      ],
+      "evidence": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E06",
+        "E22",
+        "E23"
+      ],
+      "sensitivity": {
+        "p_first": 0.936,
+        "p_top5": 1.0,
+        "median_rank": 1.0,
+        "p90_rank": 1.0
+      }
+    },
+    {
+      "rank": 2,
+      "id": "O02",
+      "name": "Registration & renewal tracker (RIM-lite) for emerging-market generic exporters",
+      "sector": "pharma-regulatory",
+      "weighted": 6.8,
+      "penalty": 0.56,
+      "final": 6.24,
+      "penalties": {
+        "hard_acquisition": 0.25,
+        "high_support": 0.16,
+        "weak_differentiation": 0.15
+      },
+      "tags": [
+        "solo_friendly",
+        "low_capital",
+        "fast_to_market",
+        "enterprise",
+        "defensible"
+      ],
+      "evidence": [
+        "E07",
+        "E10",
+        "E11",
+        "E12"
+      ],
+      "sensitivity": {
+        "p_first": 0.0185,
+        "p_top5": 0.7592,
+        "median_rank": 4.0,
+        "p90_rank": 8.0
+      }
+    },
+    {
+      "rank": 3,
+      "id": "O05",
+      "name": "Deficiency-letter (query) response copilot for generic exporters",
+      "sector": "pharma-regulatory",
+      "weighted": 6.85,
+      "penalty": 0.648,
+      "final": 6.202,
+      "penalties": {
+        "security_exposure": 0.3,
+        "heavy_regulation": 0.198,
+        "unproven_demand": 0.15
+      },
+      "tags": [
+        "ai_native",
+        "enterprise"
+      ],
+      "evidence": [
+        "E11",
+        "E12",
+        "E13"
+      ],
+      "sensitivity": {
+        "p_first": 0.023,
+        "p_top5": 0.7335,
+        "median_rank": 4.0,
+        "p90_rank": 8.0
+      }
+    },
+    {
+      "rank": 4,
+      "id": "O03",
+      "name": "Emerging-market registration requirements intelligence",
+      "sector": "pharma-regulatory",
+      "weighted": 6.65,
+      "penalty": 0.45,
+      "final": 6.2,
+      "penalties": {
+        "unstable_dependency": 0.15,
+        "high_support": 0.1,
+        "unproven_demand": 0.2
+      },
+      "tags": [
+        "ai_native",
+        "low_capital",
+        "infrastructure"
+      ],
+      "evidence": [
+        "E11",
+        "E12",
+        "E19",
+        "E20"
+      ],
+      "sensitivity": {
+        "p_first": 0.0088,
+        "p_top5": 0.7328,
+        "median_rank": 4.0,
+        "p90_rank": 8.0
+      }
+    },
+    {
+      "rank": 5,
+      "id": "O04",
+      "name": "AI dossier gap-analysis and country adaptation copilot (CTD/ACTD)",
+      "sector": "pharma-regulatory",
+      "weighted": 6.8,
+      "penalty": 0.773,
+      "final": 6.027,
+      "penalties": {
+        "security_exposure": 0.375,
+        "heavy_regulation": 0.198,
+        "hard_acquisition": 0.2
+      },
+      "tags": [
+        "ai_native",
+        "high_revenue",
+        "enterprise"
+      ],
+      "evidence": [
+        "E11",
+        "E12",
+        "E13"
+      ],
+      "sensitivity": {
+        "p_first": 0.0095,
+        "p_top5": 0.4785,
+        "median_rank": 6.0,
+        "p90_rank": 13.0
+      }
+    },
+    {
+      "rank": 6,
+      "id": "O50",
+      "name": "AI-native regulatory-affairs productized service (service first, software later)",
+      "sector": "pharma-services",
+      "weighted": 6.65,
+      "penalty": 0.648,
+      "final": 6.002,
+      "penalties": {
+        "high_support": 0.3,
+        "weak_differentiation": 0.198,
+        "unproven_demand": 0.15
+      },
+      "tags": [
+        "solo_friendly",
+        "fast_to_market",
+        "low_capital"
+      ],
+      "evidence": [
+        "E01",
+        "E12"
+      ],
+      "sensitivity": {
+        "p_first": 0.0027,
+        "p_top5": 0.4268,
+        "median_rank": 6.0,
+        "p90_rank": 12.0
+      }
+    },
+    {
+      "rank": 7,
+      "id": "O25",
+      "name": "AI tutor for Gulf health-professional licensing exams (South Asian pharmacists)",
+      "sector": "edtech",
+      "weighted": 6.55,
+      "penalty": 0.702,
+      "final": 5.848,
+      "penalties": {
+        "weak_differentiation": 0.402,
+        "high_support": 0.1,
+        "unproven_demand": 0.2
+      },
+      "tags": [
+        "solo_friendly",
+        "fast_to_market",
+        "consumer",
+        "low_capital"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0005,
+        "p_top5": 0.25,
+        "median_rank": 8.0,
+        "p90_rank": 16.0
+      }
+    },
+    {
+      "rank": 8,
+      "id": "O26",
+      "name": "Cosmetics & supplements regulatory compliance checker (e-commerce app)",
+      "sector": "consumer-regulatory",
+      "weighted": 6.5,
+      "penalty": 0.658,
+      "final": 5.842,
+      "penalties": {
+        "heavy_regulation": 0.198,
+        "weak_differentiation": 0.3,
+        "high_support": 0.16
+      },
+      "tags": [
+        "ai_native",
+        "consumer",
+        "low_capital"
+      ],
+      "evidence": [
+        "E21"
+      ],
+      "sensitivity": {
+        "p_first": 0.0005,
+        "p_top5": 0.2132,
+        "median_rank": 8.0,
+        "p90_rank": 17.0
+      }
+    },
+    {
+      "rank": 9,
+      "id": "O06",
+      "name": "Pharmacovigilance literature screening for small marketing-authorisation holders",
+      "sector": "pharma-safety",
+      "weighted": 6.75,
+      "penalty": 0.954,
+      "final": 5.796,
+      "penalties": {
+        "heavy_regulation": 0.402,
+        "weak_differentiation": 0.402,
+        "unstable_dependency": 0.15
+      },
+      "tags": [
+        "ai_native",
+        "enterprise"
+      ],
+      "evidence": [
+        "E17"
+      ],
+      "sensitivity": {
+        "p_first": 0.0005,
+        "p_top5": 0.1648,
+        "median_rank": 9.0,
+        "p90_rank": 19.0
+      }
+    },
+    {
+      "rank": 10,
+      "id": "O07",
+      "name": "PSUR/PBRER drafting assistant for generics",
+      "sector": "pharma-safety",
+      "weighted": 6.45,
+      "penalty": 0.8,
+      "final": 5.65,
+      "penalties": {
+        "heavy_regulation": 0.3,
+        "weak_differentiation": 0.3,
+        "security_exposure": 0.2
+      },
+      "tags": [
+        "ai_native",
+        "enterprise"
+      ],
+      "evidence": [
+        "E18"
+      ],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0558,
+        "median_rank": 12.0,
+        "p90_rank": 23.0
+      }
+    },
+    {
+      "rank": 11,
+      "id": "O16",
+      "name": "Pharma tender intelligence and bid-document assistant for exporters",
+      "sector": "pharma-commercial",
+      "weighted": 6.3,
+      "penalty": 0.701,
+      "final": 5.599,
+      "penalties": {
+        "unstable_dependency": 0.201,
+        "weak_differentiation": 0.3,
+        "unproven_demand": 0.2
+      },
+      "tags": [
+        "solo_friendly",
+        "low_capital"
+      ],
+      "evidence": [
+        "E07"
+      ],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.027,
+        "median_rank": 14.0,
+        "p90_rank": 23.0
+      }
+    },
+    {
+      "rank": 12,
+      "id": "O13",
+      "name": "GMP inspection intelligence and readiness (FDA 483 / warning-letter analytics)",
+      "sector": "pharma-quality",
+      "weighted": 6.2,
+      "penalty": 0.602,
+      "final": 5.598,
+      "penalties": {
+        "weak_differentiation": 0.402,
+        "hard_acquisition": 0.2
+      },
+      "tags": [
+        "solo_friendly",
+        "low_capital"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0343,
+        "median_rank": 14.0,
+        "p90_rank": 24.0
+      }
+    },
+    {
+      "rank": 13,
+      "id": "O08",
+      "name": "Nitrosamine (NDSRI) CPCA and risk-assessment workbench",
+      "sector": "pharma-cmc",
+      "weighted": 6.05,
+      "penalty": 0.498,
+      "final": 5.552,
+      "penalties": {
+        "weak_differentiation": 0.3,
+        "heavy_regulation": 0.198
+      },
+      "tags": [
+        "solo_friendly",
+        "low_capital",
+        "research_intensive"
+      ],
+      "evidence": [
+        "E16"
+      ],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0275,
+        "median_rank": 15.0,
+        "p90_rank": 25.0
+      }
+    },
+    {
+      "rank": 14,
+      "id": "O17",
+      "name": "API/excipient sourcing intelligence (DMF/CEP status, supplier risk)",
+      "sector": "pharma-commercial",
+      "weighted": 6.05,
+      "penalty": 0.502,
+      "final": 5.548,
+      "penalties": {
+        "weak_differentiation": 0.402,
+        "unproven_demand": 0.1
+      },
+      "tags": [
+        "solo_friendly",
+        "low_capital",
+        "infrastructure"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0238,
+        "median_rank": 15.0,
+        "p90_rank": 25.0
+      }
+    },
+    {
+      "rank": 15,
+      "id": "O36",
+      "name": "Third-party API change monitor for developers",
+      "sector": "developer-tools",
+      "weighted": 6.0,
+      "penalty": 0.5,
+      "final": 5.5,
+      "penalties": {
+        "weak_differentiation": 0.3,
+        "unproven_demand": 0.2
+      },
+      "tags": [
+        "solo_friendly",
+        "low_capital",
+        "fast_to_market"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0213,
+        "median_rank": 16.0,
+        "p90_rank": 27.0
+      }
+    },
+    {
+      "rank": 16,
+      "id": "O10",
+      "name": "Stability-study analytics (ICH Q1E shelf-life, OOT trending, zone IVb)",
+      "sector": "pharma-cmc",
+      "weighted": 5.95,
+      "penalty": 0.5,
+      "final": 5.45,
+      "penalties": {
+        "heavy_regulation": 0.3,
+        "unproven_demand": 0.2
+      },
+      "tags": [
+        "solo_friendly",
+        "low_capital",
+        "research_intensive"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0088,
+        "median_rank": 18.0,
+        "p90_rank": 29.0
+      }
+    },
+    {
+      "rank": 17,
+      "id": "O37",
+      "name": "Regulatory web-change monitoring for compliance teams (horizontal)",
+      "sector": "compliance",
+      "weighted": 5.9,
+      "penalty": 0.498,
+      "final": 5.402,
+      "penalties": {
+        "weak_differentiation": 0.498
+      },
+      "tags": [
+        "solo_friendly",
+        "fast_to_market",
+        "low_capital"
+      ],
+      "evidence": [
+        "E19"
+      ],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.007,
+        "median_rank": 19.0,
+        "p90_rank": 30.0
+      }
+    },
+    {
+      "rank": 18,
+      "id": "O32",
+      "name": "Export documentation automation (LC, certificates of origin, customs) for Bangladeshi exporters",
+      "sector": "trade-tech",
+      "weighted": 6.0,
+      "penalty": 0.6,
+      "final": 5.4,
+      "penalties": {
+        "hard_acquisition": 0.25,
+        "unstable_dependency": 0.15,
+        "high_support": 0.2
+      },
+      "tags": [
+        "ai_native",
+        "low_capital"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.003,
+        "median_rank": 20.0,
+        "p90_rank": 30.0
+      }
+    },
+    {
+      "rank": 19,
+      "id": "O44",
+      "name": "Manuscript and figure formatting assistant for researchers",
+      "sector": "research-software",
+      "weighted": 5.8,
+      "penalty": 0.402,
+      "final": 5.398,
+      "penalties": {
+        "weak_differentiation": 0.402
+      },
+      "tags": [
+        "solo_friendly",
+        "consumer",
+        "fast_to_market"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.013,
+        "median_rank": 19.0,
+        "p90_rank": 31.0
+      }
+    },
+    {
+      "rank": 20,
+      "id": "O12",
+      "name": "AI SOP / deviation / CAPA writing assistant (QMS-lite)",
+      "sector": "pharma-quality",
+      "weighted": 6.15,
+      "penalty": 0.8,
+      "final": 5.35,
+      "penalties": {
+        "heavy_regulation": 0.3,
+        "weak_differentiation": 0.3,
+        "security_exposure": 0.2
+      },
+      "tags": [
+        "ai_native",
+        "low_capital"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0043,
+        "median_rank": 21.0,
+        "p90_rank": 32.0
+      }
+    },
+    {
+      "rank": 21,
+      "id": "O19",
+      "name": "Computational-methods rigor checker for papers (authors, reviewers, journals)",
+      "sector": "research-software",
+      "weighted": 5.9,
+      "penalty": 0.6,
+      "final": 5.3,
+      "penalties": {
+        "hard_acquisition": 0.3,
+        "unproven_demand": 0.3
+      },
+      "tags": [
+        "ai_native",
+        "research_intensive"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0013,
+        "median_rank": 23.0,
+        "p90_rank": 33.0
+      }
+    },
+    {
+      "rank": 22,
+      "id": "O35",
+      "name": "AI tutoring for Bangladesh national curriculum (SSC/HSC)",
+      "sector": "edtech",
+      "weighted": 5.8,
+      "penalty": 0.502,
+      "final": 5.298,
+      "penalties": {
+        "weak_differentiation": 0.402,
+        "high_support": 0.1
+      },
+      "tags": [
+        "consumer",
+        "ai_native"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0035,
+        "median_rank": 23.0,
+        "p90_rank": 34.0
+      }
+    },
+    {
+      "rank": 23,
+      "id": "O45",
+      "name": "Grant and fellowship finder + application assistant for LMIC researchers",
+      "sector": "research-software",
+      "weighted": 5.8,
+      "penalty": 0.502,
+      "final": 5.298,
+      "penalties": {
+        "weak_differentiation": 0.402,
+        "unproven_demand": 0.1
+      },
+      "tags": [
+        "solo_friendly",
+        "consumer"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0043,
+        "median_rank": 23.0,
+        "p90_rank": 35.0
+      }
+    },
+    {
+      "rank": 24,
+      "id": "O18",
+      "name": "npcadd Cloud — validated in-silico screening reports for natural-product researchers",
+      "sector": "research-software",
+      "weighted": 5.7,
+      "penalty": 0.45,
+      "final": 5.25,
+      "penalties": {
+        "weak_differentiation": 0.3,
+        "expensive_infra": 0.15
+      },
+      "tags": [
+        "solo_friendly",
+        "fast_to_market",
+        "research_intensive",
+        "consumer"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.002,
+        "median_rank": 25.0,
+        "p90_rank": 36.0
+      }
+    },
+    {
+      "rank": 25,
+      "id": "O20",
+      "name": "South Asia drug brand-to-generic database API",
+      "sector": "health-data",
+      "weighted": 5.75,
+      "penalty": 0.501,
+      "final": 5.249,
+      "penalties": {
+        "unstable_dependency": 0.201,
+        "weak_differentiation": 0.3
+      },
+      "tags": [
+        "infrastructure",
+        "low_capital"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0015,
+        "median_rank": 25.0,
+        "p90_rank": 35.0
+      }
+    },
+    {
+      "rank": 26,
+      "id": "O24",
+      "name": "Promotional-material (MLR) pre-review for emerging-market pharma marketing",
+      "sector": "pharma-commercial",
+      "weighted": 5.7,
+      "penalty": 0.5,
+      "final": 5.2,
+      "penalties": {
+        "weak_differentiation": 0.3,
+        "unproven_demand": 0.2
+      },
+      "tags": [
+        "ai_native",
+        "low_capital"
+      ],
+      "evidence": [
+        "E13"
+      ],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0003,
+        "median_rank": 26.0,
+        "p90_rank": 36.0
+      }
+    },
+    {
+      "rank": 27,
+      "id": "O46",
+      "name": "AI systematic-review screening for academics",
+      "sector": "research-software",
+      "weighted": 5.65,
+      "penalty": 0.498,
+      "final": 5.152,
+      "penalties": {
+        "weak_differentiation": 0.498
+      },
+      "tags": [
+        "ai_native",
+        "research_intensive"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 28.0,
+        "p90_rank": 37.0
+      }
+    },
+    {
+      "rank": 28,
+      "id": "O11",
+      "name": "Annual product quality review (APQR/PQR) automation",
+      "sector": "pharma-quality",
+      "weighted": 6.0,
+      "penalty": 0.852,
+      "final": 5.148,
+      "penalties": {
+        "heavy_regulation": 0.402,
+        "security_exposure": 0.25,
+        "high_support": 0.2
+      },
+      "tags": [
+        "enterprise"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0015,
+        "median_rank": 28.0,
+        "p90_rank": 38.0
+      }
+    },
+    {
+      "rank": 29,
+      "id": "O33",
+      "name": "Bangla WhatsApp/voice AI agents for SMEs",
+      "sector": "ai-agents",
+      "weighted": 5.95,
+      "penalty": 0.803,
+      "final": 5.147,
+      "penalties": {
+        "weak_differentiation": 0.402,
+        "unstable_dependency": 0.201,
+        "high_support": 0.2
+      },
+      "tags": [
+        "ai_native",
+        "consumer"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 28.0,
+        "p90_rank": 38.0
+      }
+    },
+    {
+      "rank": 30,
+      "id": "O09",
+      "name": "ICH Q3D elemental-impurities risk-assessment generator",
+      "sector": "pharma-cmc",
+      "weighted": 5.6,
+      "penalty": 0.5,
+      "final": 5.1,
+      "penalties": {
+        "weak_differentiation": 0.3,
+        "unproven_demand": 0.2
+      },
+      "tags": [
+        "solo_friendly",
+        "low_capital",
+        "fast_to_market"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 30.0,
+        "p90_rank": 40.0
+      }
+    },
+    {
+      "rank": 31,
+      "id": "O30",
+      "name": "Remittance documentation and invoicing for South Asian freelancers",
+      "sector": "fintech",
+      "weighted": 5.85,
+      "penalty": 0.8,
+      "final": 5.05,
+      "penalties": {
+        "weak_differentiation": 0.402,
+        "heavy_regulation": 0.198,
+        "security_exposure": 0.2
+      },
+      "tags": [
+        "solo_friendly",
+        "consumer",
+        "fast_to_market"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 31.0,
+        "p90_rank": 41.0
+      }
+    },
+    {
+      "rank": 32,
+      "id": "O31",
+      "name": "Garment-factory compliance and EU due-diligence / digital product passport data",
+      "sector": "industrial-compliance",
+      "weighted": 5.75,
+      "penalty": 0.7,
+      "final": 5.05,
+      "penalties": {
+        "weak_differentiation": 0.3,
+        "unproven_demand": 0.2,
+        "hard_acquisition": 0.2
+      },
+      "tags": [
+        "enterprise",
+        "defensible"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 31.0,
+        "p90_rank": 40.0
+      }
+    },
+    {
+      "rank": 33,
+      "id": "O41",
+      "name": "Export contract review for SMEs (Incoterms, LC terms)",
+      "sector": "legal-tech",
+      "weighted": 5.65,
+      "penalty": 0.6,
+      "final": 5.05,
+      "penalties": {
+        "weak_differentiation": 0.402,
+        "heavy_regulation": 0.198
+      },
+      "tags": [
+        "solo_friendly",
+        "fast_to_market"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 31.0,
+        "p90_rank": 41.0
+      }
+    },
+    {
+      "rank": 34,
+      "id": "O23",
+      "name": "Medical-information response automation",
+      "sector": "pharma-medical",
+      "weighted": 5.9,
+      "penalty": 0.9,
+      "final": 5.0,
+      "penalties": {
+        "hard_acquisition": 0.3,
+        "heavy_regulation": 0.3,
+        "weak_differentiation": 0.3
+      },
+      "tags": [
+        "ai_native",
+        "enterprise"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 33.0,
+        "p90_rank": 42.0
+      }
+    },
+    {
+      "rank": 35,
+      "id": "O22",
+      "name": "EU HTA joint clinical assessment (JCA) evidence-synthesis copilot",
+      "sector": "market-access",
+      "weighted": 5.85,
+      "penalty": 0.898,
+      "final": 4.952,
+      "penalties": {
+        "hard_acquisition": 0.4,
+        "weak_differentiation": 0.3,
+        "heavy_regulation": 0.198
+      },
+      "tags": [
+        "enterprise",
+        "high_revenue",
+        "research_intensive"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0013,
+        "median_rank": 34.0,
+        "p90_rank": 44.0
+      }
+    },
+    {
+      "rank": 36,
+      "id": "O15",
+      "name": "Cleaning-validation HBEL/PDE and MACO calculator",
+      "sector": "pharma-quality",
+      "weighted": 5.45,
+      "penalty": 0.498,
+      "final": 4.952,
+      "penalties": {
+        "weak_differentiation": 0.3,
+        "heavy_regulation": 0.198
+      },
+      "tags": [
+        "solo_friendly",
+        "low_capital",
+        "fast_to_market"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0003,
+        "median_rank": 34.0,
+        "p90_rank": 44.0
+      }
+    },
+    {
+      "rank": 37,
+      "id": "O34",
+      "name": "Bangla and low-resource-language data and evaluation services for AI labs",
+      "sector": "ai-services",
+      "weighted": 5.55,
+      "penalty": 0.6,
+      "final": 4.95,
+      "penalties": {
+        "hard_acquisition": 0.3,
+        "weak_differentiation": 0.3
+      },
+      "tags": [
+        "solo_friendly",
+        "low_capital"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 34.0,
+        "p90_rank": 43.0
+      }
+    },
+    {
+      "rank": 38,
+      "id": "O38",
+      "name": "EU AI Act compliance workspace",
+      "sector": "compliance",
+      "weighted": 5.8,
+      "penalty": 0.9,
+      "final": 4.9,
+      "penalties": {
+        "weak_differentiation": 0.402,
+        "hard_acquisition": 0.3,
+        "heavy_regulation": 0.198
+      },
+      "tags": [
+        "enterprise"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 36.0,
+        "p90_rank": 44.0
+      }
+    },
+    {
+      "rank": 39,
+      "id": "O40",
+      "name": "Trade-finance document extraction API for banks",
+      "sector": "fintech",
+      "weighted": 5.8,
+      "penalty": 0.998,
+      "final": 4.802,
+      "penalties": {
+        "hard_acquisition": 0.4,
+        "security_exposure": 0.4,
+        "heavy_regulation": 0.198
+      },
+      "tags": [
+        "enterprise",
+        "high_revenue"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 38.0,
+        "p90_rank": 46.0
+      }
+    },
+    {
+      "rank": 40,
+      "id": "O29",
+      "name": "AI bookkeeping and VAT/tax compliance for Bangladeshi SMEs",
+      "sector": "fintech",
+      "weighted": 5.4,
+      "penalty": 0.698,
+      "final": 4.702,
+      "penalties": {
+        "high_support": 0.3,
+        "heavy_regulation": 0.198,
+        "security_exposure": 0.2
+      },
+      "tags": [
+        "consumer",
+        "ai_native"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 40.0,
+        "p90_rank": 47.0
+      }
+    },
+    {
+      "rank": 41,
+      "id": "O49",
+      "name": "Carbon and CBAM data for SME exporters",
+      "sector": "climate-compliance",
+      "weighted": 5.15,
+      "penalty": 0.5,
+      "final": 4.65,
+      "penalties": {
+        "unproven_demand": 0.2,
+        "weak_differentiation": 0.3
+      },
+      "tags": [],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 42.0,
+        "p90_rank": 47.0
+      }
+    },
+    {
+      "rank": 42,
+      "id": "O42",
+      "name": "Freight-quote aggregator for Bangladeshi SME exporters",
+      "sector": "logistics",
+      "weighted": 5.05,
+      "penalty": 0.4,
+      "final": 4.65,
+      "penalties": {
+        "hard_acquisition": 0.25,
+        "unstable_dependency": 0.15
+      },
+      "tags": [],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 42.0,
+        "p90_rank": 47.0
+      }
+    },
+    {
+      "rank": 43,
+      "id": "O14",
+      "name": "eCTD validator/publisher lite for emerging markets",
+      "sector": "pharma-regulatory",
+      "weighted": 5.4,
+      "penalty": 0.8,
+      "final": 4.6,
+      "penalties": {
+        "heavy_regulation": 0.3,
+        "weak_differentiation": 0.3,
+        "high_support": 0.2
+      },
+      "tags": [
+        "enterprise",
+        "research_intensive"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 43.0,
+        "p90_rank": 49.0
+      }
+    },
+    {
+      "rank": 44,
+      "id": "O48",
+      "name": "Smartphone crop-disease diagnosis for Bangladeshi farmers",
+      "sector": "agritech",
+      "weighted": 5.2,
+      "penalty": 0.6,
+      "final": 4.6,
+      "penalties": {
+        "hard_acquisition": 0.4,
+        "high_support": 0.2
+      },
+      "tags": [
+        "consumer",
+        "research_intensive"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 43.0,
+        "p90_rank": 48.0
+      }
+    },
+    {
+      "rank": 45,
+      "id": "O21",
+      "name": "Clinical-trial site enablement and feasibility for South Asian sites",
+      "sector": "clinical-research",
+      "weighted": 5.3,
+      "penalty": 0.702,
+      "final": 4.598,
+      "penalties": {
+        "heavy_regulation": 0.402,
+        "hard_acquisition": 0.3
+      },
+      "tags": [
+        "enterprise"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 43.0,
+        "p90_rank": 48.0
+      }
+    },
+    {
+      "rank": 46,
+      "id": "O39",
+      "name": "SOC 2 / ISO 27001-lite for emerging-market SaaS exporters",
+      "sector": "security-compliance",
+      "weighted": 5.0,
+      "penalty": 0.498,
+      "final": 4.502,
+      "penalties": {
+        "weak_differentiation": 0.498
+      },
+      "tags": [],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 45.0,
+        "p90_rank": 49.0
+      }
+    },
+    {
+      "rank": 47,
+      "id": "O43",
+      "name": "US medical billing/coding AI with a Bangladesh delivery team",
+      "sector": "healthcare-admin",
+      "weighted": 5.9,
+      "penalty": 1.402,
+      "final": 4.498,
+      "penalties": {
+        "heavy_regulation": 0.402,
+        "security_exposure": 0.4,
+        "hard_acquisition": 0.3,
+        "weak_differentiation": 0.3
+      },
+      "tags": [
+        "high_revenue"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 45.0,
+        "p90_rank": 49.0
+      }
+    },
+    {
+      "rank": 48,
+      "id": "O47",
+      "name": "Lab inventory and reagent management for LMIC university labs",
+      "sector": "research-software",
+      "weighted": 5.0,
+      "penalty": 0.6,
+      "final": 4.4,
+      "penalties": {
+        "hard_acquisition": 0.3,
+        "weak_differentiation": 0.3
+      },
+      "tags": [
+        "solo_friendly",
+        "fast_to_market"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 47.0,
+        "p90_rank": 50.0
+      }
+    },
+    {
+      "rank": 49,
+      "id": "O28",
+      "name": "E-pharmacy prescription verification and compliance (Bangladesh)",
+      "sector": "health-commerce",
+      "weighted": 5.05,
+      "penalty": 0.798,
+      "final": 4.252,
+      "penalties": {
+        "heavy_regulation": 0.498,
+        "security_exposure": 0.3
+      },
+      "tags": [],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 48.0,
+        "p90_rank": 50.0
+      }
+    },
+    {
+      "rank": 50,
+      "id": "O27",
+      "name": "Hospital formulary and drug-interaction checker for LMIC hospitals",
+      "sector": "clinical-software",
+      "weighted": 5.05,
+      "penalty": 0.802,
+      "final": 4.248,
+      "penalties": {
+        "heavy_regulation": 0.402,
+        "hard_acquisition": 0.4
+      },
+      "tags": [
+        "research_intensive"
+      ],
+      "evidence": [],
+      "sensitivity": {
+        "p_first": 0.0,
+        "p_top5": 0.0,
+        "median_rank": 48.0,
+        "p90_rank": 50.0
+      }
+    }
+  ]
+}

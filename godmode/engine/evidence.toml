@@ -1,0 +1,212 @@
+# PROJECT GODMODE — evidence register
+#
+# Every claim the dossier leans on is registered here with its provenance and
+# an honest strength label. Opportunities cite these IDs. Anything not in this
+# file is an analyst judgment and is labelled as such where it is used.
+#
+# strength:
+#   primary     — the regulator / original publisher, read via search summary
+#   secondary   — press, trade media, or third-party summaries of a primary source
+#   vendor      — a company describing its own product (marketing claim)
+#   observation — something measured directly in this session (small sample)
+#
+# retrieved: date the claim was gathered (web search, 2026-11-05). Re-verify
+# anything older than 90 days before a spending decision.
+
+[[evidence]]
+id = "E01"
+claim = "FDA final guidance (Jan 2024) 'Revising ANDA Labeling Following Revision of the RLD Labeling' makes ANDA holders responsible for monitoring RLD labeling changes and submitting conforming labeling with a side-by-side comparison against the RLD."
+source = "FDA guidance page; docket FDA-2022-D-0092; FDA OGD"
+url = "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/revising-anda-labeling-following-revision-rld-labeling-guidance-industry"
+strength = "primary"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E02"
+claim = "Regenstrief/Indiana University study of 9,105 DailyMed labels (>1,500 drugs) found 68% of multi-source generics had safety-labeling discrepancies vs brand; 9% differed by more than 10 side effects; causes included out-of-date information."
+source = "Duke J, Friedlin J, Li X. Pharmacoepidemiol Drug Saf 2013;22(3):294-301 (press release Dec 2012)"
+url = "https://medicine.iu.edu/news/2012/12/regenstrief-study-finds-that-generic-drugs-often-have-incorrect-safety-labeling"
+strength = "secondary"
+retrieved = "2026-11-05"
+note = "Dated (2012). Establishes the structural problem; current prevalence must be re-measured — the MVP can do this from public data."
+
+[[evidence]]
+id = "E03"
+claim = "FDA's Drug Safety-related Labeling Changes (SrLC) database covers NDAs and CDER BLAs only (ANDAs excluded), safety sections only, and changes from January 2016 onward."
+source = "FDA SrLC database page"
+url = "https://www.fda.gov/drugs/drug-safety-and-availability/drug-safety-labeling-changes-slc-database"
+strength = "primary"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E04"
+claim = "Dr.Evidence sells automated RLD monitoring with email alerts and section-by-section label comparison, citing a library of 728,000+ labels from 11 health authorities."
+source = "Dr.Evidence website"
+url = "https://www.drevidence.com/labeling-and-documentation"
+strength = "vendor"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E05"
+claim = "Basil Systems launched an AI 'Insights' feature in Basil Intel for Pharma that generates label comparisons with redlining."
+source = "BioSpace press release"
+url = "https://www.biospace.com/press-releases/basil-systems-launches-ai-powered-insights-tool-to-accelerate-pharma-labeling-strategy-and-market-intelligence"
+strength = "vendor"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E06"
+claim = "Other label-comparison offerings exist: freya.intelligence/LabelCompare (Freyr ecosystem) and a generics-focused RLD tracking platform described by Sarjen KnowledgeNet (India); IQVIA RIM Smart Labeling and Freyr LABEL 360 cover labeling workflow."
+source = "Vendor pages (freyafusion.com, knowledgenet.sarjen.com, iqvia.com, freyrsolutions.com)"
+url = "https://knowledgenet.sarjen.com/ai/automated-fda-rld-label-tracking-generic-drug-labeling-compliance/"
+strength = "vendor"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E07"
+claim = "Bangladesh pharmaceutical exports reached about $238.5M in FY2025-26, up ~12% from $213.2M in FY2024-25, to 130+ countries (EPB data)."
+source = "bdnews24 citing Export Promotion Bureau"
+url = "https://bdnews24.com/business/515zckldx9"
+strength = "secondary"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E08"
+claim = "The UN General Assembly adopted (29 Oct 2026, New York time) a three-year extension of Bangladesh's LDC graduation preparatory period, moving graduation from 24 Nov 2026 to 24 Nov 2029 (Nepal likewise)."
+source = "Prothom Alo; BSS; UNB"
+url = "https://en.prothomalo.com/bangladesh/addcsizr3s"
+strength = "secondary"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E09"
+claim = "Paddle's developer documentation lists Bangladesh with allow_sales=true and USD default payout; Paddle advises confirming via its live /countries endpoint."
+source = "Paddle developer docs"
+url = "https://developer.paddle.com/concepts/sell/supported-countries-locales"
+strength = "primary"
+retrieved = "2026-11-05"
+note = "Docs example, not a live account check. Confirm with Paddle before building billing."
+
+[[evidence]]
+id = "E10"
+claim = "A small-pharma RIM vendor states enterprise RIM is priced per seat at roughly $15K-25K per user per year and that first-year cost can exceed a small company's whole regulatory-operations budget."
+source = "DnXT Solutions 'RIM software for small pharma' page"
+url = "https://dnxtsolutions-b5fghth7fdakdadv.westus2-01.azurewebsites.net/rim-for-small-pharma/"
+strength = "vendor"
+retrieved = "2026-11-05"
+note = "A competitor's marketing claim about incumbents; directionally useful, not a price benchmark."
+
+[[evidence]]
+id = "E11"
+claim = "Emerging-market dossier requirements are fragmented: ASEAN uses ACTD, GCC uses ICH CTD, and national authorities layer their own Module 1 rules; harmonisation exists mainly within regional blocs."
+source = "Comparative regulatory reviews (PubMed 32008246 and related)"
+url = "https://www.pubmed.gov/32008246/"
+strength = "secondary"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E12"
+claim = "Bangladeshi pharma regulatory-affairs job postings describe registration, renewal and variation management across international markets (e.g. a company exporting to 28+ countries) and CTD/ACTD/eCTD dossier preparation."
+source = "medex.com.bd job postings (Popular Pharmaceuticals and others)"
+url = "https://medex.com.bd/jobs/930/popular-pharmaceuticals-ltd-executive-sr-executive-regulatory-affairs"
+strength = "secondary"
+retrieved = "2026-11-05"
+note = "Most postings date 2019-2024. Evidence of the workflow, not of willingness to pay."
+
+[[evidence]]
+id = "E13"
+claim = "Investors are funding AI regulatory-affairs tools: Weave Bio ($20M Series A, Oct 2025), Entvin AI (YC, ~$500K, 2025; labeling AI and promo review), Regara (seed, Apr 2026), Klaris ($1M pre-seed, Feb 2026), Validfor ($1.2M pre-seed, 2026), Global Key Solutions (pre-seed, Jan 2026)."
+source = "HIT Consultant, Entrackr, aggregator pages"
+url = "https://hitconsultant.net/2025/10/16/weave-bio-raises-20m-to-scale-ai-native-regulatory-automation-platform/"
+strength = "secondary"
+retrieved = "2026-11-05"
+note = "Validates investor belief in the category; most target large pharma/biotech, not emerging-market generics."
+
+[[evidence]]
+id = "E14"
+claim = "EMA and the EU network published a draft electronic product information (ePI) roadmap in March 2026 tied to the new pharmaceutical legislation; the EU ePI standard is FHIR-based; a phased rollout for centrally authorised products is reported from Q4 2026."
+source = "EMA ePI page; IntuitionLabs secondary summary"
+url = "https://www.ema.europa.eu/en/human-regulatory/marketing-authorisation/product-information/electronic-product-information-epi"
+strength = "primary"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E15"
+claim = "FDA's Patient Medication Information (PMI) proposed rule (31 May 2023) would require one-page PMIs for Rx drugs with a proposed 5-year implementation; no final rule was found as of mid-2026."
+source = "Federal Register 2023-11354; FR notice 2026-13346"
+url = "https://www.govinfo.gov/content/pkg/FR-2023-05-31/html/2023-11354.htm"
+strength = "primary"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E16"
+claim = "Nitrosamine (NDSRI) compliance: FDA's 2023 guidance introduced the CPCA with mitigation expected by 1 Aug 2025; Lhasa added CPCA to Derek Nexus; a free Excel CPCA calculator circulates in the USP Nitrosamines Exchange community."
+source = "USP Nitrosamines Exchange; Lhasa Limited blog"
+url = "https://nitrosamines.usp.org/t/cpca-calculation-tool-excel-based-updated/6958"
+strength = "secondary"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E17"
+claim = "AI literature-monitoring tools for pharmacovigilance already exist (e.g. biologit MLM-AI, founded 2021, GxP-ready claims); pricing is not published."
+source = "SourceForge listings; vendor claims"
+url = "https://www.sourceforge.net/software/product/biologit-MLM-AI/"
+strength = "vendor"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E18"
+claim = "RxLogix markets automated PSUR/PBRER generation (PV Reports) and publishing (PV Publisher)."
+source = "RxLogix website"
+url = "https://rxlogix.com/"
+strength = "vendor"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E19"
+claim = "Cortellis Regulatory Intelligence covers 80+ markets and is sold as enterprise contracts with no public pricing; regulatory-intelligence pricing in general is quote-only and opaque."
+source = "Clarivate product page; TrustRadius; ChangeFlow pricing article"
+url = "https://www.trustradius.com/products/cortellis/pricing"
+strength = "secondary"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E20"
+claim = "The African Medicines Agency (HQ Kigali) is operational; 31 AU states had ratified by 2026; its continental listing pilot assessed 21 products and listed 12; AMRH/AU-3S were handed over in Jan 2026."
+source = "EMA AMA partner page; The Pharma Letter"
+url = "https://www.ema.europa.eu/en/partners-networks/international-activities/multilateral-coalitions-initiatives/african-medicines-agency-african-union"
+strength = "primary"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E21"
+claim = "Certo raised a $4M seed (Daphni) for AI compliance review of beauty and CPG products."
+source = "pulse.bot deal note"
+url = "https://www.pulse.bot/ai/deals/certo-raises-4m-seed-round-led-by-daphni-46efcfa8-28f7-434f-a559-010287528dca/"
+strength = "secondary"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E22"
+claim = "GSK Global Safety researchers built PVLens (AMIA 2025) to extract labeled safety information from FDA SPLs and map it to MedDRA, citing static references such as SIDER as outdated — large-pharma safety teams value SPL-derived, continuously updated label data."
+source = "Painter, Powell, Bate. AMIA 2025; arXiv 2503.20639"
+url = "https://arxiv.org/abs/2503.20639"
+strength = "primary"
+retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E23"
+claim = "In seven public mirrors of DailyMed warfarin SPLs examined in this session, effective dates of labels from different labelers ranged from 2012 to 2026, and document structure ranged from flat (no subsections) to fully nested PLR format."
+source = "Direct inspection of SPL XML (see labelledger/tests/fixtures/PROVENANCE.md)"
+url = "https://dailymed.nlm.nih.gov/dailymed/"
+strength = "observation"
+retrieved = "2026-11-05"
+note = "Illustrative only. Not a prevalence estimate; repackager labels can be legitimately old."
+
+[[evidence]]
+id = "E24"
+claim = "Stripe acquired Lemon Squeezy (2024) and folded merchant-of-record capability into Stripe Managed Payments; Paddle remains independent. Merchant-of-record fees cited around 5% + $0.50 (secondary)."
+source = "Rework / Dodo Payments comparisons"
+url = "https://resources.rework.com/tools/billing-revenue/paddle-vs-lemon-squeezy"
+strength = "secondary"
+retrieved = "2026-11-05"

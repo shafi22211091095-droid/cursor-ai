@@ -1,0 +1,1422 @@
+# PROJECT GODMODE — opportunity dataset (Missions A and C)
+#
+# 50 technology opportunities for a solo, AI-leveraged founder based in
+# Bangladesh with a pharmaceutical-sciences research background.
+#
+# SCORES ARE ANALYST JUDGMENTS, NOT MEASUREMENTS. They were assigned by the
+# virtual founding team (product, engineering, sales, finance, red team) using
+# the anchors below, then stress-tested by `score.py --sensitivity`, which
+# perturbs every score and weight to show which rankings are robust and which
+# are within noise. Evidence IDs point into evidence.toml; an opportunity with
+# no evidence IDs rests on judgment alone.
+#
+# Score anchors (1-10):
+#   severity            9-10 regulator-enforced, recurring, costly · 7-8 significant recurring cost/risk · 5-6 moderate inefficiency · <=4 nice-to-have
+#   willingness_to_pay  9-10 enterprise spend >$10k/yr proven · 7-8 $2-10k/yr · 5-6 SMB $0.5-2k/yr · 3-4 consumer · <=2 free is expected
+#   market              size AND reachability of the serviceable market
+#   solo_feasibility    one founder + AI agents can build, sell and support it
+#   ai_leverage         how much AI/automation creates a 10x, not a 10% gain
+#   speed_to_mvp        10 = useful MVP in <2 weeks · 5 = ~3 months · 1 = >1 year
+#   distribution        one founder can reach many buyers cheaply and repeatably
+#   defensibility       achievable data / workflow / network / trust moats
+#   capital_efficiency  cash needed to first revenue (10 = almost none)
+#   expansion           credible adjacent products and markets
+#
+# Penalties are a fraction (0-1) of each penalty's maximum, defined below.
+
+[meta]
+version = 1
+date = "2026-11-05"
+founder_profile = "Solo founder, Bangladesh, pharmaceutical sciences + research, AI-tool access, unknown (assume low) capital, global ambition"
+
+[weights]
+severity = 0.15
+willingness_to_pay = 0.15
+market = 0.10
+solo_feasibility = 0.10
+ai_leverage = 0.10
+speed_to_mvp = 0.10
+distribution = 0.10
+defensibility = 0.10
+capital_efficiency = 0.05
+expansion = 0.05
+
+[penalty_catalogue]
+heavy_regulation = { max = 0.6, description = "Product itself is regulated (GxP validation, HIPAA, SaMD, licensed advice) or carries liability for regulated decisions" }
+hard_acquisition = { max = 0.5, description = "Long enterprise/government sales cycles, gatekeepers, or relationship-only channels" }
+unstable_dependency = { max = 0.3, description = "Core value depends on third-party APIs, portals or licences that can change or be withdrawn" }
+expensive_infra = { max = 0.3, description = "Material compute, data-licence or hosting cost before revenue" }
+high_support = { max = 0.4, description = "Onboarding, data entry or human delivery effort scales with customers" }
+weak_differentiation = { max = 0.6, description = "Credible incumbents or free tools already solve most of the problem" }
+unproven_demand = { max = 0.4, description = "No evidence yet that this buyer pays for this outcome" }
+security_exposure = { max = 0.5, description = "Holds confidential, personal or regulated data that raises breach impact and procurement friction" }
+
+# --------------------------------------------------------------------------
+# A. Pharma & life-sciences regulatory operations (founder-advantaged)
+# --------------------------------------------------------------------------
+
+[[opportunity]]
+id = "O01"
+name = "LabelLedger — reference-label change intelligence and generic label drift detection"
+sector = "pharma-regulatory"
+concept = "Version-control every public drug label, explain each change section by section, and flag generic labels that have drifted out of sync with their reference."
+customer = "Labeling and regulatory-affairs teams at generic manufacturers (US ANDA holders first, many run from India/Bangladesh), plus the regulatory consultancies that serve them."
+problem = "Generic labels must track reference-label changes; teams compare 30-80 page labels by hand, miss updates, and must produce side-by-side comparisons for every labeling submission."
+alternatives = "Manual DailyMed/Drugs@FDA checks, FDA SrLC database, enterprise label-intelligence platforms, consultancies."
+gap = "SrLC excludes ANDAs, non-safety sections and pre-2016 history; enterprise tools are quote-only and priced for large companies; nothing self-serve is generics-first."
+solution = "Watchlists of reference labels, deterministic section-aware redlines, severity triage, drift reports against your own labels, AI-written impact summaries grounded in the diff, submission-ready comparison drafts."
+technology = "SPL XML parsing (LOINC sections), alignment and token diffing, fuzzy sentence matching, rules-based severity, grounded LLM summaries, scheduled polling, web app."
+mvp = "Parse/diff/triage engine + drift checker + HTML/Markdown/JSON reports + watchlist poller + minimal web UI (built in this session)."
+complexity = "medium"
+capital = "<$1k to first revenue (hosting, domain, LLM tokens)"
+pricing = "Free public label history + weekly digest; Pro $199/mo (50 watched labels); Team $599/mo (300 labels, drift reports, comparison drafts); Enterprise/API custom."
+acquisition = "Free weekly 'reference label changes' digest; personalised drift snapshots built from public data as outbound hooks; LinkedIn RA community; programmatic label-history pages."
+competition = "Dr.Evidence (728k labels, RLD alerts), Basil Systems, Freyr/Freya, IQVIA RIM Smart Labeling, Sarjen KnowledgeNet, in-house scripts."
+defensibility_note = "Accumulated version archive (captured from day one), generics-specific workflow, trust in accuracy, multi-authority coverage over time, distribution via public layer."
+regulatory = "Decision support on public data; no PHI. Accuracy liability managed by deterministic diffs, provenance and human review; never auto-submits."
+main_risk = "Target buyers already satisfied by incumbents or by manual process; willingness to pay for 'monitoring' alone proves low."
+evidence_needed = "10 interviews confirming manual effort and missed updates; 3 paid pilots >= $200/mo within 60 days; drift snapshots that prospects call accurate."
+evidence = ["E01", "E02", "E03", "E04", "E05", "E06", "E22", "E23"]
+tags = ["solo_friendly", "ai_native", "low_capital", "fast_to_market", "enterprise", "infrastructure"]
+scores = { severity = 7, willingness_to_pay = 7, market = 6, solo_feasibility = 9, ai_leverage = 8, speed_to_mvp = 9, distribution = 7, defensibility = 5, capital_efficiency = 9, expansion = 8 }
+penalties = { weak_differentiation = 0.5, unproven_demand = 0.25 }
+rationale = "Regulator-defined obligation, fully public structured data, demonstrable value before any customer shares data, and a data-infrastructure path. Competition is real, so positioning and validation speed matter."
+
+[[opportunity]]
+id = "O02"
+name = "Registration & renewal tracker (RIM-lite) for emerging-market generic exporters"
+sector = "pharma-regulatory"
+concept = "A light regulatory information management system: every product x country registration, its renewal dates, certificates, variations and commitments, with AI extraction from certificates."
+customer = "Export regulatory-affairs teams at generic manufacturers in Bangladesh, India, Pakistan, Egypt, Jordan, Vietnam and Africa; local regulatory agents managing many principals."
+problem = "Teams track hundreds of registrations across dozens of countries in spreadsheets; missed renewals and expired CPP/GMP certificates block sales."
+alternatives = "Excel, email, enterprise RIM (Veeva, IQVIA), Indian RIMS vendors bundled with services."
+gap = "Enterprise RIM is priced per seat far above emerging-market budgets; spreadsheets have no reminders, audit trail or variation impact view."
+solution = "Spreadsheet import with AI column mapping, certificate OCR, renewal/expiry alerts, variation impact matrix, management dashboards."
+technology = "CRUD web app, document OCR + LLM extraction, scheduler, notifications."
+mvp = "Import an existing tracker, show expiries, send reminders; 4-6 weeks."
+complexity = "low"
+capital = "<$1k"
+pricing = "$99-$499/mo per company by registration count; agent plan per principal."
+acquisition = "Founder network in Bangladeshi pharma, in-person demos in Dhaka, export-RA WhatsApp/LinkedIn groups, agent partnerships."
+competition = "DDReg VITALIC, ProcEdge RIMS, Freyr Freya, DnXT, Excel."
+defensibility_note = "System of record with switching costs; registration data accumulates; potential manufacturer-agent network."
+regulatory = "Holds confidential registration data; GxP validation not required for tracking but requested by some buyers."
+main_risk = "Excel is 'good enough'; low budgets; slow relationship-based sales; onboarding effort."
+evidence_needed = "5 Bangladeshi exporters share their trackers and agree to a paid pilot; measured hours saved per month."
+evidence = ["E07", "E10", "E11", "E12"]
+tags = ["solo_friendly", "low_capital", "fast_to_market", "enterprise", "defensible"]
+scores = { severity = 7, willingness_to_pay = 5, market = 6, solo_feasibility = 8, ai_leverage = 6, speed_to_mvp = 8, distribution = 6, defensibility = 7, capital_efficiency = 9, expansion = 9 }
+penalties = { hard_acquisition = 0.5, high_support = 0.4, weak_differentiation = 0.25 }
+rationale = "Real workflow pain and strong founder access, but lower budgets and heavier onboarding. Best as the second product sharing customers with O01."
+
+[[opportunity]]
+id = "O03"
+name = "Emerging-market registration requirements intelligence"
+sector = "pharma-regulatory"
+concept = "A maintained, cited database of what each emerging-market authority requires (dossier format, Module 1 documents, stability zone, fees, timelines, reliance pathways) with grounded AI Q&A and change alerts."
+customer = "Export RA teams, business-development teams choosing new markets, regulatory consultants."
+problem = "Requirements are scattered across national websites and PDFs in many languages and change without notice; knowledge leaves with staff."
+alternatives = "Consultants per country, Cortellis RI (enterprise), personal networks, outdated checklists."
+gap = "No affordable, cited, self-serve source focused on generic exporters' target markets."
+solution = "Country requirement pages with citations, comparison views, AI answers that quote sources, alerts on document changes."
+technology = "Web monitoring, PDF extraction, translation, retrieval-augmented generation with citation checking."
+mvp = "10 high-volume export markets for Bangladeshi/Indian generics; 6-8 weeks."
+complexity = "medium"
+capital = "<$2k"
+pricing = "$49-$299/mo; free public summaries for SEO."
+acquisition = "Programmatic country-requirement pages, export-RA communities, consultant referrals."
+competition = "Cortellis RI, Freyr/Freya Intelligence, RegASK, consultancies."
+defensibility_note = "Curated, cited corpus and change history; quality reputation."
+regulatory = "Information service; must avoid presenting AI answers as legal/regulatory advice."
+main_risk = "Content maintenance burden across many authorities; buyers pay consultants rather than tools."
+evidence_needed = "Search demand for country requirement queries; 20 paying users from a free tier."
+evidence = ["E11", "E12", "E19", "E20"]
+tags = ["ai_native", "low_capital", "infrastructure"]
+scores = { severity = 6, willingness_to_pay = 5, market = 6, solo_feasibility = 7, ai_leverage = 9, speed_to_mvp = 7, distribution = 7, defensibility = 6, capital_efficiency = 8, expansion = 8 }
+penalties = { unstable_dependency = 0.5, high_support = 0.25, unproven_demand = 0.5 }
+rationale = "High AI leverage and SEO-friendly, but unproven willingness to pay and heavy content upkeep. Strong as a content layer inside O02."
+
+[[opportunity]]
+id = "O04"
+name = "AI dossier gap-analysis and country adaptation copilot (CTD/ACTD)"
+sector = "pharma-regulatory"
+concept = "Upload a master dossier; get a gap report against a target country's requirements and drafts of country-specific Module 1/regional sections."
+customer = "Export RA teams preparing registrations in new markets."
+problem = "Each country needs dossier adaptation; gaps found late cause queries, rejections and months of delay."
+alternatives = "Manual review, consultants, enterprise authoring tools."
+gap = "Tools target large pharma; emerging-market exporters rely on staff memory and consultants."
+solution = "Requirement checklists, document classification, gap reports, drafted administrative sections, submission checklists."
+technology = "Long-document understanding, retrieval, classification, templating; secure document handling."
+mvp = "Gap report for one dossier against 3 countries; 8-12 weeks."
+complexity = "high"
+capital = "$2-5k"
+pricing = "Per-dossier $300-$1,500 or $500-$2,000/mo."
+acquisition = "Founder-led sales to exporters; consultant partnerships."
+competition = "Freyr, DDi, Celegence, Weave Bio, Regara, consultancies."
+defensibility_note = "Requirement knowledge base + workflow embedding; weak if only an LLM wrapper."
+regulatory = "Handles highly confidential dossiers; accuracy errors cause rejections."
+main_risk = "Customers will not upload dossiers to a new vendor; quality bar is very high."
+evidence_needed = "3 companies willing to run a pilot on a real dossier under NDA."
+evidence = ["E11", "E12", "E13"]
+tags = ["ai_native", "high_revenue", "enterprise"]
+scores = { severity = 8, willingness_to_pay = 8, market = 7, solo_feasibility = 5, ai_leverage = 8, speed_to_mvp = 5, distribution = 5, defensibility = 6, capital_efficiency = 7, expansion = 9 }
+penalties = { security_exposure = 0.75, heavy_regulation = 0.33, hard_acquisition = 0.4 }
+rationale = "Highest value per use in the cluster but requires trust and depth a solo founder cannot show on day one. A natural year-2 module."
+
+[[opportunity]]
+id = "O05"
+name = "Deficiency-letter (query) response copilot for generic exporters"
+sector = "pharma-regulatory"
+concept = "Parse an authority's deficiency letter, map each query to dossier sections and guidance, and draft structured responses with evidence checklists."
+customer = "RA teams at exporters receiving 30-90-day query deadlines."
+problem = "Queries arrive in batches with hard deadlines; responses require hunting through guidance and dossier sections."
+alternatives = "Manual drafting, consultants, generic chat assistants."
+gap = "Generic chatbots lack the dossier context, guidance citations and query tracking."
+solution = "Query parser, response templates, guidance retrieval with citations, deadline tracking, response library."
+technology = "LLM extraction and drafting with retrieval; document store; deadline tracker."
+mvp = "Query parsing + response drafting with citations; 6-8 weeks."
+complexity = "medium"
+capital = "<$2k"
+pricing = "$49 per query letter or $300-$900/mo."
+acquisition = "Founder network; consultant partnerships; content on common query types."
+competition = "Consultancies, generic AI assistants, enterprise authoring suites."
+defensibility_note = "Accumulated response library (with consent) and query taxonomy."
+regulatory = "Confidential documents; responses remain the applicant's responsibility."
+main_risk = "Trust and confidentiality; quality variance across authorities."
+evidence_needed = "Collect 20 anonymised real queries; measure drafting time saved in 3 pilots."
+evidence = ["E11", "E12", "E13"]
+tags = ["ai_native", "enterprise"]
+scores = { severity = 8, willingness_to_pay = 7, market = 6, solo_feasibility = 6, ai_leverage = 9, speed_to_mvp = 6, distribution = 5, defensibility = 6, capital_efficiency = 8, expansion = 8 }
+penalties = { security_exposure = 0.6, heavy_regulation = 0.33, unproven_demand = 0.375 }
+rationale = "Deadline-driven pain with strong AI leverage; held back by confidentiality and trust barriers."
+
+[[opportunity]]
+id = "O06"
+name = "Pharmacovigilance literature screening for small marketing-authorisation holders"
+sector = "pharma-safety"
+concept = "Weekly automated screening of global and local literature for ICSRs and safety signals per product, with audit trail."
+customer = "Small/mid MAHs and PV service providers."
+problem = "Weekly literature monitoring is mandatory and labour-intensive."
+alternatives = "PV CROs, enterprise safety suites, existing AI tools."
+gap = "Exists but expensive or bundled with services; local-journal coverage weak."
+solution = "Search automation, AI relevance triage, ICSR candidate extraction, audit trail."
+technology = "Literature APIs, LLM classification, workflow, validation pack."
+mvp = "PubMed-only screening for 20 substances; 6 weeks."
+complexity = "medium"
+capital = "$2-5k (database licences later)"
+pricing = "$300-$2,000/mo per MAH."
+acquisition = "PV professional communities, CRO partnerships."
+competition = "biologit MLM-AI and similar tools, PV CROs, enterprise suites."
+defensibility_note = "Validation documentation and accuracy record; otherwise thin."
+regulatory = "GVP-regulated activity; customers expect validated systems."
+main_risk = "Crowded; validation burden; licensed databases (Embase) costly."
+evidence_needed = "Price points from 5 MAHs; validation expectations."
+evidence = ["E17"]
+tags = ["ai_native", "enterprise"]
+scores = { severity = 8, willingness_to_pay = 7, market = 6, solo_feasibility = 6, ai_leverage = 9, speed_to_mvp = 7, distribution = 5, defensibility = 5, capital_efficiency = 7, expansion = 7 }
+penalties = { heavy_regulation = 0.67, weak_differentiation = 0.67, unstable_dependency = 0.5 }
+rationale = "Real mandate and WTP, but crowded with funded tools and a validation burden."
+
+[[opportunity]]
+id = "O07"
+name = "PSUR/PBRER drafting assistant for generics"
+sector = "pharma-safety"
+concept = "Draft periodic safety reports for generics from reference safety information, literature and the MAH's exposure and case counts."
+customer = "PV teams at generic MAHs; PV service providers."
+problem = "Periodic reports are long, repetitive and required per product and market."
+alternatives = "PV vendors, internal writers, enterprise report automation."
+gap = "Generic-focused, public-data-assisted drafting is uncommon and costly."
+solution = "Templates per authority, auto-filled reference sections, literature summaries, QC checks."
+technology = "Document generation, retrieval, LLM drafting with citations."
+mvp = "Draft a generic PSUR skeleton for one product; 8 weeks."
+complexity = "medium"
+capital = "<$2k"
+pricing = "$500-$2,000 per report or subscription."
+acquisition = "PV vendor partnerships; LinkedIn PV community."
+competition = "RxLogix PV Reports, PV CROs, medical-writing AI tools."
+defensibility_note = "Templates and authority-specific know-how."
+regulatory = "Regulated documents; QPPV accountability."
+main_risk = "Incumbents and vendors; trust in AI-drafted safety documents."
+evidence_needed = "3 PV vendors willing to pilot on past reports."
+evidence = ["E18"]
+tags = ["ai_native", "enterprise"]
+scores = { severity = 7, willingness_to_pay = 7, market = 6, solo_feasibility = 6, ai_leverage = 8, speed_to_mvp = 6, distribution = 5, defensibility = 5, capital_efficiency = 8, expansion = 7 }
+penalties = { heavy_regulation = 0.5, weak_differentiation = 0.5, security_exposure = 0.4 }
+rationale = "Useful later as a LabelLedger adjacency (reference safety information is shared data), not as a first product."
+
+[[opportunity]]
+id = "O08"
+name = "Nitrosamine (NDSRI) CPCA and risk-assessment workbench"
+sector = "pharma-cmc"
+concept = "Structure-based CPCA categorisation, acceptable-intake lookup and risk-assessment report generation for each product."
+customer = "CMC/QA/RA teams at generic and API manufacturers; testing labs."
+problem = "Every product needs a documented nitrosamine risk assessment; consultants are expensive."
+alternatives = "Lhasa Derek Nexus CPCA, free Excel CPCA calculators, consultants."
+gap = "Affordable report generation and portfolio tracking; but core calculation is commoditised."
+solution = "RDKit-based CPCA, curated AI limits, report templates, portfolio dashboard."
+technology = "Cheminformatics (RDKit), rules engine, document generation."
+mvp = "CPCA calculator + report for one product; 4 weeks."
+complexity = "medium"
+capital = "<$1k"
+pricing = "$99-$499/mo or per report."
+acquisition = "Nitrosamine community content; testing-lab partnerships."
+competition = "Lhasa, USP community tools, consultancies."
+defensibility_note = "Curated limits database and validated rules; modest."
+regulatory = "Calculation errors carry patient-safety and compliance risk."
+main_risk = "Main deadlines passed (Aug 2025); free tools cover the calculation."
+evidence_needed = "Demand from emerging-market exporters facing regulated-market queries."
+evidence = ["E16"]
+tags = ["solo_friendly", "low_capital", "research_intensive"]
+scores = { severity = 6, willingness_to_pay = 6, market = 5, solo_feasibility = 7, ai_leverage = 6, speed_to_mvp = 7, distribution = 5, defensibility = 5, capital_efficiency = 9, expansion = 6 }
+penalties = { weak_differentiation = 0.5, heavy_regulation = 0.33 }
+rationale = "Founder's chemistry fit is excellent, but timing and free tools weaken it. Keep as a CMC module idea."
+
+[[opportunity]]
+id = "O09"
+name = "ICH Q3D elemental-impurities risk-assessment generator"
+sector = "pharma-cmc"
+concept = "Component-based elemental impurity risk assessments and PDE-based limits with report output."
+customer = "Formulation/QA teams at generic manufacturers."
+problem = "Each product needs an EI assessment; spreadsheets are error-prone."
+alternatives = "Spreadsheets, consortium databases, consultants."
+gap = "Low-cost, report-ready tooling for small manufacturers."
+solution = "Calculator, excipient data library, report template."
+technology = "Deterministic calculations, document generation."
+mvp = "Calculator + report; 3 weeks."
+complexity = "low"
+capital = "<$1k"
+pricing = "$49-$199/mo."
+acquisition = "Content marketing, templates."
+competition = "Spreadsheets, consortium data, consultants."
+defensibility_note = "Low; data library helps."
+regulatory = "Errors affect submissions."
+main_risk = "Episodic use and low urgency."
+evidence_needed = "Evidence of EI-related deficiency letters among exporters."
+evidence = []
+tags = ["solo_friendly", "low_capital", "fast_to_market"]
+scores = { severity = 5, willingness_to_pay = 5, market = 5, solo_feasibility = 8, ai_leverage = 5, speed_to_mvp = 8, distribution = 4, defensibility = 4, capital_efficiency = 9, expansion = 5 }
+penalties = { weak_differentiation = 0.5, unproven_demand = 0.5 }
+rationale = "Easy to build, hard to make matter."
+
+[[opportunity]]
+id = "O10"
+name = "Stability-study analytics (ICH Q1E shelf-life, OOT trending, zone IVb)"
+sector = "pharma-cmc"
+concept = "Cloud analytics for stability data: shelf-life regression, poolability tests, out-of-trend alerts, report-ready plots."
+customer = "QC/QA stability coordinators at manufacturers."
+problem = "Stability data lives in spreadsheets; statistics are done inconsistently."
+alternatives = "Excel, JMP/Minitab, stability LIMS."
+gap = "Affordable, purpose-built analytics for small sites."
+solution = "Import, ICH Q1E statistics, trend alerts, PDF reports."
+technology = "Statistics, web app."
+mvp = "Q1E calculator + plots; 4-6 weeks."
+complexity = "medium"
+capital = "<$1k"
+pricing = "$99-$399/mo per site."
+acquisition = "Free calculator as lead magnet."
+competition = "JMP, Minitab, LIMS vendors."
+defensibility_note = "Workflow embedding; modest."
+regulatory = "GMP use implies Part 11 / validation expectations."
+main_risk = "Validation burden and low urgency."
+evidence_needed = "Sites willing to pay without a validation package."
+evidence = []
+tags = ["solo_friendly", "low_capital", "research_intensive"]
+scores = { severity = 6, willingness_to_pay = 6, market = 6, solo_feasibility = 7, ai_leverage = 5, speed_to_mvp = 6, distribution = 5, defensibility = 5, capital_efficiency = 9, expansion = 6 }
+penalties = { heavy_regulation = 0.5, unproven_demand = 0.5 }
+rationale = "Solid niche, but GMP validation expectations slow adoption."
+
+[[opportunity]]
+id = "O11"
+name = "Annual product quality review (APQR/PQR) automation"
+sector = "pharma-quality"
+concept = "Compile APQRs from batch, QC, deviation and complaint data with trend analysis and drafted narrative."
+customer = "QA departments at manufacturers."
+problem = "APQRs consume weeks per product per year."
+alternatives = "Manual compilation, QMS modules."
+gap = "Small sites lack integrated data and tooling."
+solution = "Data import templates, trend charts, drafted conclusions."
+technology = "ETL, statistics, LLM drafting."
+mvp = "Template-driven APQR for one product; 8 weeks."
+complexity = "high"
+capital = "$1-3k"
+pricing = "$200-$800/mo per site."
+acquisition = "Founder network; QA communities."
+competition = "QMS vendors, consultants."
+defensibility_note = "Data integration creates switching costs."
+regulatory = "GMP record; validation expected."
+main_risk = "Data integration effort per customer."
+evidence_needed = "Time spent per APQR at 5 sites."
+evidence = []
+tags = ["enterprise"]
+scores = { severity = 7, willingness_to_pay = 6, market = 6, solo_feasibility = 5, ai_leverage = 7, speed_to_mvp = 5, distribution = 4, defensibility = 6, capital_efficiency = 8, expansion = 7 }
+penalties = { heavy_regulation = 0.67, security_exposure = 0.5, high_support = 0.5 }
+rationale = "Real pain, but integration and validation make it consulting-heavy."
+
+[[opportunity]]
+id = "O12"
+name = "AI SOP / deviation / CAPA writing assistant (QMS-lite)"
+sector = "pharma-quality"
+concept = "Draft and review SOPs, deviation investigations and CAPAs against GMP expectations."
+customer = "QA teams at small manufacturers."
+problem = "Quality documentation is slow and inconsistent; investigations are weak."
+alternatives = "Templates, consultants, QMS suites, general AI assistants."
+gap = "GMP-specific drafting with root-cause structure is rare at low price."
+solution = "Guided templates, root-cause prompts, review checks."
+technology = "LLM drafting, templates, document store."
+mvp = "Deviation investigation drafter; 4 weeks."
+complexity = "medium"
+capital = "<$1k"
+pricing = "$99-$399/mo."
+acquisition = "QA communities; content."
+competition = "QMS vendors, general AI assistants."
+defensibility_note = "Low."
+regulatory = "GMP records; data-integrity expectations."
+main_risk = "General assistants are good enough; weak differentiation."
+evidence_needed = "QA heads willing to pay beyond a chat assistant."
+evidence = []
+tags = ["ai_native", "low_capital"]
+scores = { severity = 6, willingness_to_pay = 6, market = 7, solo_feasibility = 6, ai_leverage = 8, speed_to_mvp = 6, distribution = 5, defensibility = 4, capital_efficiency = 8, expansion = 7 }
+penalties = { heavy_regulation = 0.5, weak_differentiation = 0.5, security_exposure = 0.4 }
+rationale = "Large market, little moat."
+
+[[opportunity]]
+id = "O13"
+name = "GMP inspection intelligence and readiness (FDA 483 / warning-letter analytics)"
+sector = "pharma-quality"
+concept = "Searchable inspection findings with AI self-inspection checklists for a site's profile."
+customer = "QA heads at sites preparing for FDA/WHO/PIC/S inspections."
+problem = "Inspection readiness is costly; findings data is scattered."
+alternatives = "Redica Systems, FDAzilla heritage tools, consultants."
+gap = "Affordable readiness for emerging-market sites."
+solution = "Findings database, site-specific checklists, mock audit prompts."
+technology = "Public data ingestion, classification, LLM."
+mvp = "Warning-letter search + checklist generator; 4 weeks."
+complexity = "medium"
+capital = "<$1k"
+pricing = "$99-$499/mo."
+acquisition = "Content on inspection trends."
+competition = "Redica Systems and others."
+defensibility_note = "Low-moderate."
+regulatory = "Low."
+main_risk = "Incumbents own the data narrative."
+evidence_needed = "Willingness to pay among emerging-market QA heads."
+evidence = []
+tags = ["solo_friendly", "low_capital"]
+scores = { severity = 6, willingness_to_pay = 7, market = 5, solo_feasibility = 7, ai_leverage = 7, speed_to_mvp = 7, distribution = 5, defensibility = 4, capital_efficiency = 9, expansion = 6 }
+penalties = { weak_differentiation = 0.67, hard_acquisition = 0.4 }
+rationale = "Useful but contested by an established specialist."
+
+[[opportunity]]
+id = "O14"
+name = "eCTD validator/publisher lite for emerging markets"
+sector = "pharma-regulatory"
+concept = "Affordable cloud eCTD/ACTD assembly and validation against regional specifications."
+customer = "Exporters filing in eCTD-adopting markets."
+problem = "Publishing tools are expensive; outsourced publishing is slow."
+alternatives = "Commercial publishing suites, outsourcing."
+gap = "Low-cost cloud option for small companies."
+solution = "Backbone generation, validation rules, packaging."
+technology = "XML backbones, regional specs, validation engine."
+mvp = "Validator for one region; 3-4 months."
+complexity = "high"
+capital = "$2-5k"
+pricing = "$300-$1,000/mo."
+acquisition = "Partnerships, content."
+competition = "Established publishing vendors."
+defensibility_note = "Specification depth."
+regulatory = "Submission-critical; errors cause technical rejection."
+main_risk = "Spec complexity and support load."
+evidence_needed = "Number of target markets mandating eCTD for generics."
+evidence = []
+tags = ["enterprise", "research_intensive"]
+scores = { severity = 6, willingness_to_pay = 7, market = 5, solo_feasibility = 4, ai_leverage = 4, speed_to_mvp = 4, distribution = 5, defensibility = 6, capital_efficiency = 7, expansion = 6 }
+penalties = { heavy_regulation = 0.5, weak_differentiation = 0.5, high_support = 0.5 }
+rationale = "Deterministic and valuable, but slow to build and low AI leverage."
+
+[[opportunity]]
+id = "O15"
+name = "Cleaning-validation HBEL/PDE and MACO calculator"
+sector = "pharma-quality"
+concept = "Health-based exposure limits and MACO calculations with toxicology references and reports."
+customer = "Validation and QA teams at multi-product sites."
+problem = "Calculations are error-prone and poorly documented."
+alternatives = "Spreadsheets, consultants, validation suites."
+gap = "Low-cost documented calculator."
+solution = "Calculator, monograph library, report."
+technology = "Deterministic calculations."
+mvp = "Calculator + report; 3 weeks."
+complexity = "low"
+capital = "<$1k"
+pricing = "$49-$199/mo."
+acquisition = "Validation communities."
+competition = "Spreadsheets, consultants."
+defensibility_note = "Low."
+regulatory = "GMP impact."
+main_risk = "Low urgency and episodic."
+evidence_needed = "Evidence of paid demand."
+evidence = []
+tags = ["solo_friendly", "low_capital", "fast_to_market"]
+scores = { severity = 5, willingness_to_pay = 5, market = 5, solo_feasibility = 8, ai_leverage = 4, speed_to_mvp = 8, distribution = 4, defensibility = 4, capital_efficiency = 9, expansion = 4 }
+penalties = { weak_differentiation = 0.5, heavy_regulation = 0.33 }
+rationale = "A feature, not a company."
+
+[[opportunity]]
+id = "O16"
+name = "Pharma tender intelligence and bid-document assistant for exporters"
+sector = "pharma-commercial"
+concept = "Match UN agency, pooled-procurement and national tenders to an exporter's registered portfolio and draft compliance documents."
+customer = "Export/business-development teams at generic manufacturers."
+problem = "Tenders are scattered; eligibility depends on registrations, prequalification and documents."
+alternatives = "Tender aggregators, agents, manual monitoring."
+gap = "Portfolio-aware matching with registration status is rare."
+solution = "Tender ingestion, portfolio matching, eligibility checks, document drafts."
+technology = "Scraping/ingestion, entity matching, LLM extraction."
+mvp = "Daily tender digest matched to a portfolio; 4 weeks."
+complexity = "medium"
+capital = "<$1k"
+pricing = "$99-$499/mo."
+acquisition = "Founder network; export associations."
+competition = "Tender aggregators, agents."
+defensibility_note = "Portfolio data + registration link (synergy with O02)."
+regulatory = "Low."
+main_risk = "Portal terms and fragility; aggregators already cover sources."
+evidence_needed = "Exporters' tender-win revenue and current tooling."
+evidence = ["E07"]
+tags = ["solo_friendly", "low_capital"]
+scores = { severity = 6, willingness_to_pay = 6, market = 6, solo_feasibility = 7, ai_leverage = 7, speed_to_mvp = 7, distribution = 6, defensibility = 5, capital_efficiency = 8, expansion = 6 }
+penalties = { unstable_dependency = 0.67, weak_differentiation = 0.5, unproven_demand = 0.5 }
+rationale = "Revenue-linked for buyers, but fragile sources and existing aggregators."
+
+[[opportunity]]
+id = "O17"
+name = "API/excipient sourcing intelligence (DMF/CEP status, supplier risk)"
+sector = "pharma-commercial"
+concept = "Supplier discovery and qualification signals from public DMF/CEP and inspection data."
+customer = "Sourcing and RA teams at formulation manufacturers."
+problem = "Supplier qualification and regulatory-status checks are slow."
+alternatives = "PharmaCompass, Pharmaoffer, brokers."
+gap = "Risk signals tied to inspection outcomes are thin."
+solution = "Supplier profiles, status alerts, risk scores."
+technology = "Public data ingestion, entity resolution."
+mvp = "Supplier search with status; 4 weeks."
+complexity = "medium"
+capital = "<$1k"
+pricing = "$99-$399/mo."
+acquisition = "SEO, sourcing communities."
+competition = "PharmaCompass, Pharmaoffer and similar."
+defensibility_note = "Data curation."
+regulatory = "Low."
+main_risk = "Established free/freemium players."
+evidence_needed = "Gap analysis vs existing platforms."
+evidence = []
+tags = ["solo_friendly", "low_capital", "infrastructure"]
+scores = { severity = 5, willingness_to_pay = 6, market = 6, solo_feasibility = 7, ai_leverage = 6, speed_to_mvp = 7, distribution = 6, defensibility = 5, capital_efficiency = 8, expansion = 6 }
+penalties = { weak_differentiation = 0.67, unproven_demand = 0.25 }
+rationale = "Proven model, crowded space."
+
+[[opportunity]]
+id = "O18"
+name = "npcadd Cloud — validated in-silico screening reports for natural-product researchers"
+sector = "research-software"
+concept = "Hosted version of the founder's existing npcadd pipeline: validation-gated docking, ADMET and publication-ready reports."
+customer = "Academic natural-product and pharmacology researchers, mainly in South Asia, Africa and the Middle East."
+problem = "Computational sections of natural-product papers are often unvalidated and rejected or criticised by reviewers."
+alternatives = "Free web tools (SwissADME, CB-Dock2), desktop tools (PyRx), paid suites, cloud bio-tool platforms."
+gap = "No tool enforces validation (redocking gate, efficiency-based ranking) by default."
+solution = "Upload compounds and targets, get a validated, reproducible report with honest limitations."
+technology = "Existing npcadd pipeline, job queue, CPU workers."
+mvp = "Hosted single-target run with report; 3-4 weeks (pipeline already exists)."
+complexity = "low"
+capital = "$1-2k (compute)"
+pricing = "$9-$49/mo students and labs; per-run credits."
+acquisition = "YouTube tutorials, academic communities, reviewer word of mouth."
+competition = "Free tools, cloud bio-tool platforms."
+defensibility_note = "Rigor brand; open-source credibility."
+regulatory = "Low; ethical risk of enabling low-quality papers mitigated by enforced validation."
+main_risk = "Low willingness to pay; free alternatives."
+evidence_needed = "100 sign-ups from one tutorial; 5% paid conversion."
+evidence = []
+tags = ["solo_friendly", "fast_to_market", "research_intensive", "consumer"]
+scores = { severity = 5, willingness_to_pay = 3, market = 5, solo_feasibility = 8, ai_leverage = 6, speed_to_mvp = 8, distribution = 7, defensibility = 5, capital_efficiency = 7, expansion = 5 }
+penalties = { weak_differentiation = 0.5, expensive_infra = 0.5 }
+rationale = "Uses an asset you already own; keep it open source as a credibility engine, not the first business."
+
+[[opportunity]]
+id = "O19"
+name = "Computational-methods rigor checker for papers (authors, reviewers, journals)"
+sector = "research-software"
+concept = "Automated reviewer-style checks of docking/ADMET/network-pharmacology methods sections and supplementary data."
+customer = "Authors before submission; journals and reviewers."
+problem = "Weak computational methods are common and hard to screen at scale."
+alternatives = "Human reviewers; generic AI assistants."
+gap = "No domain-specific checklist automation."
+solution = "Checklist engine, evidence requests, report."
+technology = "LLM extraction, rules."
+mvp = "Checker for docking studies; 4 weeks."
+complexity = "medium"
+capital = "<$1k"
+pricing = "Authors $19/paper; journals per-submission contracts."
+acquisition = "Academic communities; journal partnerships."
+competition = "General AI review tools."
+defensibility_note = "Domain rules and validation datasets."
+regulatory = "Low."
+main_risk = "Journals buy slowly; authors pay little."
+evidence_needed = "One journal pilot."
+evidence = []
+tags = ["ai_native", "research_intensive"]
+scores = { severity = 6, willingness_to_pay = 4, market = 5, solo_feasibility = 7, ai_leverage = 8, speed_to_mvp = 6, distribution = 5, defensibility = 6, capital_efficiency = 8, expansion = 6 }
+penalties = { hard_acquisition = 0.6, unproven_demand = 0.75 }
+rationale = "Intellectually aligned with npcadd; commercially unproven."
+
+[[opportunity]]
+id = "O20"
+name = "South Asia drug brand-to-generic database API"
+sector = "health-data"
+concept = "Structured API mapping local brand names to generics, strengths, manufacturers and prices for Bangladesh, India and Pakistan."
+customer = "Telemedicine, e-pharmacy, insurer and EHR builders in South Asia."
+problem = "Apps need clean drug master data; local brands number in the tens of thousands."
+alternatives = "Drug-index websites, manual lists, regulator registries."
+gap = "Few licensed, clean, developer-friendly APIs."
+solution = "Curated dataset, API, update feed."
+technology = "Data curation, entity resolution, API."
+mvp = "Bangladesh dataset + API; 6 weeks."
+complexity = "medium"
+capital = "<$2k"
+pricing = "$99-$999/mo per app."
+acquisition = "Developer outreach; health-tech founders."
+competition = "Existing drug-index sites and in-house lists."
+defensibility_note = "Curation quality and update cadence."
+regulatory = "Data-rights questions; must use lawful sources."
+main_risk = "Data licensing and small buyer pool."
+evidence_needed = "10 health-tech companies willing to pay."
+evidence = []
+tags = ["infrastructure", "low_capital"]
+scores = { severity = 5, willingness_to_pay = 4, market = 5, solo_feasibility = 7, ai_leverage = 6, speed_to_mvp = 7, distribution = 6, defensibility = 6, capital_efficiency = 8, expansion = 6 }
+penalties = { unstable_dependency = 0.67, weak_differentiation = 0.5 }
+rationale = "Useful infrastructure with thin budgets."
+
+[[opportunity]]
+id = "O21"
+name = "Clinical-trial site enablement and feasibility for South Asian sites"
+sector = "clinical-research"
+concept = "Help sites in Bangladesh/South Asia present feasibility data and win sponsor/CRO studies."
+customer = "Hospitals and site networks; CROs scouting new sites."
+problem = "Sites lack visibility and standardised feasibility responses."
+alternatives = "CRO relationships, manual questionnaires."
+gap = "Low digital presence of capable sites."
+solution = "Site profiles, feasibility-response drafting, registry analytics."
+technology = "Registry data, LLM drafting."
+mvp = "Site profile + feasibility drafter; 6 weeks."
+complexity = "medium"
+capital = "$1-3k"
+pricing = "Per-site subscription; success fees."
+acquisition = "Hospital networks; CRO partnerships."
+competition = "CRO internal tools; feasibility platforms."
+defensibility_note = "Site network."
+regulatory = "Clinical research regulation; ethics."
+main_risk = "Long sales cycles; regulatory environment for trials."
+evidence_needed = "Sponsor interest in the region."
+evidence = []
+tags = ["enterprise"]
+scores = { severity = 6, willingness_to_pay = 6, market = 6, solo_feasibility = 4, ai_leverage = 5, speed_to_mvp = 5, distribution = 4, defensibility = 5, capital_efficiency = 6, expansion = 6 }
+penalties = { heavy_regulation = 0.67, hard_acquisition = 0.6 }
+rationale = "Relationship business more than software."
+
+[[opportunity]]
+id = "O22"
+name = "EU HTA joint clinical assessment (JCA) evidence-synthesis copilot"
+sector = "market-access"
+concept = "Automate PICO-driven evidence synthesis and dossier assembly for EU joint clinical assessments."
+customer = "Market-access and HEOR teams at innovative pharma; HEOR consultancies."
+problem = "JCAs require many PICOs under tight timelines."
+alternatives = "HEOR consultancies, systematic-review tools."
+gap = "Speed under multiple PICOs."
+solution = "PICO management, screening, extraction, reporting."
+technology = "LLM screening/extraction, statistics."
+mvp = "PICO-scoped screening and extraction; 3 months."
+complexity = "high"
+capital = "$5k+"
+pricing = "Enterprise contracts."
+acquisition = "Enterprise sales."
+competition = "Consultancies and funded evidence-synthesis startups."
+defensibility_note = "Methodology credibility."
+regulatory = "Methodological scrutiny by assessors."
+main_risk = "Enterprise sales impossible to run solo from Dhaka at first."
+evidence_needed = "Consultancy partner."
+evidence = []
+tags = ["enterprise", "high_revenue", "research_intensive"]
+scores = { severity = 7, willingness_to_pay = 8, market = 5, solo_feasibility = 4, ai_leverage = 8, speed_to_mvp = 4, distribution = 3, defensibility = 6, capital_efficiency = 6, expansion = 6 }
+penalties = { hard_acquisition = 0.8, weak_differentiation = 0.5, heavy_regulation = 0.33 }
+rationale = "High value, wrong stage for this founder."
+
+[[opportunity]]
+id = "O23"
+name = "Medical-information response automation"
+sector = "pharma-medical"
+concept = "Draft standard response letters to healthcare-professional enquiries from labels and literature."
+customer = "Medical-information teams and outsourced MI providers."
+problem = "Enquiries are repetitive and must be accurate and on-label."
+alternatives = "Response libraries, MI vendors."
+gap = "Faster drafting with citations."
+solution = "Enquiry classification, retrieval, drafting, review."
+technology = "RAG with citation checks."
+mvp = "Response drafter for one product; 6 weeks."
+complexity = "medium"
+capital = "<$2k"
+pricing = "Enterprise subscription."
+acquisition = "Enterprise sales."
+competition = "MI vendors and enterprise suites."
+defensibility_note = "Workflow embedding."
+regulatory = "Promotional/off-label risk; PV reporting obligations."
+main_risk = "Enterprise sales and compliance review."
+evidence_needed = "MI team pilots."
+evidence = []
+tags = ["ai_native", "enterprise"]
+scores = { severity = 6, willingness_to_pay = 7, market = 6, solo_feasibility = 5, ai_leverage = 8, speed_to_mvp = 5, distribution = 4, defensibility = 5, capital_efficiency = 7, expansion = 6 }
+penalties = { hard_acquisition = 0.6, heavy_regulation = 0.5, weak_differentiation = 0.5 }
+rationale = "Fine market, poor solo fit."
+
+[[opportunity]]
+id = "O24"
+name = "Promotional-material (MLR) pre-review for emerging-market pharma marketing"
+sector = "pharma-commercial"
+concept = "Check promotional claims against approved labeling and local promotion codes before medical/legal review."
+customer = "Marketing and medical teams at emerging-market pharma companies."
+problem = "Promotional claims drift off-label; reviews are slow."
+alternatives = "Manual medical review; enterprise MLR tools; Entvin-style AI."
+gap = "Local-code awareness at local prices."
+solution = "Claim extraction, label matching, code checks."
+technology = "LLM claim matching, label retrieval (reuses O01 data)."
+mvp = "Claim checker for one market; 6 weeks."
+complexity = "medium"
+capital = "<$1k"
+pricing = "$99-$499/mo."
+acquisition = "Founder network in Bangladeshi pharma marketing."
+competition = "Entvin AI, enterprise MLR suites."
+defensibility_note = "Label data from O01."
+regulatory = "Promotion regulation."
+main_risk = "Low enforcement reduces urgency."
+evidence_needed = "Marketing heads' willingness to pay."
+evidence = ["E13"]
+tags = ["ai_native", "low_capital"]
+scores = { severity = 5, willingness_to_pay = 5, market = 6, solo_feasibility = 6, ai_leverage = 8, speed_to_mvp = 6, distribution = 5, defensibility = 4, capital_efficiency = 8, expansion = 6 }
+penalties = { weak_differentiation = 0.5, unproven_demand = 0.5 }
+rationale = "Plausible LabelLedger adjacency; weak standalone."
+
+[[opportunity]]
+id = "O25"
+name = "AI tutor for Gulf health-professional licensing exams (South Asian pharmacists)"
+sector = "edtech"
+concept = "Adaptive practice and explanations for Gulf and international pharmacist licensing exams."
+customer = "Pharmacists and pharmacy graduates in South Asia seeking overseas licensure."
+problem = "Prep material is uneven; candidates pay repeatedly and fail."
+alternatives = "Prep centres, PDFs, social-media groups, established prep brands."
+gap = "Affordable adaptive practice with explanations."
+solution = "Original question bank (never recalled exam items), spaced repetition, analytics."
+technology = "LLM item generation with expert review, adaptive engine."
+mvp = "500 reviewed questions + adaptive app; 3-4 weeks."
+complexity = "low"
+capital = "<$1k"
+pricing = "$15-$60 per exam cycle."
+acquisition = "Facebook/Telegram communities, YouTube."
+competition = "Many local and global prep providers."
+defensibility_note = "Weak; brand and outcomes data."
+regulatory = "Must not use leaked/recalled items (IP and ethics)."
+main_risk = "Crowded, price-sensitive, seasonal."
+evidence_needed = "Pre-sales to 100 candidates."
+evidence = []
+tags = ["solo_friendly", "fast_to_market", "consumer", "low_capital"]
+scores = { severity = 6, willingness_to_pay = 5, market = 6, solo_feasibility = 9, ai_leverage = 8, speed_to_mvp = 9, distribution = 7, defensibility = 3, capital_efficiency = 9, expansion = 5 }
+penalties = { weak_differentiation = 0.67, high_support = 0.25, unproven_demand = 0.5 }
+rationale = "Fast cash-flow candidate; weak moat and small ceiling."
+
+[[opportunity]]
+id = "O26"
+name = "Cosmetics & supplements regulatory compliance checker (e-commerce app)"
+sector = "consumer-regulatory"
+concept = "Check formulas, labels and claims against EU/US/ASEAN rules for indie beauty and supplement brands."
+customer = "Independent beauty and supplement brands selling online internationally."
+problem = "Brands launch into markets without understanding ingredient restrictions and claim rules."
+alternatives = "Consultants, compliance services, newly funded AI tools."
+gap = "Affordable, self-serve checks inside the store platform."
+solution = "Ingredient screening, claim checks, label templates, market readiness."
+technology = "Rules database, LLM claim analysis, store-platform app."
+mvp = "EU+US ingredient and claim checker; 6 weeks."
+complexity = "medium"
+capital = "<$2k"
+pricing = "$29-$199/mo."
+acquisition = "App-store distribution; content."
+competition = "Certo ($4M seed), compliance consultancies."
+defensibility_note = "Rules database; app-store reviews."
+regulatory = "Liability for wrong compliance advice."
+main_risk = "Rules breadth and accuracy across jurisdictions."
+evidence_needed = "App-store search demand; 50 paying stores."
+evidence = ["E21"]
+tags = ["ai_native", "consumer", "low_capital"]
+scores = { severity = 6, willingness_to_pay = 5, market = 7, solo_feasibility = 7, ai_leverage = 8, speed_to_mvp = 7, distribution = 8, defensibility = 4, capital_efficiency = 8, expansion = 7 }
+penalties = { heavy_regulation = 0.33, weak_differentiation = 0.5, high_support = 0.4 }
+rationale = "Good distribution mechanics; less founder advantage than pharma."
+
+[[opportunity]]
+id = "O27"
+name = "Hospital formulary and drug-interaction checker for LMIC hospitals"
+sector = "clinical-software"
+concept = "Formulary management and interaction alerts priced for low- and middle-income hospitals."
+customer = "Hospital pharmacy departments."
+problem = "Paper formularies and few interaction checks."
+alternatives = "Paper, free apps, expensive clinical systems."
+gap = "Affordable localised tools."
+solution = "Formulary builder, interaction database, prescribing checks."
+technology = "Drug knowledge base, web app."
+mvp = "Formulary + interaction lookup; 6 weeks."
+complexity = "medium"
+capital = "$1-3k"
+pricing = "$100-$300/mo per hospital."
+acquisition = "Hospital networks; government programmes."
+competition = "Free apps; hospital information systems."
+defensibility_note = "Localisation."
+regulatory = "Clinical decision support may be regulated as a medical device."
+main_risk = "Low budgets; regulatory classification."
+evidence_needed = "Hospital pilots with budget owners."
+evidence = []
+tags = ["research_intensive"]
+scores = { severity = 6, willingness_to_pay = 3, market = 5, solo_feasibility = 6, ai_leverage = 6, speed_to_mvp = 6, distribution = 3, defensibility = 5, capital_efficiency = 7, expansion = 5 }
+penalties = { heavy_regulation = 0.67, hard_acquisition = 0.8 }
+rationale = "Socially valuable, commercially hard."
+
+[[opportunity]]
+id = "O28"
+name = "E-pharmacy prescription verification and compliance (Bangladesh)"
+sector = "health-commerce"
+concept = "Verify prescriptions and controlled-drug rules for online pharmacies."
+customer = "E-pharmacies and pharmacy chains."
+problem = "Unverified prescriptions and regulatory exposure."
+alternatives = "Manual checks."
+gap = "Automated, auditable verification."
+solution = "Prescription OCR, rule checks, audit logs."
+technology = "OCR, rules, LLM."
+mvp = "Prescription parser + checks; 6 weeks."
+complexity = "medium"
+capital = "$1-3k"
+pricing = "Per-verification fees."
+acquisition = "Direct sales to a handful of e-pharmacies."
+competition = "In-house builds."
+defensibility_note = "Low."
+regulatory = "Heavily regulated; patient data."
+main_risk = "Tiny buyer pool; regulation."
+evidence_needed = "Regulatory clarity."
+evidence = []
+tags = []
+scores = { severity = 6, willingness_to_pay = 4, market = 4, solo_feasibility = 5, ai_leverage = 7, speed_to_mvp = 6, distribution = 4, defensibility = 4, capital_efficiency = 6, expansion = 5 }
+penalties = { heavy_regulation = 0.83, security_exposure = 0.6 }
+rationale = "Regulatory and data risk outweigh the opportunity."
+
+# --------------------------------------------------------------------------
+# B. Bangladesh / emerging-market business software
+# --------------------------------------------------------------------------
+
+[[opportunity]]
+id = "O29"
+name = "AI bookkeeping and VAT/tax compliance for Bangladeshi SMEs"
+sector = "fintech"
+concept = "Bank/receipt ingestion, Bangla-aware categorisation and VAT/tax filings preparation."
+customer = "Bangladeshi SMEs and freelancers."
+problem = "Bookkeeping is manual; compliance is confusing."
+alternatives = "Accountants, spreadsheets, local accounting software."
+gap = "AI-native automation in Bangla."
+solution = "Ingestion, categorisation, filing drafts."
+technology = "OCR, LLM, accounting rules."
+mvp = "Receipt-to-ledger for freelancers; 6 weeks."
+complexity = "medium"
+capital = "$1-3k"
+pricing = "$5-$30/mo."
+acquisition = "Freelancer communities, accountants."
+competition = "Local accounting software, accountants."
+defensibility_note = "Tax-rule localisation."
+regulatory = "Tax advice liability; financial data."
+main_risk = "Very low willingness to pay; support load."
+evidence_needed = "Paid conversion in a pilot cohort."
+evidence = []
+tags = ["consumer", "ai_native"]
+scores = { severity = 6, willingness_to_pay = 3, market = 6, solo_feasibility = 6, ai_leverage = 7, speed_to_mvp = 6, distribution = 5, defensibility = 4, capital_efficiency = 7, expansion = 6 }
+penalties = { high_support = 0.75, heavy_regulation = 0.33, security_exposure = 0.4 }
+rationale = "Large local need, low local budgets."
+
+[[opportunity]]
+id = "O30"
+name = "Remittance documentation and invoicing for South Asian freelancers"
+sector = "fintech"
+concept = "Invoices, contracts and foreign-income documentation that satisfy banks and tax authorities."
+customer = "Freelancers and micro-agencies in Bangladesh, Pakistan and Nepal."
+problem = "Receiving foreign income requires paperwork banks and tax offices accept."
+alternatives = "Payment platforms' own tools, templates."
+gap = "Locally compliant documentation bundles."
+solution = "Invoice generator, income statements, tax summaries."
+technology = "Document generation, integrations."
+mvp = "Invoice + annual statement generator; 3 weeks."
+complexity = "low"
+capital = "<$1k"
+pricing = "$3-$10/mo."
+acquisition = "Freelancer groups."
+competition = "Payment platforms, templates."
+defensibility_note = "Weak."
+regulatory = "Financial documentation accuracy."
+main_risk = "Commoditised."
+evidence_needed = "Willingness to pay."
+evidence = []
+tags = ["solo_friendly", "consumer", "fast_to_market"]
+scores = { severity = 6, willingness_to_pay = 4, market = 7, solo_feasibility = 7, ai_leverage = 6, speed_to_mvp = 7, distribution = 7, defensibility = 3, capital_efficiency = 8, expansion = 5 }
+penalties = { weak_differentiation = 0.67, heavy_regulation = 0.33, security_exposure = 0.4 }
+rationale = "Easy to start, easy to copy."
+
+[[opportunity]]
+id = "O31"
+name = "Garment-factory compliance and EU due-diligence / digital product passport data"
+sector = "industrial-compliance"
+concept = "Collect and share factory sustainability, chemical and social-compliance data in the formats EU buyers request."
+customer = "Bangladeshi garment factories and their buyers."
+problem = "Repeated audits and data requests from multiple brands."
+alternatives = "Industry platforms, consultants, spreadsheets."
+gap = "Factory-side automation; chemistry know-how for chemical compliance."
+solution = "Data hub, document extraction, buyer-specific exports."
+technology = "Document AI, data model, integrations."
+mvp = "Chemical-compliance document hub; 8 weeks."
+complexity = "medium"
+capital = "$2-5k"
+pricing = "$100-$500/mo per factory."
+acquisition = "Industry associations; buyer mandates."
+competition = "Established sustainability-data platforms."
+defensibility_note = "Network with buyers."
+regulatory = "Shifting EU timelines."
+main_risk = "EU scope reductions; buyers choose the platform."
+evidence_needed = "Factory owners' spend on compliance data today."
+evidence = []
+tags = ["enterprise", "defensible"]
+scores = { severity = 6, willingness_to_pay = 5, market = 7, solo_feasibility = 5, ai_leverage = 6, speed_to_mvp = 5, distribution = 5, defensibility = 6, capital_efficiency = 7, expansion = 7 }
+penalties = { weak_differentiation = 0.5, unproven_demand = 0.5, hard_acquisition = 0.4 }
+rationale = "Big local industry, but platform buyers decide."
+
+[[opportunity]]
+id = "O32"
+name = "Export documentation automation (LC, certificates of origin, customs) for Bangladeshi exporters"
+sector = "trade-tech"
+concept = "Generate and check export documents against letter-of-credit terms to avoid discrepancies."
+customer = "SME exporters and freight forwarders."
+problem = "LC discrepancies delay payment and cost fees."
+alternatives = "Manual preparation, forwarders."
+gap = "Automated discrepancy checks."
+solution = "LC parser, document generator, discrepancy checker."
+technology = "Document AI, rules (UCP 600 practice)."
+mvp = "LC discrepancy checker; 6 weeks."
+complexity = "medium"
+capital = "<$2k"
+pricing = "$30-$200/mo or per LC."
+acquisition = "Forwarders, chambers of commerce."
+competition = "Bank and trade-finance platforms."
+defensibility_note = "Workflow."
+regulatory = "Financial documents."
+main_risk = "Fragmented buyers; support."
+evidence_needed = "Discrepancy rates and fees among SMEs."
+evidence = []
+tags = ["ai_native", "low_capital"]
+scores = { severity = 7, willingness_to_pay = 5, market = 6, solo_feasibility = 6, ai_leverage = 7, speed_to_mvp = 6, distribution = 5, defensibility = 5, capital_efficiency = 8, expansion = 6 }
+penalties = { hard_acquisition = 0.5, unstable_dependency = 0.5, high_support = 0.5 }
+rationale = "Real pain, no founder advantage."
+
+[[opportunity]]
+id = "O33"
+name = "Bangla WhatsApp/voice AI agents for SMEs"
+sector = "ai-agents"
+concept = "Customer-service and ordering agents that speak Bangla over WhatsApp and phone."
+customer = "Bangladeshi SMEs, clinics and retailers."
+problem = "Missed messages and calls lose sales."
+alternatives = "Human staff, chatbot builders."
+gap = "Good Bangla voice/text quality at SME prices."
+solution = "Agent builder, catalogue sync, handover."
+technology = "LLMs, speech, messaging APIs."
+mvp = "WhatsApp order agent; 4 weeks."
+complexity = "medium"
+capital = "$1-3k"
+pricing = "$20-$100/mo + usage."
+acquisition = "Facebook commerce communities."
+competition = "Global agent platforms localising quickly."
+defensibility_note = "Weak."
+regulatory = "Messaging-platform policies."
+main_risk = "Platform dependency and price competition."
+evidence_needed = "SME retention."
+evidence = []
+tags = ["ai_native", "consumer"]
+scores = { severity = 6, willingness_to_pay = 4, market = 7, solo_feasibility = 6, ai_leverage = 9, speed_to_mvp = 7, distribution = 6, defensibility = 3, capital_efficiency = 7, expansion = 6 }
+penalties = { weak_differentiation = 0.67, unstable_dependency = 0.67, high_support = 0.5 }
+rationale = "Hot category, weak moat."
+
+[[opportunity]]
+id = "O34"
+name = "Bangla and low-resource-language data and evaluation services for AI labs"
+sector = "ai-services"
+concept = "Expert-built evaluation sets and data for medical and scientific Bangla."
+customer = "AI labs and model evaluators."
+problem = "Low-resource languages lack high-quality evaluations."
+alternatives = "Large data vendors."
+gap = "Domain-expert (medical/pharma) Bangla data."
+solution = "Curated eval sets, annotation services."
+technology = "Annotation tooling, QA pipelines."
+mvp = "Medical Bangla eval set; 4 weeks."
+complexity = "low"
+capital = "<$1k"
+pricing = "Project contracts."
+acquisition = "Direct outreach to labs/vendors."
+competition = "Global data vendors."
+defensibility_note = "Expert network."
+regulatory = "Low."
+main_risk = "Buyer concentration; services economics."
+evidence_needed = "One paid project."
+evidence = []
+tags = ["solo_friendly", "low_capital"]
+scores = { severity = 5, willingness_to_pay = 7, market = 5, solo_feasibility = 5, ai_leverage = 6, speed_to_mvp = 7, distribution = 4, defensibility = 4, capital_efficiency = 8, expansion = 5 }
+penalties = { hard_acquisition = 0.6, weak_differentiation = 0.5 }
+rationale = "Possible side income, not a scalable asset."
+
+[[opportunity]]
+id = "O35"
+name = "AI tutoring for Bangladesh national curriculum (SSC/HSC)"
+sector = "edtech"
+concept = "Bangla AI tutor aligned to national curriculum and exams."
+customer = "Students and parents."
+problem = "Private tuition is expensive; quality varies."
+alternatives = "Coaching centres, established edtech apps."
+gap = "Personalised AI tutoring at low price."
+solution = "Curriculum-grounded tutor, practice, progress reports."
+technology = "LLM, curriculum retrieval."
+mvp = "One subject tutor; 4 weeks."
+complexity = "medium"
+capital = "$1-3k"
+pricing = "$2-$8/mo."
+acquisition = "Social media, schools."
+competition = "Established local edtech and global AI tutors."
+defensibility_note = "Weak."
+regulatory = "Child data."
+main_risk = "Low ARPU; strong incumbents."
+evidence_needed = "Retention in a pilot cohort."
+evidence = []
+tags = ["consumer", "ai_native"]
+scores = { severity = 6, willingness_to_pay = 3, market = 7, solo_feasibility = 7, ai_leverage = 8, speed_to_mvp = 7, distribution = 6, defensibility = 3, capital_efficiency = 8, expansion = 5 }
+penalties = { weak_differentiation = 0.67, high_support = 0.25 }
+rationale = "Large audience, low monetisation, strong incumbents."
+
+# --------------------------------------------------------------------------
+# C. Global horizontal / developer / compliance software
+# --------------------------------------------------------------------------
+
+[[opportunity]]
+id = "O36"
+name = "Third-party API change monitor for developers"
+sector = "developer-tools"
+concept = "Diff and explain changes to the APIs and SDKs a team depends on."
+customer = "Engineering teams depending on many vendor APIs."
+problem = "Silent breaking changes cause outages."
+alternatives = "Changelogs, status pages, generic web monitors."
+gap = "Semantic, dependency-aware alerts."
+solution = "Spec/doc diffing, impact mapping."
+technology = "OpenAPI diffing, crawling, LLM summaries."
+mvp = "OpenAPI diff alerts; 3 weeks."
+complexity = "low"
+capital = "<$1k"
+pricing = "$29-$299/mo."
+acquisition = "Developer communities."
+competition = "API tooling vendors, open-source diff tools."
+defensibility_note = "Low."
+regulatory = "None."
+main_risk = "Crowded developer-tool space; no founder advantage."
+evidence_needed = "Team willingness to pay."
+evidence = []
+tags = ["solo_friendly", "low_capital", "fast_to_market"]
+scores = { severity = 5, willingness_to_pay = 5, market = 6, solo_feasibility = 8, ai_leverage = 6, speed_to_mvp = 8, distribution = 6, defensibility = 4, capital_efficiency = 9, expansion = 5 }
+penalties = { weak_differentiation = 0.5, unproven_demand = 0.5 }
+rationale = "Same engine shape as O01 with none of the domain advantage."
+
+[[opportunity]]
+id = "O37"
+name = "Regulatory web-change monitoring for compliance teams (horizontal)"
+sector = "compliance"
+concept = "Monitor regulator and standards web pages; summarise changes."
+customer = "Compliance teams across industries."
+problem = "Missing regulatory updates."
+alternatives = "Visual web monitors, regulatory-change platforms."
+gap = "Little."
+solution = "Page monitoring, AI summaries."
+technology = "Crawling, diffing, LLM."
+mvp = "2 weeks."
+complexity = "low"
+capital = "<$1k"
+pricing = "$29-$299/mo."
+acquisition = "SEO."
+competition = "Visualping, ChangeFlow, Compliance.ai and others."
+defensibility_note = "Very low."
+regulatory = "None."
+main_risk = "Commodity."
+evidence_needed = "None worth gathering."
+evidence = ["E19"]
+tags = ["solo_friendly", "fast_to_market", "low_capital"]
+scores = { severity = 5, willingness_to_pay = 5, market = 6, solo_feasibility = 8, ai_leverage = 7, speed_to_mvp = 8, distribution = 5, defensibility = 3, capital_efficiency = 9, expansion = 5 }
+penalties = { weak_differentiation = 0.83 }
+rationale = "A commodity; vertical depth (O01/O03) is the antidote."
+
+[[opportunity]]
+id = "O38"
+name = "EU AI Act compliance workspace"
+sector = "compliance"
+concept = "AI-system inventory, risk classification and technical documentation."
+customer = "Companies deploying AI in the EU."
+problem = "New obligations, unclear processes."
+alternatives = "GRC platforms, consultancies, new startups."
+gap = "Shrinking as incumbents add modules."
+solution = "Inventory, classification, documentation templates."
+technology = "Workflow, LLM drafting."
+mvp = "Inventory + classifier; 6 weeks."
+complexity = "medium"
+capital = "<$2k"
+pricing = "$200-$2,000/mo."
+acquisition = "Enterprise sales."
+competition = "GRC vendors and many startups."
+defensibility_note = "Low."
+regulatory = "Advice liability."
+main_risk = "Crowded; no founder advantage."
+evidence_needed = "None for this founder."
+evidence = []
+tags = ["enterprise"]
+scores = { severity = 6, willingness_to_pay = 7, market = 7, solo_feasibility = 5, ai_leverage = 7, speed_to_mvp = 5, distribution = 4, defensibility = 4, capital_efficiency = 7, expansion = 6 }
+penalties = { weak_differentiation = 0.67, hard_acquisition = 0.6, heavy_regulation = 0.33 }
+rationale = "Busy category; not this founder's edge."
+
+[[opportunity]]
+id = "O39"
+name = "SOC 2 / ISO 27001-lite for emerging-market SaaS exporters"
+sector = "security-compliance"
+concept = "Affordable security-compliance automation for small SaaS teams selling abroad."
+customer = "Small SaaS companies in South Asia."
+problem = "Enterprise buyers demand security attestations."
+alternatives = "Established compliance-automation platforms, consultants."
+gap = "Price."
+solution = "Policy templates, evidence collection."
+technology = "Integrations, workflow."
+mvp = "Policy pack + checklist; 6 weeks."
+complexity = "medium"
+capital = "<$2k"
+pricing = "$99-$499/mo."
+acquisition = "Startup communities."
+competition = "Vanta, Drata, Secureframe and others."
+defensibility_note = "Low."
+regulatory = "Auditor relationships."
+main_risk = "Incumbents' integrations and brand."
+evidence_needed = "None worth gathering now."
+evidence = []
+tags = []
+scores = { severity = 5, willingness_to_pay = 5, market = 5, solo_feasibility = 5, ai_leverage = 6, speed_to_mvp = 5, distribution = 4, defensibility = 4, capital_efficiency = 7, expansion = 5 }
+penalties = { weak_differentiation = 0.83 }
+rationale = "Incumbent-dominated."
+
+[[opportunity]]
+id = "O40"
+name = "Trade-finance document extraction API for banks"
+sector = "fintech"
+concept = "Structured extraction and checking of trade documents for bank trade-operations teams."
+customer = "Trade-finance operations at banks."
+problem = "Manual document checking."
+alternatives = "Bank systems, large vendors."
+gap = "Specialised AI extraction."
+solution = "Extraction API, discrepancy rules."
+technology = "Document AI."
+mvp = "Extraction for 5 document types; 8 weeks."
+complexity = "high"
+capital = "$2-5k"
+pricing = "Enterprise contracts."
+acquisition = "Bank sales."
+competition = "Large trade-tech vendors."
+defensibility_note = "Accuracy data."
+regulatory = "Banking security requirements."
+main_risk = "Bank procurement impossible solo."
+evidence_needed = "Bank sponsor."
+evidence = []
+tags = ["enterprise", "high_revenue"]
+scores = { severity = 7, willingness_to_pay = 7, market = 6, solo_feasibility = 4, ai_leverage = 8, speed_to_mvp = 5, distribution = 3, defensibility = 5, capital_efficiency = 6, expansion = 6 }
+penalties = { hard_acquisition = 0.8, security_exposure = 0.8, heavy_regulation = 0.33 }
+rationale = "Right problem, wrong buyer for a solo founder."
+
+[[opportunity]]
+id = "O41"
+name = "Export contract review for SMEs (Incoterms, LC terms)"
+sector = "legal-tech"
+concept = "Flag risky terms in export contracts and purchase orders."
+customer = "SME exporters."
+problem = "Unfavourable terms cause losses."
+alternatives = "Lawyers, general AI assistants."
+gap = "Thin."
+solution = "Clause extraction, risk flags."
+technology = "LLM."
+mvp = "2-3 weeks."
+complexity = "low"
+capital = "<$1k"
+pricing = "$10-$50/mo."
+acquisition = "Trade associations."
+competition = "General AI assistants."
+defensibility_note = "Very low."
+regulatory = "Legal-advice rules."
+main_risk = "General assistants already do this."
+evidence_needed = "None worth gathering."
+evidence = []
+tags = ["solo_friendly", "fast_to_market"]
+scores = { severity = 5, willingness_to_pay = 4, market = 6, solo_feasibility = 7, ai_leverage = 8, speed_to_mvp = 7, distribution = 5, defensibility = 3, capital_efficiency = 9, expansion = 5 }
+penalties = { weak_differentiation = 0.67, heavy_regulation = 0.33 }
+rationale = "A prompt, not a product."
+
+[[opportunity]]
+id = "O42"
+name = "Freight-quote aggregator for Bangladeshi SME exporters"
+sector = "logistics"
+concept = "Compare forwarder quotes and track shipments."
+customer = "SME exporters."
+problem = "Opaque pricing."
+alternatives = "Forwarder relationships, digital forwarders."
+gap = "Local marketplace."
+solution = "Quote requests, comparison, tracking."
+technology = "Marketplace web app."
+mvp = "6 weeks."
+complexity = "medium"
+capital = "$1-3k"
+pricing = "Commission."
+acquisition = "Direct sales."
+competition = "Digital forwarders."
+defensibility_note = "Liquidity network."
+regulatory = "Low."
+main_risk = "Two-sided cold start."
+evidence_needed = "Forwarder participation."
+evidence = []
+tags = []
+scores = { severity = 5, willingness_to_pay = 4, market = 5, solo_feasibility = 6, ai_leverage = 5, speed_to_mvp = 6, distribution = 5, defensibility = 4, capital_efficiency = 7, expansion = 5 }
+penalties = { hard_acquisition = 0.5, unstable_dependency = 0.5 }
+rationale = "Marketplace cold-start without founder advantage."
+
+[[opportunity]]
+id = "O43"
+name = "US medical billing/coding AI with a Bangladesh delivery team"
+sector = "healthcare-admin"
+concept = "AI-first revenue-cycle services delivered with a small offshore team."
+customer = "US independent practices."
+problem = "Denials and coding errors cost revenue."
+alternatives = "Billing companies, VC-backed AI RCM."
+gap = "Price."
+solution = "AI coding suggestions, denial management, human review."
+technology = "LLMs, EHR integrations."
+mvp = "Coding-assist service for one specialty; 8 weeks."
+complexity = "high"
+capital = "$5k+"
+pricing = "% of collections."
+acquisition = "US practice sales."
+competition = "Large billing firms and funded AI RCM companies."
+defensibility_note = "Low."
+regulatory = "HIPAA/BAA; payer rules."
+main_risk = "Compliance, US sales, crowded."
+evidence_needed = "US partner."
+evidence = []
+tags = ["high_revenue"]
+scores = { severity = 7, willingness_to_pay = 7, market = 8, solo_feasibility = 4, ai_leverage = 7, speed_to_mvp = 5, distribution = 4, defensibility = 4, capital_efficiency = 6, expansion = 6 }
+penalties = { heavy_regulation = 0.67, security_exposure = 0.8, hard_acquisition = 0.6, weak_differentiation = 0.5 }
+rationale = "Big market, wrong risk profile."
+
+# --------------------------------------------------------------------------
+# D. Research & academic software
+# --------------------------------------------------------------------------
+
+[[opportunity]]
+id = "O44"
+name = "Manuscript and figure formatting assistant for researchers"
+sector = "research-software"
+concept = "Format manuscripts, references and figures to journal requirements automatically."
+customer = "Researchers and graduate students."
+problem = "Reformatting for each journal wastes days."
+alternatives = "Reference managers, templates, general AI."
+gap = "End-to-end formatting incl. figures."
+solution = "Journal rules database, converters, checks."
+technology = "Document processing, LLM."
+mvp = "4 weeks."
+complexity = "medium"
+capital = "<$1k"
+pricing = "$5-$15/mo or per paper."
+acquisition = "Academic communities."
+competition = "Reference managers, writing tools."
+defensibility_note = "Low."
+regulatory = "None."
+main_risk = "Low WTP, crowded."
+evidence_needed = "Paid conversion."
+evidence = []
+tags = ["solo_friendly", "consumer", "fast_to_market"]
+scores = { severity = 5, willingness_to_pay = 3, market = 6, solo_feasibility = 8, ai_leverage = 8, speed_to_mvp = 8, distribution = 6, defensibility = 3, capital_efficiency = 9, expansion = 5 }
+penalties = { weak_differentiation = 0.67 }
+rationale = "Easy to build, hard to charge for."
+
+[[opportunity]]
+id = "O45"
+name = "Grant and fellowship finder + application assistant for LMIC researchers"
+sector = "research-software"
+concept = "Match researchers to funding and help draft eligible applications."
+customer = "Researchers in low- and middle-income countries."
+problem = "Funding discovery and writing are hard."
+alternatives = "Funding databases, consultants, general AI."
+gap = "LMIC-specific eligibility filtering."
+solution = "Opportunity database, matching, drafting support."
+technology = "Ingestion, matching, LLM."
+mvp = "4 weeks."
+complexity = "low"
+capital = "<$1k"
+pricing = "$5-$20/mo; institutional plans."
+acquisition = "Academic communities."
+competition = "Funding databases and grant-writing AI tools."
+defensibility_note = "Low."
+regulatory = "None."
+main_risk = "Low WTP."
+evidence_needed = "Institutional buyers."
+evidence = []
+tags = ["solo_friendly", "consumer"]
+scores = { severity = 5, willingness_to_pay = 3, market = 6, solo_feasibility = 8, ai_leverage = 8, speed_to_mvp = 8, distribution = 6, defensibility = 3, capital_efficiency = 9, expansion = 5 }
+penalties = { weak_differentiation = 0.67, unproven_demand = 0.25 }
+rationale = "Helpful, crowded, low budget."
+
+[[opportunity]]
+id = "O46"
+name = "AI systematic-review screening for academics"
+sector = "research-software"
+concept = "Screening and extraction for systematic reviews."
+customer = "Academic reviewers."
+problem = "Screening thousands of abstracts is slow."
+alternatives = "Covidence, Rayyan, Elicit, DistillerSR and others."
+gap = "Very little."
+solution = "AI screening, extraction."
+technology = "LLM classification."
+mvp = "4 weeks."
+complexity = "medium"
+capital = "<$1k"
+pricing = "$10-$50/mo."
+acquisition = "Academic communities."
+competition = "Many funded incumbents."
+defensibility_note = "Low."
+regulatory = "None."
+main_risk = "Crowded."
+evidence_needed = "None worth gathering."
+evidence = []
+tags = ["ai_native", "research_intensive"]
+scores = { severity = 6, willingness_to_pay = 4, market = 6, solo_feasibility = 6, ai_leverage = 9, speed_to_mvp = 6, distribution = 5, defensibility = 3, capital_efficiency = 8, expansion = 5 }
+penalties = { weak_differentiation = 0.83 }
+rationale = "A solved category."
+
+[[opportunity]]
+id = "O47"
+name = "Lab inventory and reagent management for LMIC university labs"
+sector = "research-software"
+concept = "Simple inventory, expiry and ordering for university labs."
+customer = "University and institute labs."
+problem = "Lost reagents, expired stock, duplicate orders."
+alternatives = "Spreadsheets, free lab tools."
+gap = "Simplicity and price."
+solution = "Inventory app, barcode scanning."
+technology = "Web/mobile app."
+mvp = "3 weeks."
+complexity = "low"
+capital = "<$1k"
+pricing = "$5-$20/mo per lab."
+acquisition = "Academic networks."
+competition = "Free lab-management tools."
+defensibility_note = "Low."
+regulatory = "None."
+main_risk = "Institutions rarely pay."
+evidence_needed = "Department budgets."
+evidence = []
+tags = ["solo_friendly", "fast_to_market"]
+scores = { severity = 4, willingness_to_pay = 3, market = 5, solo_feasibility = 8, ai_leverage = 4, speed_to_mvp = 8, distribution = 4, defensibility = 4, capital_efficiency = 9, expansion = 4 }
+penalties = { hard_acquisition = 0.6, weak_differentiation = 0.5 }
+rationale = "Low value."
+
+# --------------------------------------------------------------------------
+# E. Other sectors and business-model options
+# --------------------------------------------------------------------------
+
+[[opportunity]]
+id = "O48"
+name = "Smartphone crop-disease diagnosis for Bangladeshi farmers"
+sector = "agritech"
+concept = "Photo-based diagnosis and treatment advice in Bangla."
+customer = "Smallholder farmers; agri-input companies; NGOs."
+problem = "Crop losses from late or wrong diagnosis."
+alternatives = "Extension officers, input dealers, existing apps."
+gap = "Local crops and Bangla support."
+solution = "Vision models, advisory content."
+technology = "Computer vision, mobile app."
+mvp = "8 weeks."
+complexity = "medium"
+capital = "$2-5k"
+pricing = "B2B2C via input companies; grants."
+acquisition = "NGO and agri-company partnerships."
+competition = "Global agri apps; government services."
+defensibility_note = "Local image data."
+regulatory = "Pesticide advice responsibility."
+main_risk = "Farmers do not pay; B2B2C sales slow."
+evidence_needed = "Sponsor willing to pay."
+evidence = []
+tags = ["consumer", "research_intensive"]
+scores = { severity = 7, willingness_to_pay = 2, market = 7, solo_feasibility = 5, ai_leverage = 8, speed_to_mvp = 6, distribution = 3, defensibility = 4, capital_efficiency = 6, expansion = 5 }
+penalties = { hard_acquisition = 0.8, high_support = 0.5 }
+rationale = "High impact, weak business model."
+
+[[opportunity]]
+id = "O49"
+name = "Carbon and CBAM data for SME exporters"
+sector = "climate-compliance"
+concept = "Product carbon data and supplier questionnaires for EU-facing SMEs."
+customer = "SME exporters to the EU."
+problem = "Buyers ask for carbon data the SME cannot produce."
+alternatives = "Consultants, carbon-accounting platforms."
+gap = "SME pricing."
+solution = "Activity-data capture, calculators, reports."
+technology = "Emission factors, workflow."
+mvp = "6 weeks."
+complexity = "medium"
+capital = "<$2k"
+pricing = "$50-$300/mo."
+acquisition = "Trade associations."
+competition = "Carbon-accounting platforms."
+defensibility_note = "Low."
+regulatory = "Methodology scrutiny; shifting EU scope."
+main_risk = "Regulatory scope changes reduce urgency."
+evidence_needed = "Buyer mandates in target sectors."
+evidence = []
+tags = []
+scores = { severity = 5, willingness_to_pay = 5, market = 6, solo_feasibility = 5, ai_leverage = 6, speed_to_mvp = 5, distribution = 4, defensibility = 4, capital_efficiency = 7, expansion = 6 }
+penalties = { unproven_demand = 0.5, weak_differentiation = 0.5 }
+rationale = "Regulation-dependent demand without founder edge."
+
+[[opportunity]]
+id = "O50"
+name = "AI-native regulatory-affairs productized service (service first, software later)"
+sector = "pharma-services"
+concept = "Sell fixed-scope regulatory deliverables (label update packages, country checklists, query drafts) produced with your own AI tooling; turn repeated work into software."
+customer = "Generic exporters and small MAHs that already outsource RA work."
+problem = "Consultants are slow and expensive; in-house teams are overloaded."
+alternatives = "Regulatory consultancies, freelancers."
+gap = "AI-leveraged delivery at lower price and faster turnaround."
+solution = "Productised packages with fixed prices and SLAs."
+technology = "Internal tools (LabelLedger engine), templates."
+mvp = "Immediately; first package in week 2."
+complexity = "low"
+capital = "<$500"
+pricing = "$150-$1,500 per package."
+acquisition = "Founder network; LinkedIn; partnerships."
+competition = "Consultancies (Freyr, DDReg and many freelancers)."
+defensibility_note = "Weak as a service; strong as the discovery engine for software."
+regulatory = "Professional responsibility for deliverables."
+main_risk = "Founder time becomes the bottleneck; needs RA credibility."
+evidence_needed = "3 paid packages in 30 days."
+evidence = ["E01", "E12"]
+tags = ["solo_friendly", "fast_to_market", "low_capital"]
+scores = { severity = 7, willingness_to_pay = 7, market = 7, solo_feasibility = 5, ai_leverage = 7, speed_to_mvp = 9, distribution = 6, defensibility = 4, capital_efficiency = 9, expansion = 6 }
+penalties = { high_support = 0.75, weak_differentiation = 0.33, unproven_demand = 0.375 }
+rationale = "Not a separate venture: it is the concierge go-to-market for O01 during validation."
