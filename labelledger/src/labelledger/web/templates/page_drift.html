@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Drift · {{ report.follower.title }}{% endblock %}
+{% block content %}
+<div class="row no-print" style="margin-bottom:0.8rem">
+  {% if adhoc %}<span class="badge sev-none">ad-hoc comparison · not stored</span>{% endif %}
+  {% if not adhoc %}
+  <form class="row" action="/drift" method="get">
+    <input type="hidden" name="reference" value="{{ report.reference.set_id }}">
+    <input type="hidden" name="follower" value="{{ report.follower.set_id }}">
+    <label for="min" style="margin:0">Show</label>
+    <select id="min" name="min">{% for s in ["critical","major","moderate","minor"] %}<option value="{{ s }}" {% if s == min_name %}selected{% endif %}>{{ s }} and above</option>{% endfor %}</select>
+    <button class="secondary" type="submit">Apply</button>
+  </form>
+  <span class="spacer"></span>
+  <a class="button secondary" href="/drift?reference={{ report.reference.set_id }}&follower={{ report.follower.set_id }}&min={{ min_name }}&format=html">Download HTML</a>
+  <a class="button secondary" href="/drift?reference={{ report.reference.set_id }}&follower={{ report.follower.set_id }}&min={{ min_name }}&format=json">JSON</a>
+  {% endif %}
+</div>
+{% include "_drift_body.html" %}
+{% endblock %}

@@ -1,0 +1,5 @@
+# Local archive databases and demo output
+*.db
+*.db-wal
+*.db-shm
+/out/

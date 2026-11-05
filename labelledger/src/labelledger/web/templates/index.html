@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% from "_macros.html" import sev %}
+{% block content %}
+<div class="grid">
+  <section class="card">
+    <h2 style="margin-top:0">Compare two labels now</h2>
+    <p class="small muted">Upload two SPL XML files (from DailyMed or your own labeling system). Nothing is stored.</p>
+    <form action="/compare" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <div class="field"><label for="first">Older version or reference label</label><input id="first" type="file" name="first" accept=".xml,application/xml,text/xml" required></div>
+      <div class="field"><label for="second">Newer version or your label</label><input id="second" type="file" name="second" accept=".xml,application/xml,text/xml" required></div>
+      <div class="field"><label for="mode">Comparison</label>
+        <select id="mode" name="mode">
+          <option value="diff">Version redline (same label, two versions)</option>
+          <option value="drift">Drift check (reference vs your label)</option>
+        </select></div>
+      <button type="submit">Compare</button>
+    </form>
+  </section>
+  <section class="card">
+    <h2 style="margin-top:0">Add to your archive</h2>
+    <p class="small muted">Stored versions are kept with checksums; uploading a newer version of a stored label records the redline and alerts watchers.</p>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <div class="field"><label for="files">SPL XML file(s)</label><input id="files" type="file" name="files" accept=".xml,application/xml,text/xml" multiple required></div>
+      <button type="submit">Upload</button>
+    </form>
+    <form action="/poll" method="post" style="margin-top:1rem">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <button class="secondary" type="submit">Check DailyMed for watched labels</button>
+    </form>
+  </section>
+</div>
+
+<section class="card">
+  <div class="row"><h2 style="margin:0">Alerts</h2><span class="spacer"></span><span class="chip"><b>{{ alerts | length }}</b> new</span></div>
+  {% for a in alerts %}
+    <div class="row hunk">
+      {{ sev(a.severity) }}
+      <a href="/changes/{{ a.change_id }}">{{ a.title or a.set_id }} · v{{ a.from_version }} → v{{ a.to_version }}</a>
+      <span class="small muted">watched as {{ a.role }}</span>
+      <span class="spacer"></span>
+      <form class="inline" action="/alerts/{{ a.id }}" method="post"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="status" value="reviewed"><button class="secondary" type="submit">Mark reviewed</button></form>
+    </div>
+  {% else %}
+    <p class="empty">No new alerts. Add reference labels to your watchlist to be alerted when they change.</p>
+  {% endfor %}
+</section>
+
+<div class="grid">
+  <section class="card">
+    <h2 style="margin-top:0">Recent changes</h2>
+    {% for c in changes %}
+      <div class="row small" style="margin:0.35rem 0">{{ sev(c.severity) }} <a href="/changes/{{ c.id }}">{{ c.title or c.set_id }}</a> <span class="muted">v{{ c.from_version }} → v{{ c.to_version }}</span></div>
+    {% else %}<p class="empty">No changes recorded yet.</p>{% endfor %}
+  </section>
+  <section class="card">
+    <h2 style="margin-top:0">Watchlist</h2>
+    {% for w in watches %}
+      <div class="row small" style="margin:0.35rem 0">
+        <span class="badge sev-none">{{ w.role }}</span>
+        <a href="/labels/{{ w.set_id }}">{{ w.title or w.set_id }}</a>
+        {% if w.follower_set_id %}<span class="muted">→ followed by {{ w.follower_title or w.follower_set_id }}</span>{% endif %}
+        <span class="spacer"></span>
+        <form class="inline" action="/watches/{{ w.id }}/delete" method="post"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="secondary" type="submit" aria-label="Remove watch">Remove</button></form>
+      </div>
+    {% else %}<p class="empty">Nothing watched yet.</p>{% endfor %}
+    <form action="/watches" method="post" style="margin-top:0.8rem">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <div class="field"><label for="w-set">DailyMed set ID to watch</label><input id="w-set" type="text" name="set_id" required pattern="[0-9a-fA-F-]{20,40}" placeholder="e.g. 1244c338-9140-425a-bf2a-9da6b4ac0287" style="width:100%"></div>
+      <div class="row">
+        <select name="role" aria-label="Role">{% for r in roles %}<option value="{{ r }}">{{ r }}</option>{% endfor %}</select>
+        <button type="submit">Watch</button>
+      </div>
+    </form>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Redline · {{ diff.new.title }}{% endblock %}
+{% block content %}
+<div class="row no-print" style="margin-bottom:0.8rem">
+  {% if adhoc %}<span class="badge sev-none">ad-hoc comparison · not stored</span>{% endif %}
+  <span class="spacer"></span>
+  {% if change_id %}
+    <a class="button secondary" href="/changes/{{ change_id }}/export?format=html">Download HTML</a>
+    <a class="button secondary" href="/changes/{{ change_id }}/export?format=md">Markdown</a>
+    <a class="button secondary" href="/changes/{{ change_id }}/export?format=json">JSON</a>
+  {% endif %}
+</div>
+{% include "_diff_body.html" %}
+{% endblock %}

@@ -1,0 +1,97 @@
+[project]
+name = "labelledger"
+version = "0.1.0"
+description = "Version control, explained redlines and drift detection for regulated drug labels (FDA SPL)"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Proprietary — all rights reserved" }
+authors = [{ name = "LabelLedger" }]
+keywords = ["pharmaceutical", "regulatory", "labeling", "SPL", "DailyMed", "diff"]
+classifiers = [
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Intended Audience :: Healthcare Industry",
+  "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+dependencies = [
+  "lxml>=6.0,<7",
+  "rapidfuzz>=3.10,<4",
+  "httpx>=0.28,<0.29",
+  "fastapi>=0.150,<1",
+  "uvicorn>=0.40,<1",
+  "jinja2>=3.1.6,<4",
+  "typer>=0.20,<1",
+  "pydantic>=2.10,<3",
+  "python-multipart>=0.0.20,<0.1",
+]
+
+[project.optional-dependencies]
+# Grounded AI summaries. Everything works without it; the deterministic
+# summariser is always available and is what tests exercise by default.
+ai = ["anthropic>=2.1,<3"]
+dev = [
+  "anthropic>=2.1,<3",
+  "pytest>=9,<10",
+  "pytest-cov>=7,<8",
+  "hypothesis>=6.150,<7",
+  "ruff>=0.17,<0.18",
+  "mypy>=2.4,<3",
+  "lxml-stubs>=0.5,<1",
+]
+
+[project.scripts]
+labelledger = "labelledger.cli:app"
+
+[build-system]
+requires = ["hatchling==1.28.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/labelledger"]
+
+[tool.uv]
+# Supply-chain hygiene: never resolve a release younger than two weeks at lock
+# time. Move this date forward deliberately when upgrading dependencies.
+exclude-newer = "2026-10-22T00:00:00Z"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM", "RET", "PTH", "N", "ARG", "BLE", "RUF", "S"]
+ignore = [
+  "E501",   # ruff format owns line length; long literals are left intact
+  "N812",   # `from . import text as T` is a deliberate short alias
+  "S101",   # assert is fine in tests and for internal invariants
+  "S603", "S607",
+  "RUF001", "RUF002", "RUF003",  # label text legitimately contains typographic characters
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S", "ARG001", "ARG002", "ARG005", "E501", "PTH", "N802"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unreachable = true
+files = ["src/labelledger"]
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["rapidfuzz.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+markers = ["network: requires outbound access to DailyMed (skipped by default)"]
+
+[tool.coverage.run]
+source = ["labelledger"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = ["pragma: no cover", "if TYPE_CHECKING:", "raise NotImplementedError"]

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% from "_macros.html" import sev %}
+{% block title %}{{ title }} · LabelLedger{% endblock %}
+{% block content %}
+<section class="card">
+  <h1>{{ title }}</h1>
+  <p>{{ message }}</p>
+  {% if links %}<ul>{% for href, text in links %}<li><a href="{{ href }}">{{ text }}</a></li>{% endfor %}</ul>{% endif %}
+  {% if outcomes %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>Set ID</th><th>Result</th><th class="num">Version</th><th>Severity</th><th>Note</th></tr></thead>
+    <tbody>{% for o in outcomes %}<tr><td class="mono small"><a href="/labels/{{ o.set_id }}">{{ o.set_id }}</a></td><td>{{ o.status }}</td><td class="num">{{ o.version or "—" }}</td><td>{% if o.severity %}{{ sev(o.severity) }}{% if o.change_id %} <a href="/changes/{{ o.change_id }}">view</a>{% endif %}{% endif %}</td><td class="small">{{ o.message }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+  {% endif %}
+  <p><a href="/">Back to dashboard</a></p>
+</section>
+{% endblock %}

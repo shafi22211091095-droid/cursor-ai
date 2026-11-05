@@ -1,0 +1,69 @@
+name: LabelLedger
+
+on:
+  push:
+    branches: ['**']
+    paths: ['labelledger/**', 'godmode/**', '.github/workflows/labelledger.yml']
+  pull_request:
+    paths: ['labelledger/**', 'godmode/**', '.github/workflows/labelledger.yml']
+  workflow_dispatch:
+
+concurrency:
+  group: labelledger-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Lint, types, tests (py${{ matrix.python }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.13']
+    defaults:
+      run:
+        working-directory: labelledger
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: '0.11.32'  # the lockfile was produced with this uv release
+          enable-cache: true
+      - name: Install from the lockfile
+        run: |
+          uv venv -p ${{ matrix.python }} .venv
+          uv sync --frozen --extra dev
+      - name: ruff
+        run: |
+          .venv/bin/ruff check src tests
+          .venv/bin/ruff format --check src tests
+      - name: mypy --strict
+        run: .venv/bin/mypy
+      - name: pytest
+        run: .venv/bin/pytest -W error::ResourceWarning --cov=labelledger --cov-report=term-missing --cov-fail-under=88
+
+  strategy-artifacts:
+    name: GODMODE dossier is reproducible
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Opportunity ranking is current
+        run: python3 godmode/engine/score.py --check
+      - name: Financial model is current
+        run: python3 godmode/finance/model.py --check
+
+  container:
+    name: Container build
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build
+        run: docker build -t labelledger:ci labelledger
+      - name: CLI runs in the image
+        run: docker run --rm labelledger:ci labelledger version

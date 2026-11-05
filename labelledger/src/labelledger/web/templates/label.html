@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% from "_macros.html" import sev %}
+{% block title %}{{ label.title }} · LabelLedger{% endblock %}
+{% block content %}
+<section class="card">
+  <h1>{{ label.title }}</h1>
+  <dl class="meta">
+    <dt>Labeler</dt><dd>{{ label.labeler or "—" }}</dd>
+    <dt>Set ID</dt><dd class="mono">{{ label.set_id }}</dd>
+    <dt>Application</dt><dd>{{ label.application_numbers | join(", ") or "—" }}</dd>
+    <dt>Generic name</dt><dd>{{ label.generic_names | join(", ") or "—" }}</dd>
+    <dt>Latest</dt><dd>v{{ label.latest_version }} · effective {{ label.latest_effective or "—" }}</dd>
+    <dt>Last checked</dt><dd>{{ label.last_checked or "never" }}</dd>
+  </dl>
+</section>
+<div class="grid">
+  <section class="card">
+    <h2 style="margin-top:0">Versions in your archive</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th class="num">Version</th><th>Effective</th><th>Captured</th><th>Source</th><th></th></tr></thead>
+      <tbody>
+      {% for v in versions %}
+        <tr><td class="num">v{{ v.version }}</td><td class="small">{{ v.effective_date or "—" }}</td><td class="small">{{ v.captured_at[:10] }}</td><td class="small">{{ v.source }}</td><td class="small"><a href="/labels/{{ label.set_id }}/versions/{{ v.version }}.xml">XML</a></td></tr>
+      {% endfor %}
+      </tbody>
+    </table></div>
+  </section>
+  <section class="card">
+    <h2 style="margin-top:0">Recorded changes</h2>
+    {% for c in changes %}
+      <div class="row small" style="margin:0.35rem 0">{{ sev(c.severity) }} <a href="/changes/{{ c.id }}">v{{ c.from_version }} → v{{ c.to_version }}</a> <span class="muted">{{ c.created_at[:10] }}</span></div>
+    {% else %}<p class="empty">Only one version stored so far.</p>{% endfor %}
+  </section>
+</div>
+<div class="grid">
+  <section class="card">
+    <h2 style="margin-top:0">Check drift</h2>
+    <p class="small muted">Compare this label (as reference) with another label in your archive.</p>
+    <form action="/drift" method="get">
+      <input type="hidden" name="reference" value="{{ label.set_id }}">
+      <div class="field"><label for="follower">Follower label</label>
+        <select id="follower" name="follower" required style="width:100%">{% for o in others %}<option value="{{ o.set_id }}">{{ o.title }} · {{ o.labeler or "" }} · v{{ o.latest_version }}</option>{% endfor %}</select></div>
+      <button type="submit" {% if not others %}disabled{% endif %}>Check drift</button>
+    </form>
+  </section>
+  <section class="card">
+    <h2 style="margin-top:0">Watch this label</h2>
+    {% for w in watches %}<p class="small">Watched as <strong>{{ w.role }}</strong>{% if w.follower_set_id %} for {{ w.follower_set_id }}{% endif %}.</p>{% endfor %}
+    <form action="/watches" method="post">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <input type="hidden" name="set_id" value="{{ label.set_id }}">
+      <div class="field"><label for="role">Role</label><select id="role" name="role">{% for r in roles %}<option value="{{ r }}">{{ r }}</option>{% endfor %}</select></div>
+      <div class="field"><label for="fset">Your label that follows it (optional)</label>
+        <select id="fset" name="follower_set_id"><option value="">—</option>{% for o in others %}<option value="{{ o.set_id }}">{{ o.title }} · {{ o.labeler or "" }}</option>{% endfor %}</select></div>
+      <button type="submit">Watch</button>
+    </form>
+  </section>
+</div>
+{% endblock %}

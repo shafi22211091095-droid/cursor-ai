@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}LabelLedger{% endblock %}</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="inner">
+    <a class="brand" href="/">Label<span>Ledger</span></a>
+    <nav class="nav" aria-label="Main">
+      <a href="/">Dashboard</a>
+      <a href="/labels">Archive</a>
+      <a href="/digest">Weekly digest</a>
+    </nav>
+  </div>
+</header>
+<main>
+{% block content %}{% endblock %}
+<p class="disclaimer">LabelLedger {{ engine_version }} · Decision support only. Redlines and severity are computed deterministically from the
+source SPL; AI-written text, when enabled, is marked and verified against the redline. Verify against official labeling before acting.</p>
+</main>
+</body>
+</html>

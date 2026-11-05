@@ -1,0 +1,64 @@
+{% from "_macros.html" import sev, segments, docmeta %}
+<section class="card">
+  <div class="row">
+    <h1 style="margin:0">Label drift: {{ report.follower.title }}</h1>
+    <span class="spacer"></span>
+    {{ sev(report.severity.label) }}
+  </div>
+  <p class="muted small">Follower label compared with its reference, statement by statement.</p>
+  <div class="row">
+    <span class="chip">Parity <b>{{ (report.parity * 100) | round(1) }}%</b></span>
+    {% if report.lag_days is not none %}<span class="chip">Reference is <b>{{ report.lag_days }}</b> day(s) newer</span>{% endif %}
+    {% for name, n in report.counts.items() if n %}<span class="chip sev-{{ name }}"><b>{{ n }}</b> {{ name }}</span>{% endfor %}
+  </div>
+  <div class="grid" style="margin-top:1rem">
+    <div>{{ docmeta(report.reference, "Reference") }}</div>
+    <div>{{ docmeta(report.follower, "Follower") }}</div>
+  </div>
+  {% if report.reference_changes_after_follower %}
+  <div class="notice"><strong>The reference declares major changes after the follower's label date:</strong>
+    <ul class="small">{% for r in report.reference_changes_after_follower %}<li>{{ r }}</li>{% endfor %}</ul>
+  </div>
+  {% endif %}
+</section>
+
+<section class="card">
+  <h2 style="margin-top:0">Parity by section family</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Family</th><th class="num">Tier</th><th>Parity</th><th class="num">Missing</th><th class="num">Changed</th><th class="num">Extra</th><th class="num">Ref. statements</th></tr></thead>
+    <tbody>
+    {% for p in report.pools %}
+      <tr>
+        <td>{{ p.label }}</td><td class="num">{{ p.tier }}</td>
+        <td><div class="row"><div class="bar" style="flex:1"><span style="width: {{ (p.parity * 100) | round(1) }}%"></span></div><span class="small mono">{{ (p.parity * 100) | round(1) }}%</span></div></td>
+        <td class="num">{{ p.missing }}</td><td class="num">{{ p.changed }}</td><td class="num">{{ p.extra }}</td><td class="num">{{ p.reference_sentences }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table></div>
+  <p class="small muted">Skipped as product-specific: {{ report.skipped_pools | join(", ") or "none" }}. Differences in Indications can reflect patent or exclusivity carve-outs.</p>
+</section>
+
+<h2>Findings</h2>
+{% for f in report.findings if f.severity.value >= min_severity %}
+<article class="card change sev-{{ f.severity.label }}" id="{{ f.fid }}">
+  <div class="row">
+    {{ sev(f.severity.label) }}
+    <span class="path">{{ f.kind | capitalize }} · {{ f.pool_label }}</span>
+    <span class="spacer"></span>
+    <span class="small muted mono">{{ f.fid }}{% if f.kind != "extra" %} · coverage {{ (f.coverage * 100) | round | int }}%{% endif %}</span>
+  </div>
+  <ul class="reasons">{% for r in f.reasons %}<li>{{ r }}</li>{% endfor %}</ul>
+  {% if f.kind == "changed" %}
+    <div class="hunk"><span class="hid">follower → reference</span>{{ segments(f.segments) }}</div>
+  {% elif f.kind == "missing" %}
+    <div class="hunk"><span class="hid">in reference only</span><ins>{{ f.reference_text }}</ins></div>
+  {% else %}
+    <div class="hunk"><span class="hid">in follower only</span><del>{{ f.follower_text }}</del></div>
+  {% endif %}
+  <p class="small muted">{% if f.reference_section %}Reference: {{ f.reference_section }}{% endif %}{% if f.reference_section and f.follower_section %} · {% endif %}{% if f.follower_section %}Follower: {{ f.follower_section }}{% endif %}</p>
+</article>
+{% else %}
+<div class="card empty">No drift findings at or above the selected severity.</div>
+{% endfor %}
+{% if hidden_count %}<p class="small muted">{{ hidden_count }} lower-severity finding(s) hidden. Export JSON for the complete list.</p>{% endif %}

@@ -1,0 +1,1948 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet href="http://www.accessdata.fda.gov/spl/stylesheet/spl.xsl" type="text/xsl" ?>
+<document xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hl7-org:v3 http://www.accessdata.fda.gov/spl/schema/spl.xsd">
+   <id root="42473c39-b5b9-429c-a21f-8c63cbb65310"/>
+   <code code="34391-3" codeSystem="2.16.840.1.113883.6.1" displayName="HUMAN PRESCRIPTION DRUG LABEL"/>
+   <title>These highlights do not include all the information needed to use warfarin sodium tablets USP safely and effectively.  See full prescribing information for warfarin sodium. Initial U.S. Approval: 1954
+        <br/>
+   </title>
+   <effectiveTime value="20120904"/>
+   <setId root="ed1d5b87-84d2-4ec7-b1bc-cf8f5096e938"/>
+   <versionNumber value="2"/>
+   <author>
+      <time/>
+      <assignedEntity>
+         <representedOrganization>
+            <id extension="938389038" root="1.3.6.1.4.1.519.1"/>
+            <name>TYA Pharmaceuticals</name>
+            <assignedEntity>
+               <assignedOrganization>
+                  <id extension="938389038" root="1.3.6.1.4.1.519.1"/>
+                  <name>TYA Pharmaceuticals</name>
+                  <assignedEntity>
+                     <assignedOrganization>
+                        <id extension="938389038" root="1.3.6.1.4.1.519.1"/>
+                        <name>TYA Pharmaceuticals</name>
+                     </assignedOrganization>
+                     <performance>
+                        <actDefinition>
+                           <code code="C73607" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="RELABEL"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="64725-0833" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                     <performance>
+                        <actDefinition>
+                           <code code="C73606" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="REPACK"/>
+                           <product>
+                              <manufacturedProduct classCode="MANU">
+                                 <manufacturedMaterialKind>
+                                    <code code="64725-0833" codeSystem="2.16.840.1.113883.6.69"/>
+                                 </manufacturedMaterialKind>
+                              </manufacturedProduct>
+                           </product>
+                        </actDefinition>
+                     </performance>
+                  </assignedEntity>
+               </assignedOrganization>
+            </assignedEntity>
+         </representedOrganization>
+      </assignedEntity>
+   </author>
+   <component>
+      <structuredBody>
+         <component>
+            <section>
+               <id root="c759574e-36d1-471e-994a-09252addcbc1"/>
+               <code code="48780-1" codeSystem="2.16.840.1.113883.6.1" displayName="SPL product data elements section"/>
+               <effectiveTime value="20060511"/>
+               <subject>
+                  <manufacturedProduct>
+                     <manufacturedProduct>
+                        <code codeSystem="2.16.840.1.113883.6.69" code="64725-0833"/>
+                        <name>Warfarin Sodium</name>
+                        <formCode code="C42998" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="TABLET"/>
+                        <asEntityWithGeneric>
+                           <genericMedicine>
+                              <name>Warfarin Sodium</name>
+                           </genericMedicine>
+                        </asEntityWithGeneric>
+                        <asEquivalentEntity classCode="EQUIV">
+                           <code code="C64637" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <definingMaterialKind>
+                              <code code="0555-0833" codeSystem="2.16.840.1.113883.6.69"/>
+                           </definingMaterialKind>
+                        </asEquivalentEntity>
+                        <ingredient classCode="ACTIB">
+                           <quantity>
+                              <numerator value="5" unit="mg"/>
+                              <denominator value="1" unit="1"/>
+                           </quantity>
+                           <ingredientSubstance>
+                              <code code="6153CWM0CL" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>WARFARIN SODIUM</name>
+                              <activeMoiety>
+                                 <activeMoiety>
+                                    <code code="5Q7ZVV76EI" codeSystem="2.16.840.1.113883.4.9"/>
+                                    <name>WARFARIN</name>
+                                 </activeMoiety>
+                              </activeMoiety>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="3SY5LH9PMK" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>ANHYDROUS LACTOSE</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="9H4L916OBU" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>HYPROMELLOSE 2208 (3 MPA.S)</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="70097M6I30" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>MAGNESIUM STEARATE</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="O8232NY3SJ" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>STARCH, CORN</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="H77VEI93A8" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>FD&amp;C YELLOW NO. 6</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <ingredient classCode="IACT">
+                           <ingredientSubstance>
+                              <code code="LMI26O6933" codeSystem="2.16.840.1.113883.4.9"/>
+                              <name>ALUMINUM OXIDE</name>
+                           </ingredientSubstance>
+                        </ingredient>
+                        <asContent>
+                           <quantity>
+                              <numerator value="100" unit="1"/>
+                              <denominator value="1"/>
+                           </quantity>
+                           <containerPackagedProduct>
+                              <code code="64725-0833-1" codeSystem="2.16.840.1.113883.6.69"/>
+                              <formCode code="C43169" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="BOTTLE"/>
+                           </containerPackagedProduct>
+                        </asContent>
+                     </manufacturedProduct>
+                     <subjectOf>
+                        <approval>
+                           <id extension="ANDA040145" root="2.16.840.1.113883.3.150"/>
+                           <code code="C73584" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="ANDA"/>
+                           <author>
+                              <territorialAuthority>
+                                 <territory>
+                                    <code code="USA" codeSystem="2.16.840.1.113883.5.28"/>
+                                 </territory>
+                              </territorialAuthority>
+                           </author>
+                        </approval>
+                     </subjectOf>
+                     <subjectOf>
+                        <marketingAct>
+                           <code code="C53292" codeSystem="2.16.840.1.113883.3.26.1.1"/>
+                           <statusCode code="active"/>
+                           <effectiveTime>
+                              <low value="19970725"/>
+                           </effectiveTime>
+                        </marketingAct>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic classCode="OBS">
+                           <code code="SPLCOLOR" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value xsi:type="CE" code="C48331" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="ORANGE">
+                              <originalText>peach</originalText>
+                           </value>
+                        </characteristic>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic classCode="OBS">
+                           <code code="SPLSIZE" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value unit="mm" value="11" xsi:type="PQ"/>
+                        </characteristic>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic classCode="OBS">
+                           <code code="SPLSHAPE" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value xsi:type="CE" code="C48345" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="OVAL"/>
+                        </characteristic>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic classCode="OBS">
+                           <code code="SPLSCORE" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value value="2" xsi:type="INT"/>
+                        </characteristic>
+                     </subjectOf>
+                     <subjectOf>
+                        <characteristic classCode="OBS">
+                           <code code="SPLIMPRINT" codeSystem="2.16.840.1.113883.1.11.19255"/>
+                           <value xsi:type="ST">833;5;barr</value>
+                        </characteristic>
+                     </subjectOf>
+                     <consumedIn>
+                        <substanceAdministration>
+                           <routeCode code="C38288" codeSystem="2.16.840.1.113883.3.26.1.1" displayName="ORAL"/>
+                        </substanceAdministration>
+                     </consumedIn>
+                  </manufacturedProduct>
+               </subject>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_recent_changes_id_348c1f76-3444-4770-8279-55e57ece317b">
+               <id root="afca0806-963d-4444-91db-f6eadc6dbeab"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="43683-2" displayName="RECENT MAJOR CHANGES SECTION"/>
+               <effectiveTime value="20111104"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <paragraph>Contraindications (4)               10/2011</paragraph>
+                        <paragraph>Warnings and Precautions, Use in Pregnant Women with Mechanical Heart Valves (5.5)               10/2011</paragraph>
+                     </text>
+                  </highlight>
+               </excerpt>
+            </section>
+         </component>
+         <component>
+            <section ID="id_95a867fc-493a-4fde-89fd-b5d5054cd6f6">
+               <id root="eabbf3d5-c5c8-4365-8921-647c744d91a3"/>
+               <code code="34066-1" codeSystem="2.16.840.1.113883.6.1" displayName="Boxed Warning section"/>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">WARNING: BLEEDING RISK</content>
+                  </paragraph>
+                  <list listType="unordered">
+                     <item>
+                        <content styleCode="bold">Warfarin sodium can cause major or fatal bleeding [ ].
+                                    <content styleCode="italics">see Warnings and Precautions (5.1)</content>
+                        </content>
+                     </item>
+                     <item>
+                        <content styleCode="bold">Perform regular monitoring of INR in all treated patients [ ].
+                                    <content styleCode="italics">see Dosage and Administration (2.1)</content>
+                        </content>
+                     </item>
+                     <item>
+                        <content styleCode="bold">Drugs, dietary changes, and other factors affect INR levels achieved with warfarin sodium therapy [ ].
+                                    <content styleCode="italics">see Drug Interactions (7)</content>
+                        </content>
+                     </item>
+                     <item>
+                        <content styleCode="bold">Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding [ ].
+                                    <content styleCode="italics">see Patient Counseling Information (17)</content>
+                        </content>
+                     </item>
+                  </list>
+               </text>
+               <effectiveTime value="20111104"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <paragraph>
+                           <content styleCode="bold">WARNING: BLEEDING RISK</content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="italics">See full prescribing information for complete boxed warning</content>
+                        </paragraph>
+                        <list listType="unordered">
+                           <item>
+                              <content styleCode="bold">Warfarin sodium can cause major or fatal bleeding. (5.1)</content>
+                           </item>
+                           <item>
+                              <content styleCode="bold">Perform regular monitoring of INR in all treated patients. (2.1)</content>
+                           </item>
+                           <item>
+                              <content styleCode="bold">Drugs, dietary changes, and other factors affect INR levels achieved with warfarin sodium therapy. (7)</content>
+                           </item>
+                           <item>
+                              <content styleCode="bold">Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding. (17)</content>
+                           </item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_indications_id_706cf295-76a1-4e30-b491-0210196a1f31">
+               <id root="80481ae6-7fde-459c-9f08-6bdeff48861d"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="34067-9" displayName="INDICATIONS &amp; USAGE SECTION"/>
+               <title>1 INDICATIONS AND USAGE</title>
+               <text>
+                  <paragraph>Warfarin Sodium Tablets USP are indicated for:</paragraph>
+                  <list listType="unordered">
+                     <item>Prophylaxis and treatment of venous thrombosis and its extension, pulmonary embolism (PE).</item>
+                     <item>Prophylaxis and treatment of thromboembolic complications associated with atrial fibrillation (AF) and/or cardiac valve replacement.</item>
+                     <item>Reduction in the risk of death, recurrent myocardial infarction (MI), and thromboembolic events such as stroke or systemic embolization after myocardial infarction.</item>
+                  </list>
+                  <paragraph>
+                     <content styleCode="bold">Limitations of Use</content>
+                  </paragraph>
+                  <paragraph>Warfarin sodium has no direct effect on an established thrombus, nor does it reverse ischemic tissue damage. Once a thrombus has occurred, however, the goals of anticoagulant treatment are to prevent further extension of the formed clot and to prevent secondary thromboembolic complications that may result in serious and possibly fatal sequelae.</paragraph>
+               </text>
+               <effectiveTime value="20111104"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <paragraph>Warfarin sodium is a vitamin K antagonist indicated for:</paragraph>
+                        <list listType="unordered">
+                           <item>Prophylaxis and treatment of venous thrombosis and its extension, pulmonary embolism (1)</item>
+                           <item>Prophylaxis and treatment of thromboembolic complications associated with atrial fibrillation and/or cardiac valve replacement (1)</item>
+                           <item>Reduction in the risk of death, recurrent myocardial infarction, and thromboembolic events such as stroke or systemic embolization after myocardial infarction (1)</item>
+                        </list>
+                        <paragraph>
+                           <content styleCode="bold">Limitation of Use</content>
+                        </paragraph>
+                        <paragraph>Warfarin sodium has no direct effect on an established thrombus, nor does it reverse ischemic tissue damage. (1)</paragraph>
+                     </text>
+                  </highlight>
+               </excerpt>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_dosage_admin_id_412531ec-bdce-4641-8627-38906638cb96">
+               <id root="bba7a326-000a-4a80-8c46-b71281723280"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="34068-7" displayName="DOSAGE &amp; ADMINISTRATION SECTION"/>
+               <title>2 DOSAGE AND ADMINISTRATION</title>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">2.1 Individualized Dosing</content>
+                  </paragraph>
+                  <paragraph>The dosage and administration of warfarin sodium must be individualized for each patient according to the patient’s INR response to the drug. Adjust the dose based on the patient’s INR and the condition being treated. Consult the latest evidence-based clinical practice guidelines from the American College of Chest Physicians (ACCP) to assist in the determination of the duration and intensity of anticoagulation with warfarin sodium [ ].
+                            <content styleCode="italics">see References (15)</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">2.2 Recommended Target INR Ranges and Durations for Individual Indications</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">An INR of greater than 4 appears to provide no additional therapeutic benefit in most patients and is associated with a higher risk of bleeding.</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Venous Thromboembolism (including deep venous thrombosis [DVT] and PE)</content>
+                  </paragraph>
+                  <paragraph>Adjust the warfarin dose to maintain a target INR of 2.5 (INR range, 2 to 3) for all treatment durations. The duration of treatment is based on the indication as follows:</paragraph>
+                  <list listType="unordered">
+                     <item>For patients with a DVT or PE secondary to a transient (reversible) risk factor, treatment with warfarin for 3 months is recommended.</item>
+                     <item>For patients with an unprovoked DVT or PE, treatment with warfarin is recommended for at least 3 months. After 3 months of therapy, evaluate the risk-benefit ratio of long-term treatment for the individual patient.</item>
+                     <item>For patients with two episodes of unprovoked DVT or PE, long-term treatment with warfarin is recommended. For a patient receiving long-term anticoagulant treatment, periodically reassess the risk-benefit ratio of continuing such treatment in the individual patient.</item>
+                  </list>
+                  <paragraph>
+                     <content styleCode="bold">Atrial Fibrillation</content>
+                  </paragraph>
+                  <paragraph>In patients with non-valvular AF, anticoagulate with warfarin to target INR of 2.5 (range, 2 to 3).</paragraph>
+                  <list listType="unordered">
+                     <item>In patients with non-valvular AF that is persistent or paroxysmal and at high risk of stroke (i.e., having any of the following features: prior ischemic stroke, transient ischemic attack, or systemic embolism, or 2 of the following risk factors: age greater than 75 years, moderately or severely impaired left ventricular systolic function and/or heart failure, history of hypertension, or diabetes mellitus), long-term anticoagulation with warfarin is recommended.</item>
+                     <item>In patients with non-valvular AF that is persistent or paroxysmal and at an intermediate risk of ischemic stroke (i.e., having 1 of the following risk factors: age greater than 75 years, moderately or severely impaired left ventricular systolic function and/or heart failure, history of hypertension, or diabetes mellitus), long-term anticoagulation with warfarin is recommended.</item>
+                     <item>For patients with AF and mitral stenosis, long-term anticoagulation with warfarin is recommended.</item>
+                     <item>For patients with AF and prosthetic heart valves, long-term anticoagulation with warfarin is recommended; the target INR may be increased and aspirin added depending on valve type and position, and on patient factors.</item>
+                  </list>
+                  <paragraph>
+                     <content styleCode="bold">Mechanical and Bioprosthetic Heart Valves</content>
+                  </paragraph>
+                  <list listType="unordered">
+                     <item>For patients with a bileaflet mechanical valve or a Medtronic Hall (Minneapolis, MN) tilting disk valve in the aortic position who are in sinus rhythm and without left atrial enlargement, therapy with warfarin to a target INR of 2.5 (range, 2 to 3) is recommended.</item>
+                     <item>For patients with tilting disk valves and bileaflet mechanical valves in the mitral position, therapy with warfarin to a target INR of 3 (range, 2.5 to 3.5) is recommended.</item>
+                     <item>For patients with caged ball or caged disk valves, therapy with warfarin to a target INR of 3 (range, 2.5 to 3.5) is recommended.</item>
+                     <item>For patients with a bioprosthetic valve in the mitral position, therapy with warfarin to a target INR of 2.5 (range, 2 to 3) for the first 3 months after valve insertion is recommended. If additional risk factors for thromboembolism are present (AF, previous thromboembolism, left ventricular dysfunction), a target INR of 2.5 (range 2 to 3) is recommended.</item>
+                  </list>
+                  <paragraph>
+                     <content styleCode="bold">Post-Myocardial Infarction</content>
+                  </paragraph>
+                  <list listType="unordered">
+                     <item>For high-risk patients with MI (e.g., those with a large anterior MI, those with significant heart failure, those with intracardiac thrombus visible on transthoracic echocardiography, those with AF, and those with a history of a thromboembolic event), therapy with combined moderate-intensity (INR, 2 to 3) warfarin plus low-dose aspirin (≤ 100 mg/day) for at least 3 months after the MI is recommended.</item>
+                  </list>
+                  <paragraph>
+                     <content styleCode="bold">Recurrent Systemic Embolism and Other Indications</content>
+                  </paragraph>
+                  <paragraph>Oral anticoagulation therapy with warfarin has not been fully evaluated by clinical trials in patients with valvular disease associated with AF, patients with mitral stenosis, and patients with recurrent systemic embolism of unknown etiology. However, a moderate dose regimen (INR 2 to 3) may be used for these patients.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">2.3 Initial and Maintenance Dosing</content>
+                  </paragraph>
+                  <paragraph>The appropriate initial dosing of warfarin sodium varies widely for different patients. Not all factors responsible for warfarin dose variability are known, and the initial dose is influenced by:</paragraph>
+                  <list listType="unordered">
+                     <item>Clinical factors including age, race, body weight, sex, concomitant medications, and comorbidities</item>
+                     <item>Genetic factors (CYP2C9 and VKORC1 genotypes) [ ].
+                                <content styleCode="italics">see Clinical Pharmacology (12.5)</content>
+                     </item>
+                  </list>
+                  <paragraph>Select the initial dose based on the expected maintenance dose, taking into account the above factors. Modify this dose based on consideration of patient-specific clinical factors. Consider lower initial and maintenance doses for elderly and/or debilitated patients and in Asian patients [ ]. Routine use of loading doses is not recommended as this practice may increase hemorrhagic and other complications and does not offer more rapid protection against clot formation.
+                            <content styleCode="italics">see Use in Specific Populations (8.5) and Clinical Pharmacology (12.3)</content>
+                  </paragraph>
+                  <paragraph>Individualize the duration of therapy for each patient. In general, anticoagulant therapy should be continued until the danger of thrombosis and embolism has passed [ ].
+                            <content styleCode="italics">see Dosage and Administration (2.2)</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Dosage Recommendations without Consideration of Genotype</content>
+                  </paragraph>
+                  <paragraph>If the patient’s CYP2C9 and VKORC1 genotypes are not known, the initial dose of warfarin sodium is usually 2 to 5 mg once daily. Determine each patient’s dosing needs by close monitoring of the INR response and consideration of the indication being treated. Typical maintenance doses are 2 to 10 mg once daily.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Dosing Recommendations with Consideration of Genotype</content>
+                  </paragraph>
+                  <paragraph>displays three ranges of expected maintenance warfarin sodium doses observed in subgroups of patients having different combinations of CYP2C9 and VKORC1 gene variants [ ]. If the patient’s CYP2C9 and/or VKORC1 genotype are known, consider these ranges in choosing the initial dose. Patients with CYP2C9 *1/*3, *2/*2, *2/*3, and *3/*3 may require more prolonged time (&gt; 2 to 4 weeks) to achieve maximum INR effect for a given dosage regimen than patients without these CYP variants.
+                            <content styleCode="bold">Table 1</content>
+                     <content styleCode="italics">see Clinical Pharmacology (12.5)</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Table 1: Three Ranges of Expected Maintenance Warfarin Sodium  Daily Doses Based on</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">CYP2C9 and VKORC1 Genotypes
+                                <sup>†</sup>
+                     </content>
+                  </paragraph>
+                  <table border="single" width="436" ID="id_374f0322-094d-49e1-b9f8-74a925af8578">
+                     <col width="14.8%"/>
+                     <col width="13.2%"/>
+                     <col width="15.1%"/>
+                     <col width="15.2%"/>
+                     <col width="16.2%"/>
+                     <col width="12.8%"/>
+                     <col width="12.8%"/>
+                     <tbody>
+                        <tr ID="id_5402fe8b-501c-4bd0-a5d6-e52e4501bd9d">
+                           <td align="center" valign="top" rowspan="2" styleCode="Botrule Toprule Rrule Lrule">VKORC1</td>
+                           <td align="center" valign="top" colspan="6" styleCode="Botrule Rrule">CYP2C9</td>
+                        </tr>
+                        <tr ID="id_edfe76b7-8ee9-409e-b8ac-41c56c648f76">
+                           <td align="center" valign="top" styleCode="Lrule Botrule Rrule">*1/*1</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">*1/*2</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">*1/*3</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">*2/*2</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">*2/*3</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">*3/*3</td>
+                        </tr>
+                        <tr ID="id_0027bd5b-da68-400b-ace0-8da2d4cab275">
+                           <td align="center" valign="top" styleCode="Lrule Botrule Rrule">GG</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">5 to 7 mg</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">5 to 7 mg</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">3 to 4 mg</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">3 to 4 mg</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">3 to 4 mg</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">0.5 to 2 mg</td>
+                        </tr>
+                        <tr ID="id_9827e3d1-ff07-4b5f-a07a-c8b571dd56a4">
+                           <td align="center" valign="top" styleCode="Lrule Botrule Rrule">AG</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">5 to 7 mg</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">3 to 4 mg</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">3 to 4 mg</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">3 to 4 mg</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">0.5 to 2 mg</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">0.5 to 2 mg</td>
+                        </tr>
+                        <tr ID="id_6ff0e30c-6eff-4a95-944c-10ec19a299c7">
+                           <td align="center" valign="top" styleCode="Lrule Botrule Rrule">AA</td>
+                           <td align="center" valign="top" styleCode="Rrule">3 to 4 mg</td>
+                           <td align="center" valign="top" styleCode="Rrule">3 to 4 mg</td>
+                           <td align="center" valign="top" styleCode="Rrule">0.5 to 2 mg</td>
+                           <td align="center" valign="top" styleCode="Rrule">0.5 to 2 mg</td>
+                           <td align="center" valign="top" styleCode="Rrule">0.5 to 2 mg</td>
+                           <td align="center" valign="top" styleCode="Botrule Rrule">0.5 to 2 mg</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph>  Ranges are derived from multiple published clinical studies. VKORC1 -1639G &gt; A (rs9923231) variant is used in this table. Other co-inherited VKORC1 variants may also be important determinants of warfarin dose.
+                            <content styleCode="bold">
+                        <sup>†</sup>
+                     </content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">2.4</content>
+                     <content styleCode="bold">Monitoring to Achieve Optimal Anticoagulation</content>
+                  </paragraph>
+                  <paragraph>Warfarin sodium is a narrow therapeutic range (index) drug, and its action may be affected by factors such as other drugs and dietary vitamin K. Therefore, anticoagulation must be carefully monitored during warfarin sodium therapy. Determine the INR daily after the administration of the initial dose until INR results stabilize in the therapeutic range. After stabilization, maintain dosing within the therapeutic range by performing periodic INRs. The frequency of performing INR should be based on the clinical situation but generally acceptable intervals for INR determinations are 1 to 4 weeks. Perform additional INR tests when other warfarin products are interchanged with warfarin sodium, as well as whenever other medications are initiated, discontinued, or taken irregularly. Heparin, a common concomitant drug, increases the INR [ ].
+                            <content styleCode="italics">see Dosage and Administration (2.8) and Drug Interactions (7)</content>
+                  </paragraph>
+                  <paragraph>Determinations of whole blood clotting and bleeding times are not effective measures for monitoring of warfarin sodium therapy.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">2.5 Missed Dose</content>
+                  </paragraph>
+                  <paragraph>The anticoagulant effect of warfarin sodium persists beyond 24 hours. If a patient misses a dose of warfarin sodium at the intended time of day, the patient should take the dose as soon as possible on the same day. The patient should not double the dose the next day to make up for a missed dose.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">2.7 Treatment During Dentistry and Surgery</content>
+                  </paragraph>
+                  <paragraph>Some dental or surgical procedures may necessitate the interruption or change in the dose of warfarin sodium therapy. Consider the benefits and risks when discontinuing warfarin sodium even for a short period of time. Determine the INR immediately prior to any dental or surgical procedure. In patients undergoing minimally invasive procedures who must be anticoagulated prior to, during, or immediately following these procedures, adjusting the dosage of warfarin sodium to maintain the INR at the low end of the therapeutic range may safely allow for continued anticoagulation.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">2.8 Conversion From Other Anticoagulants</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Heparin</content>
+                  </paragraph>
+                  <paragraph>Since the full anticoagulant effect of warfarin sodium is not achieved for several days, heparin is preferred for initial rapid anticoagulation. During initial therapy with warfarin sodium, the interference with heparin anticoagulation is of minimal clinical significance. Conversion to warfarin sodium may begin concomitantly with heparin therapy or may be delayed 3 to 6 days. To ensure therapeutic anticoagulation, continue full dose heparin therapy and overlap warfarin sodium therapy with heparin for 4 to 5 days and until warfarin sodium has produced the desired therapeutic response as determined by INR, at which point heparin may be discontinued.</paragraph>
+                  <paragraph>As heparin may affect the INR, patients receiving both heparin and warfarin sodium should have INR monitoring at least:</paragraph>
+                  <list listType="unordered">
+                     <item>5 hours after the last intravenous bolus dose of heparin, or</item>
+                     <item>4 hours after cessation of a continuous intravenous infusion of heparin, or</item>
+                     <item>24 hours after the last subcutaneous heparin injection.</item>
+                  </list>
+                  <paragraph>Warfarin sodium may increase the activated partial thromboplastin time (aPTT) test, even in the absence of heparin. A severe elevation (&gt; 50 seconds) in aPTT with an INR in the desired range has been identified as an indication of increased risk of postoperative hemorrhage.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Other Anticoagulants</content>
+                  </paragraph>
+                  <paragraph>Consult the labeling of other anticoagulants for instructions on conversion to warfarin sodium.</paragraph>
+               </text>
+               <effectiveTime value="20111104"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <list listType="unordered">
+                           <item>Individualize dosing regimen for each patient, and adjust based on INR response. (2.1, 2.2)</item>
+                           <item>Knowledge of genotype can inform initial dose selection. (2.3)</item>
+                           <item>Monitoring: Obtain daily INR determinations upon initiation until stable in the therapeutic range. Obtain subsequent INR determinations every 1 to 4 weeks. (2.4)</item>
+                           <item>Review conversion instructions from other anticoagulants. (2.8)</item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_dosage_form_strength_id_f504b6c2-5ae0-4ae1-a3fb-7987434248dd">
+               <id root="b613155f-48f5-4816-b000-a653eb4049ee"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="43678-2" displayName="DOSAGE FORMS &amp; STRENGTHS SECTION"/>
+               <title>3 DOSAGE FORMS AND STRENGTHS</title>
+               <text>
+                  <paragraph>Warfarin sodium tablets USP, 1 mg are available as pink, oval, flat-faced, beveled-edge, scored tablets, debossed with 831/1 on the scored side and stylized barr on the other side.</paragraph>
+                  <paragraph>Warfarin sodium tablets USP, 2 mg are available as lavender, oval, flat-faced, beveled-edge, scored tablets, debossed with 869/2 on the scored side and stylized barr on the other side.</paragraph>
+                  <paragraph>Warfarin sodium tablets USP, 2½ mg are available as green, oval, flat-faced, beveled-edge, scored tablets, debossed with 832/ 2 ½ on the scored side and stylized barr on the other side.</paragraph>
+                  <paragraph>Warfarin sodium tablets USP, 3 mg are available as tan, oval, flat-faced, beveled-edge, scored tablets, debossed with 925/3 on the scored side and stylized barr on the other side.</paragraph>
+                  <paragraph>Warfarin sodium tablets USP, 4 mg are available as blue, oval, flat-faced, beveled-edge, scored tablets, debossed with 874/4 on the scored side and stylized barr on the other side.</paragraph>
+                  <paragraph>Warfarin sodium tablets USP, 5 mg are available as peach, oval, flat-faced, beveled-edge, scored tablets, debossed with 833/5 on the scored side and stylized barr on the other side.</paragraph>
+                  <paragraph>Warfarin sodium tablets USP, 6 mg are available as teal, oval, flat-faced, beveled-edge, scored tablets, debossed with 926/6 on the scored side and stylized barr on the other side.</paragraph>
+                  <paragraph>Warfarin sodium tablets USP, 7½  mg are available as yellow, oval, flat-faced, beveled-edge, scored tablets, debossed with 834/7 ½  on the scored side and stylized barr on the other side.</paragraph>
+                  <paragraph>Warfarin sodium tablets USP, 10 mg are available as white, oval, flat-faced, beveled-edge, scored tablets, debossed with 835/10 on the scored side and stylized barr on the other side.</paragraph>
+               </text>
+               <effectiveTime value="20111104"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <list listType="unordered">
+                           <item>Scored tablets: 1, 2, 2-1/2, 3, 4, 5, 6, 7-1/2, or 10 mg (3)</item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_contraindications_id_ea47376c-e5bb-49af-8481-e0d34d49d0ed">
+               <id root="480eb160-b8e4-4fe2-a7ae-5f995b855bfe"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="34070-3" displayName="CONTRAINDICATIONS SECTION"/>
+               <title>4 CONTRAINDICATIONS</title>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">Pregnancy</content>
+                  </paragraph>
+                  <paragraph>Warfarin sodium is contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high risk of thromboembolism [ ]. Warfarin sodium can cause fetal harm when administered to a pregnant woman. Warfarin sodium exposure during pregnancy causes a recognized pattern of major congenital malformations (warfarin embryopathy and fetotoxicity), fatal fetal hemorrhage, and an increased risk of spontaneous abortion and fetal mortality. If warfarin sodium is used during pregnancy or if the patient becomes pregnant while taking this drug, the patient should be apprised of the potential hazard to a fetus [
+                            <content styleCode="italics">see Warnings and Precautions (5.5) and Use in Specific Populations (8.1)</content>
+                     <content styleCode="italics">see Warnings and Precautions</content>
+                  </paragraph>
+                  <paragraph>].
+                            <content styleCode="italics">(5.6) and Use in Specific Populations (8.1)</content>
+                  </paragraph>
+                  <list listType="unordered">
+                     <item>Hemorrhagic tendencies or blood dyscrasias</item>
+                     <item>Recent or contemplated surgery of the central nervous system or eye, or traumatic surgery resulting in large open surfaces [ ]
+                                <content styleCode="italics">see Warnings and Precautions (5.7)</content>
+                     </item>
+                     <item>Bleeding tendencies associated with:</item>
+                  </list>
+                  <paragraph>− Active ulceration or overt bleeding of the gastrointestinal, genitourinary, or respiratory tract − Central nervous system hemorrhage − Cerebral aneurysms, dissecting aorta − Pericarditis and pericardial effusions − Bacterial endocarditis
+                            <br/>
+                     <br/>
+                     <br/>
+                     <br/>
+                  </paragraph>
+                  <list listType="unordered">
+                     <item>Threatened abortion, eclampsia, and preeclampsia</item>
+                     <item>Unsupervised patients with conditions associated with potential high level of non-compliance</item>
+                     <item>Spinal puncture and other diagnostic or therapeutic procedures with potential for uncontrollable bleeding</item>
+                     <item>Hypersensitivity to warfarin or to any other components of this product (e.g., anaphylaxis) [ ]
+                                <content styleCode="italics">see</content>
+                        <content styleCode="italics">Adverse Reactions (6)</content>
+                     </item>
+                     <item>Major regional or lumbar block anesthesia</item>
+                     <item>Malignant hypertension</item>
+                  </list>
+               </text>
+               <effectiveTime value="20111104"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <list listType="unordered">
+                           <item>Pregnancy, except in women with mechanical heart valves (4)</item>
+                           <item>Hemorrhagic tendencies or blood dyscrasias (4)</item>
+                           <item>Recent or contemplated surgery of the central nervous system (CNS) or eye, or traumatic surgery resulting in large open surfaces (4, 5.7)</item>
+                           <item>Bleeding tendencies associated with certain conditions (4)</item>
+                           <item>Threatened abortion, eclampsia, and preeclampsia (4)</item>
+                           <item>Unsupervised patients with potential high levels  of non-compliance (4)</item>
+                           <item>Spinal puncture and other diagnostic or therapeutic procedures with potential for uncontrollable bleeding (4)</item>
+                           <item>Hypersensitivity to warfarin or any component of the product (4)</item>
+                           <item>Major regional or lumbar block anesthesia (4)</item>
+                           <item>Malignant hypertension (4)</item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_warnings_precautions_id_c1a5b823-f4b6-47e5-a71f-aee644100c94">
+               <id root="2ee05366-7cb0-4897-91f6-b5d4190bdf81"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="43685-7" displayName="WARNINGS AND PRECAUTIONS SECTION"/>
+               <title>5 WARNINGS AND PRECAUTIONS</title>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">5.1  Hemorrhage</content>
+                  </paragraph>
+                  <paragraph>Warfarin sodium can cause major or fatal bleeding. Bleeding is more likely to occur within the first month. Risk factors for bleeding include high intensity of anticoagulation (INR &gt; 4), age greater than or equal to 65, history of highly variable INRs, history of gastrointestinal bleeding, hypertension, cerebrovascular disease, anemia, malignancy, trauma, renal impairment, certain genetic factors [ ], certain concomitant drugs [ ], and long duration of warfarin therapy.
+                            <content styleCode="italics">see Clinical Pharmacology (12.5)</content>
+                     <content styleCode="italics">see Drug Interactions (7)</content>
+                  </paragraph>
+                  <paragraph>Perform regular monitoring of INR in all treated patients. Those at high risk of bleeding may benefit from more frequent INR monitoring, careful dose adjustment to desired INR, and a shortest duration of therapy appropriate for the clinical condition. However, maintenance of INR in the therapeutic range does not eliminate the risk of bleeding.</paragraph>
+                  <paragraph>Drugs, dietary changes, and other factors affect INR levels achieved with warfarin sodium therapy. Perform more frequent INR monitoring when starting or stopping other drugs, including botanicals, or when changing dosages of other drugs [ ].
+                            <content styleCode="italics">see Drug Interactions (7)</content>
+                  </paragraph>
+                  <paragraph>Instruct patients about prevention measures to minimize risk of bleeding and to report signs and symptoms of bleeding [ ].
+                            <content styleCode="italics">see Patient Counseling Information (17)</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">5.2  Tissue Necrosis</content>
+                  </paragraph>
+                  <paragraph>Necrosis and/or gangrene of skin and other tissues is an uncommon but serious risk (&lt; 0.1%). Necrosis may be associated with local thrombosis and usually appears within a few days of the start of warfarin sodium therapy. In severe cases of necrosis, treatment through debridement or amputation of the affected tissue, limb, breast, or penis has been reported.</paragraph>
+                  <paragraph>Careful clinical evaluation is required to determine whether necrosis is caused by an underlying disease. Although various treatments have been attempted, no treatment for necrosis has been considered uniformly effective. Discontinue warfarin sodium therapy if necrosis occurs. Consider alternative drugs if continued anticoagulation therapy is necessary.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">5.4  Heparin-Induced Thrombocytopenia</content>
+                  </paragraph>
+                  <paragraph>Do not use warfarin sodium as initial therapy in patients with heparin-induced thrombocytopenia (HIT) and with heparin-induced thrombocytopenia with thrombosis syndrome (HITTS). Cases of limb ischemia, necrosis, and gangrene have occurred in patients with HIT and HITTS when heparin treatment was discontinued and warfarin therapy was started or continued. In some patients, sequelae have included amputation of the involved area and/or death. Treatment with warfarin sodium may be considered after the platelet count has normalized.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">5.5  Use in Pregnant Women with Mechanical Heart Valves</content>
+                  </paragraph>
+                  <paragraph>Warfarin sodium can cause fetal harm when administered to a pregnant woman. While warfarin sodium is contraindicated during pregnancy, the potential benefits of using warfarin sodium may outweigh the risks for pregnant women with mechanical heart valves at high risk of thromboembolism.  In those individual situations, the decision to initiate or continue warfarin sodium should be reviewed with the patient, taking into consideration the specific risks and benefits pertaining to the individual patient’s medical situation, as well as the most current medical guidelines.  Warfarin sodium exposure during pregnancy causes a recognized pattern of major congenital malformations (warfarin embryopathy and fetotoxicity), fatal fetal hemorrhage, and an increased risk of spontaneous abortion and fetal mortality.  If this drug is used during pregnancy, or if the patient becomes pregnant while taking this drug, the patient should be apprised of the potential hazard to a fetus [ ].
+                            <content styleCode="italics">see</content>
+                     <content styleCode="italics">Use in Specific Populations (8.1)</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">5.6  Females of Reproductive Potential</content>
+                  </paragraph>
+                  <paragraph>Warfarin sodium exposure during pregnancy can cause pregnancy loss, birth defects, or fetal death. Discuss pregnancy planning with females of reproductive potential who are on warfarin sodium therapy [ ].
+                            <content styleCode="italics">see Contraindications (4) and Use in Specific Populations (8.8)</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">5.7  Other Clinical Settings with Increased Risks</content>
+                  </paragraph>
+                  <paragraph>In the following clinical settings, the risks of warfarin sodium therapy may be increased:</paragraph>
+                  <list listType="unordered">
+                     <item>Moderate to severe hepatic impairment</item>
+                     <item>Infectious diseases or disturbances of intestinal flora (e.g., sprue, antibiotic therapy)</item>
+                     <item>Use of an indwelling catheter</item>
+                     <item>Severe to moderate hypertension</item>
+                     <item>Deficiency in protein C-mediated anticoagulant response: warfarin sodium reduces the synthesis of the naturally occurring anticoagulants, protein C and protein S. Hereditary or acquired deficiencies of protein C or its cofactor, protein S, have been associated with tissue necrosis following warfarin administration. Concomitant anticoagulation therapy with heparin for 5 to 7 days during initiation of therapy with warfarin sodium may minimize the incidence of tissue necrosis in these patients.</item>
+                     <item>Eye surgery: In cataract surgery, warfarin sodium use was associated with a significant increase in minor complications of sharp needle and local anesthesia block but not associated with potentially sight-threatening operative hemorrhagic complications. As warfarin sodium cessation or reduction may lead to serious thromboembolic complications, the decision to discontinue warfarin sodium before a relatively less invasive and complex eye surgery, such as lens surgery, should be based upon the risks of anticoagulant therapy weighed against the benefits.</item>
+                     <item>Polycythemia vera</item>
+                     <item>Vasculitis</item>
+                     <item>Diabetes mellitus</item>
+                  </list>
+                  <paragraph>
+                     <content styleCode="bold">5.8  Endogenous Factors Affecting INR</content>
+                  </paragraph>
+                  <paragraph>The following factors may be responsible for INR response: diarrhea, hepatic disorders, poor nutritional state, steatorrhea, or vitamin K deficiency.
+                            <content styleCode="bold">increased</content>
+                  </paragraph>
+                  <paragraph>The following factors may be responsible for INR response: increased vitamin K intake or hereditary warfarin resistance.
+                            <content styleCode="bold">decreased</content>
+                  </paragraph>
+               </text>
+               <effectiveTime value="20111104"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <list listType="unordered">
+                           <item>Tissue necrosis: Necrosis or gangrene of skin or other tissues can occur, with severe cases requiring debridement or amputation. Discontinue warfarin sodium and consider alternative anticoagulants if necessary. (5.2)</item>
+                           <item>Systemic atheroemboli and cholesterol microemboli: Some cases have progressed to necrosis or death. Discontinue warfarin sodium if such emboli occur. (5.3)</item>
+                           <item>Heparin-induced thrombocytopenia (HIT): Initial therapy with warfarin sodium in HIT has resulted in cases of amputation and death. Warfarin sodium may be considered after platelet count has normalized. (5.4)</item>
+                           <item>Pregnant women with mechanical heart valves: warfarin sodium may cause fetal harm; however, the benefits may outweigh the risks. (5.5)</item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_adverse_effects_id_f1b85f42-d492-4c1a-8d82-d20bb17f8960">
+               <id root="f6730348-eb78-4175-9821-cdc01c05be56"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="34084-4" displayName="ADVERSE REACTIONS SECTION"/>
+               <title>6 ADVERSE REACTIONS</title>
+               <text>
+                  <paragraph>The following serious adverse reactions to warfarin sodium are discussed in greater detail in other sections of the labeling:</paragraph>
+                  <list listType="unordered">
+                     <item>Hemorrhage [ , , ]
+                                <content styleCode="italics">see Boxed Warning</content>
+                        <content styleCode="italics">Warnings and Precautions (5.1)</content>
+                        <content styleCode="italics">and</content>
+                        <content styleCode="italics">Overdosage (10)</content>
+                     </item>
+                     <item>Necrosis of skin and other tissues [ ]
+                                <content styleCode="italics">see Warnings and Precautions (5.2)</content>
+                     </item>
+                     <item>Systemic atheroemboli and cholesterol microemboli [ ]
+                                <content styleCode="italics">see</content>
+                        <content styleCode="italics">Warnings and Precautions (5.3)</content>
+                     </item>
+                  </list>
+                  <paragraph>Other adverse reactions to warfarin sodium include:</paragraph>
+                  <list listType="unordered">
+                     <item>Immune system disorders: hypersensitivity/allergic reactions (including urticaria and anaphylactic reactions)</item>
+                     <item>Vascular disorders: vasculitis</item>
+                     <item>Hepatobiliary disorders: hepatitis, elevated liver enzymes. Cholestatic hepatitis has been associated with concomitant administration of warfarin sodium and ticlopidine.</item>
+                     <item>Gastrointestinal disorders: nausea, vomiting, diarrhea, taste perversion, abdominal pain, flatulence, bloating</item>
+                     <item>Skin disorders: rash, dermatitis (including bullous eruptions), pruritus, alopecia</item>
+                     <item>Respiratory disorders: tracheal or tracheobronchial calcification</item>
+                     <item>General disorders: chills</item>
+                  </list>
+               </text>
+               <effectiveTime value="20111104"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <paragraph>Most common adverse reactions to warfarin sodium are fatal and nonfatal hemorrhage from any tissue or organ. (6)</paragraph>
+                        <paragraph>
+                           <content styleCode="bold">To report SUSPECTED ADVERSE REACTIONS, contact TEVA USA, PHARMACOVIGILANCE at tel: 1-888-838-2872, x6351 or drug.safety@tevausa.com; or FDA at 1-800-FDA-1088 or
+                                        <content styleCode="italics">www.fda.gov/medwatch.</content>
+                           </content>
+                        </paragraph>
+                     </text>
+                  </highlight>
+               </excerpt>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_interactions_id_5e8c9e84-202a-4777-ba9a-387b25618064">
+               <id root="87ebfb4c-3c77-447b-b229-e666688a1cfd"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="34073-7" displayName="DRUG INTERACTIONS SECTION"/>
+               <title>7 DRUG INTERACTIONS</title>
+               <text>
+                  <paragraph>Drugs may interact with warfarin sodium through pharmacodynamic or pharmacokinetic mechanisms. Pharmacodynamic mechanisms for drug interactions with warfarin sodium are synergism (impaired hemostasis, reduced clotting factor synthesis), competitive antagonism (vitamin K), and alteration of the physiologic control loop for vitamin K metabolism (hereditary resistance). Pharmacokinetic mechanisms for drug interactions with warfarin sodium are mainly enzyme induction, enzyme inhibition, and reduced plasma protein binding. It is important to note that some drugs may interact by more than one mechanism.</paragraph>
+                  <paragraph>More frequent INR monitoring should be performed when starting or stopping other drugs, including botanicals, or when changing dosages of other drugs, including drugs intended for short-term use (e.g., antibiotics, antifungals, corticosteroids) [ ].
+                            <content styleCode="italics">see</content>
+                     <content styleCode="italics">Boxed Warning</content>
+                  </paragraph>
+                  <paragraph>Consult the labeling of all concurrently used drugs to obtain further information about interactions with warfarin sodium or adverse reactions pertaining to bleeding.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">7.1  CYP450 Interactions</content>
+                  </paragraph>
+                  <paragraph>CYP450 isozymes involved in the metabolism of warfarin include CYP2C9, 2C19, 2C8, 2C18, 1A2, and 3A4. The more potent warfarin -enantiomer is metabolized by CYP2C9 while the -enantiomer is metabolized by CYP1A2 and 3A4.
+                            <content styleCode="italics">S</content>
+                     <content styleCode="italics">R</content>
+                  </paragraph>
+                  <list listType="unordered">
+                     <item>Inhibitors of CYP2C9, 1A2, and/or 3A4 have the potential to increase the effect (increase INR) of warfarin by increasing the exposure of warfarin.</item>
+                     <item>Inducers of CYP2C9, 1A2, and/or 3A4 have the potential to decrease the effect (decrease INR) of warfarin by decreasing the exposure of warfarin.</item>
+                  </list>
+                  <paragraph>Examples of inhibitors and inducers of CYP2C9, 1A2, and 3A4 are below in ; however, this list should not be considered all-inclusive. Consult the labeling of all concurrently used drugs to obtain further information about CYP450 interaction potential. The CYP450 inhibition and induction potential should be considered when starting, stopping, or changing dose of concomitant mediations. Closely monitor INR if a concomitant drug is a CYP2C9, 1A2, and/or 3A4 inhibitor or inducer.
+                            <content styleCode="bold">Table 2</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Table 2:  Examples of CYP450 Interactions with Warfarin</content>
+                  </paragraph>
+                  <table border="single" width="469" ID="id_ccd7dd8b-486a-4e6f-9448-a984b0a374e4">
+                     <col width="13.6%"/>
+                     <col width="56.6%"/>
+                     <col width="29.8%"/>
+                     <tbody>
+                        <tr ID="id_8a5612ef-07c3-4629-9767-7381f203ce54">
+                           <td align="left" valign="middle" styleCode="Botrule Toprule Rrule Lrule">
+                              <content styleCode="bold">Enzyme</content>
+                           </td>
+                           <td align="center" valign="middle" styleCode="Botrule Rrule">
+                              <content styleCode="bold">Inhibitors</content>
+                           </td>
+                           <td align="center" valign="middle" styleCode="Botrule Rrule">
+                              <content styleCode="bold">Inducers</content>
+                           </td>
+                        </tr>
+                        <tr ID="id_c00bbd80-4539-4f6b-b8a8-7aff10b09fee">
+                           <td align="left" valign="top" styleCode="Lrule Botrule Rrule">CYP2C9</td>
+                           <td align="left" valign="top" styleCode="Botrule Rrule">amiodarone, capecitabine, cotrimoxazole, etravirine, fluconazole, fluvastatin, fluvoxamine, metronidazole miconazole, oxandrolone, sulfinpyrazone, tigecycline, voriconazole, zafirlukast</td>
+                           <td align="left" valign="top" styleCode="Botrule Rrule">aprepitant, bosentan, carbamazepine, phenobarbital, rifampin</td>
+                        </tr>
+                        <tr ID="id_12b410f9-8437-4f93-a554-740ab30b3f12">
+                           <td align="left" valign="top" styleCode="Lrule Botrule Rrule">CYP1A2</td>
+                           <td align="left" valign="top" styleCode="Botrule Rrule">acyclovir, allopurinol, caffeine, cimetidine, ciprofloxacin, disulfiram, enoxacin, famotidine, fluvoxamine,  methoxsalen, mexiletine, norfloxacin, oral contraceptives, phenylpropanolamine, propafenone, propranolol,  terbinafine, thiabendazole, ticlopidine, verapamil, zileuton</td>
+                           <td align="left" valign="top" styleCode="Botrule Rrule">montelukast, moricizine, omeprazole, phenobarbital, phenytoin, cigarette smoking</td>
+                        </tr>
+                        <tr ID="id_49bf4607-9c77-4682-a8ec-013560d57028">
+                           <td align="left" valign="top" styleCode="Lrule Botrule Rrule">CYP3A4</td>
+                           <td align="left" valign="top" styleCode="Rrule">alprazolam, amiodarone, amlodipine, amprenavir,  aprepitant, atorvastatin, atazanavir, bicalutamide,  cilostazol, cimetidine, ciprofloxacin, clarithromycin,  conivaptan, cyclosporine, darunavir/ritonavir, diltiazem, erythromycin, fluconazole, fluoxetine, fluvoxamine, fosamprenavir, imatinib, indinavir, isoniazid, itraconazole, ketoconazole, lopinavir/ritonavir, nefazodone, nelfinavir, nilotinib, oral contraceptives, posaconazole, ranitidine, ranolazine, ritonavir, saquinavir, telithromycin, tipranavir, voriconazole, zileuton</td>
+                           <td align="left" valign="top" styleCode="Botrule Rrule">armodafinil, amprenavir, aprepitant, bosentan, carbamazepine, efavirenz, etravirine, modafinil, nafcillin, phenytoin, pioglitazone, prednisone, rifampin, rufinamide</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph> </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">7.2  Drugs that Increase Bleeding Risk</content>
+                  </paragraph>
+                  <paragraph>Examples of drugs known to increase the risk of bleeding are presented in . Because bleeding risk is increased when these drugs are used concomitantly with warfarin, closely monitor patients receiving any such drug with warfarin.
+                            <content styleCode="bold">Table 3</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Table 3: Drugs that Can Increase the Risk of Bleeding</content>
+                  </paragraph>
+                  <table border="single" width="469" ID="id_e8303da5-ae41-4992-8343-2cec298ea57d">
+                     <col width="38.5%"/>
+                     <col width="61.4%"/>
+                     <tbody>
+                        <tr ID="id_c4fa5217-e85a-4325-aaf4-ad8a6d1a7400">
+                           <td align="center" valign="middle" styleCode="Botrule Toprule Rrule Lrule">
+                              <content styleCode="bold">Drug Class</content>
+                           </td>
+                           <td align="center" valign="middle" styleCode="Botrule Rrule">
+                              <content styleCode="bold">Specific Drugs</content>
+                           </td>
+                        </tr>
+                        <tr ID="id_fbb647d2-7816-477b-a8da-24091dbd776b">
+                           <td align="left" valign="middle" styleCode="Lrule Botrule Rrule">Anticoagulants</td>
+                           <td align="left" valign="top" styleCode="Botrule Rrule">argatroban, dabigatran, bivalirudin, desirudin, heparin, lepirudin</td>
+                        </tr>
+                        <tr ID="id_42e0bbfc-7757-495d-9944-d2f892f52887">
+                           <td align="left" valign="middle" styleCode="Lrule Botrule Rrule">Antiplatelet Agents</td>
+                           <td align="left" valign="top" styleCode="Botrule Rrule">aspirin, cilostazol, clopidogrel, dipyridamole, prasugrel, ticlopidine</td>
+                        </tr>
+                        <tr ID="id_0d88583f-9329-4e63-beed-363542250805">
+                           <td align="left" valign="top" styleCode="Lrule Botrule Rrule">Nonsteroidal Anti-Inflammatory Agents</td>
+                           <td align="left" valign="top" styleCode="Botrule Rrule">celecoxib, diclofenac, diflunisal, fenoprofen, ibuprofen, indomethacin, ketoprofen, ketorolac, mefenamic acid, naproxen, oxaprozin, piroxicam, sulindac</td>
+                        </tr>
+                        <tr ID="id_6043737f-5ff8-4ff0-b21b-7c29dfa98c48">
+                           <td align="left" valign="top" styleCode="Lrule Botrule Rrule">Serotonin Reuptake Inhibitors</td>
+                           <td align="left" valign="top" styleCode="Botrule Rrule">citalopram, desvenlafaxine, duloxetine, escitalopram, fluoxetine, fluvoxamine, milnacipran, paroxetine, sertraline, venlafaxine, vilazodone</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph> </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">7.3  Antibiotics and Antifungals</content>
+                  </paragraph>
+                  <paragraph>There have been reports of changes in INR in patients taking warfarin and antibiotics or antifungals, but clinical pharmacokinetic studies have not shown consistent effects of these agents on plasma concentrations of warfarin.</paragraph>
+                  <paragraph>Closely monitor INR when starting or stopping any antibiotic or antifungal in patients taking warfarin.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">7.4  Botanical (Herbal) Products and Foods</content>
+                  </paragraph>
+                  <paragraph>Exercise caution when botanical (herbal) products are taken concomitantly with warfarin sodium. Few adequate, well-controlled studies evaluating the potential for metabolic and/or pharmacologic interactions between botanicals and warfarin sodium exist. Due to a lack of manufacturing standardization with botanical medicinal preparations, the amount of active ingredients may vary. This could further confound the ability to assess potential interactions and effects on anticoagulation.</paragraph>
+                  <paragraph>Some botanicals may cause bleeding events when taken alone (e.g., garlic and Ginkgo biloba) and may have anticoagulant, antiplatelet, and/or fibrinolytic properties. These effects would be expected to be additive to the anticoagulant effects of warfarin sodium. Conversely, some botanicals may decrease the effects of warfarin sodium (e.g., co-enzyme Q , St. John’s wort, ginseng). Some botanicals and foods can interact with warfarin sodium through CYP450 interactions (e.g., echinacea, grapefruit juice, ginkgo, goldenseal, St. John’s wort).
+                            <sub>10</sub>
+                  </paragraph>
+                  <paragraph>Monitor the patient’s response with additional INR determinations when initiating or discontinuing any botanicals.</paragraph>
+               </text>
+               <effectiveTime value="20111104"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <list listType="unordered">
+                           <item>Consult labeling of all concurrently used drugs for complete information about interactions with warfarin sodium or increased risks for bleeding. (7)</item>
+                           <item>Inhibitors and inducers of CYP2C9, 1A2, or 3A4: May alter warfarin exposure. Monitor INR closely when any such drug is used with warfarin sodium. (7.1)</item>
+                           <item>Drugs that increase bleeding risk: Closely monitor patients receiving any such drug (e.g., other anticoagulants, antiplatelet agents, nonsteroidal anti-inflammatory drugs, serotonin reuptake inhibitors). (7.2)</item>
+                           <item>Antibiotics and antifungals: Closely monitor INR when initiating or stopping an antibiotic or antifungal course of therapy. (7.3)</item>
+                           <item>Botanical (herbal) products: Some may influence patient response to warfarin sodium necessitating close INR monitoring. (7.4)</item>
+                        </list>
+                     </text>
+                  </highlight>
+               </excerpt>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_specific_populations_id_a2eccc4d-dbea-419d-a199-699da1c84e47">
+               <id root="7cf8d5e7-f21e-4d22-8d14-33f9a61be565"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="43684-0" displayName="USE IN SPECIFIC POPULATIONS SECTION"/>
+               <title>8 USE IN SPECIFIC POPULATIONS</title>
+               <effectiveTime value="20111104"/>
+               <excerpt>
+                  <highlight>
+                     <text>
+                        <list listType="unordered">
+                           <item>Nursing mothers: Use with caution in a nursing woman. Monitor breastfeeding infants for bruising or bleeding. (8.3)</item>
+                        </list>
+                        <paragraph>
+                           <content styleCode="bold">See 17 for PATIENT COUNSELING INFORMATION and Medication Guide</content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="bold">Revised: 10/2011</content>
+                        </paragraph>
+                     </text>
+                  </highlight>
+               </excerpt>
+               <component>
+                  <section ID="i4i_pregnancy_id_7abdf387-dbe0-4a74-8255-c418755643ce">
+                     <id root="a6e86d53-ff5e-4eb4-99c3-2a0491929d76"/>
+                     <code codeSystem="2.16.840.1.113883.6.1" code="42228-7" displayName="PREGNANCY SECTION"/>
+                     <title>8.1 Pregnancy</title>
+                     <text>
+                        <paragraph>for women with mechanical heart valves [ ] and for other pregnant populations [ ].
+                                    <content styleCode="bold">Pregnancy Category D</content>
+                           <content styleCode="italics">see</content>
+                           <content styleCode="italics">Warnings and Precautions (5.5)</content>
+                           <content styleCode="bold">Pregnancy Category X</content>
+                           <content styleCode="italics">see</content>
+                           <content styleCode="italics">Contraindications (4)</content>
+                        </paragraph>
+                        <paragraph>Warfarin sodium is contraindicated in women who are pregnant except in pregnant women with mechanical heart valves, who are at high risk of thromboembolism, and for whom the benefits of warfarin sodium may outweigh the risks. Warfarin sodium can cause fetal harm when administered to a pregnant woman. Warfarin sodium exposure during pregnancy causes a recognized pattern of major congenital malformations (warfarin embryopathy), fetal hemorrhage, and an increased risk of spontaneous abortion and fetal mortality. The reproductive and developmental effects of warfarin sodium have not been evaluated in animals. If this drug is used during pregnancy or if the patient becomes pregnant while taking this drug, the patient should be apprised of the potential hazard to the fetus.</paragraph>
+                        <paragraph>In humans, warfarin crosses the placenta, and concentrations in fetal plasma approach the maternal values. Exposure to warfarin during the first trimester of pregnancy caused a pattern of congenital malformations in about 5% of exposed offspring. Warfarin embryopathy is characterized by nasal hypoplasia with or without stippled epiphyses (chondrodysplasia punctata) and growth retardation (including low birth weight). Central nervous system and eye abnormalities have also been reported, including dorsal midline dysplasia characterized by agenesis of the corpus callosum, Dandy-Walker malformation, midline cerebellar atrophy, and ventral midline dysplasia characterized by optic atrophy. Mental retardation, blindness, schizencephaly, microcephaly, hydrocephalus, and other adverse pregnancy outcomes have been reported following warfarin exposure during the second and third trimesters of pregnancy [ ) 6 ].
+                                    <content styleCode="italics">see</content>
+                           <content styleCode="italics">Contraindications (4</content>
+                           <content styleCode="italics">and</content>
+                           <content styleCode="italics">Warnings and Precautions (5.</content>
+                           <content styleCode="italics">)</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20111104"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="i4i_nursing_mothers_id_ca8bf7de-6efd-4f72-b3e4-711293a7871d">
+                     <id root="22179fbf-73c3-449e-aed0-2b2841df34e5"/>
+                     <code codeSystem="2.16.840.1.113883.6.1" code="34080-2" displayName="NURSING MOTHERS SECTION"/>
+                     <title>8.3 Nursing Mothers</title>
+                     <text>
+                        <paragraph>Based on published data in 15 nursing mothers, warfarin was not detected in human milk. Among the 15 full-term newborns, 6 nursing infants had documented prothrombin times within the expected range. Prothrombin times were not obtained for the other 9 nursing infants. Monitor breastfeeding infants for bruising or bleeding. Effects in premature infants have not been evaluated. Caution should be exercised when warfarin sodium is administered to a nursing woman.</paragraph>
+                     </text>
+                     <effectiveTime value="20111104"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="i4i_pediatric_use_id_df52e400-09dc-4785-99a2-ffc8d82c1bc1">
+                     <id root="96d43f56-04b5-481f-9a84-61ab9fac94ac"/>
+                     <code codeSystem="2.16.840.1.113883.6.1" code="34081-0" displayName="PEDIATRIC USE SECTION"/>
+                     <title>8.4 Pediatric Use</title>
+                     <text>
+                        <paragraph>Adequate and well-controlled studies with warfarin sodium have not been conducted in any pediatric population, and the optimum dosing, safety, and efficacy in pediatric patients is unknown. Pediatric use of warfarin sodium is based on adult data and recommendations, and available limited pediatric data from observational studies and patient registries. Pediatric patients administered warfarin sodium should avoid any activity or sport that may result in traumatic injury.</paragraph>
+                        <paragraph>The developing hemostatic system in infants and children results in a changing physiology of thrombosis and response to anticoagulants. Dosing of warfarin in the pediatric population varies by patient age, with infants generally having the highest, and adolescents having the lowest milligram per kilogram dose requirements to maintain target INRs. Because of changing warfarin requirements due to age, concomitant medications, diet, and existing medical condition, target INR ranges may be difficult to achieve and maintain in pediatric patients, and more frequent INR determinations are recommended. Bleeding rates varied by patient population and clinical care center in pediatric observational studies and patient registries.</paragraph>
+                        <paragraph>Infants and children receiving vitamin K-supplemented nutrition, including infant formulas, may be resistant to warfarin therapy, while human milk-fed infants may be sensitive to warfarin therapy.</paragraph>
+                     </text>
+                     <effectiveTime value="20111104"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="i4i_geriatric_use_id_f16cf47e-d423-4f90-a7d4-718f7331eb6d">
+                     <id root="2d2530ff-dca1-4cc1-a487-840f59432b78"/>
+                     <code codeSystem="2.16.840.1.113883.6.1" code="34082-8" displayName="GERIATRIC USE SECTION"/>
+                     <title>8.5 Geriatric Use</title>
+                     <text>
+                        <paragraph>Of the total number of patients receiving warfarin sodium in controlled clinical trials for which data were available for analysis, 1885 patients (24.4%) were 65 years and older, while 185 patients (2.4%) were 75 years and older. No overall differences in effectiveness or safety were observed between these patients and younger patients, but greater sensitivity of some older individuals cannot be ruled out.</paragraph>
+                        <paragraph>Patients 60 years or older appear to exhibit greater than expected INR response to the anticoagulant effects of warfarin [ ]. Warfarin sodium is contraindicated in any unsupervised patient with senility. Observe caution with administration of warfarin sodium to elderly patients in any situation or with any physical condition where added risk of hemorrhage is present. Consider lower initiation and maintenance doses of warfarin sodium in elderly patients [ ].
+                                    <content styleCode="italics">see</content>
+                           <content styleCode="italics">Clinical Pharmacology (12.3)</content>
+                           <content styleCode="italics">see</content>
+                           <content styleCode="italics">Dosage and Administration (2.2, 2.3)</content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="bold">8.6  Renal Impairment</content>
+                        </paragraph>
+                        <paragraph>Renal clearance is considered to be a minor determinant of anticoagulant response to warfarin. No dosage adjustment is necessary for patients with renal impairment.</paragraph>
+                        <paragraph>
+                           <content styleCode="bold">8.7  Hepatic Impairment</content>
+                        </paragraph>
+                        <paragraph>Hepatic impairment can potentiate the response to warfarin through impaired synthesis of clotting factors and decreased metabolism of warfarin. Use caution when using warfarin sodium in these patients.</paragraph>
+                        <paragraph>
+                           <content styleCode="bold">8.8  Females of Reproductive Potential</content>
+                        </paragraph>
+                        <paragraph>Warfarin sodium exposure during pregnancy can cause spontaneous abortion, birth defects, or fetal death. Females of reproductive potential who are candidates for warfarin sodium therapy should be counseled regarding the benefits of therapy and potential reproductive risks. Discuss pregnancy planning with females of reproductive potential who are on warfarin sodium therapy. If the patient becomes pregnant while taking warfarin sodium, she should be apprised of the potential risks to the fetus.</paragraph>
+                     </text>
+                     <effectiveTime value="20111104"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_overdosage_id_5406a3e7-c6ed-4d1a-9c2d-125553247db5">
+               <id root="a3717fef-9045-4887-9038-802bd6b3e130"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="34088-5" displayName="OVERDOSAGE SECTION"/>
+               <title>10 OVERDOSAGE</title>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">10.1  Signs and Symptoms</content>
+                  </paragraph>
+                  <paragraph>Bleeding (e.g., appearance of blood in stools or urine, hematuria, excessive menstrual bleeding, melena, petechiae, excessive bruising or persistent oozing from superficial injuries, unexplained fall in hemoglobin) is a manifestation of excessive anticoagulation.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">10.2  Treatment</content>
+                  </paragraph>
+                  <paragraph>The treatment of excessive anticoagulation is based on the level of the INR, the presence or absence of bleeding, and clinical circumstances. Reversal of warfarin sodium anticoagulation may be obtained by discontinuing warfarin sodium therapy and, if necessary, by administration of oral or parenteral vitamin K .
+                            <sub>1</sub>
+                  </paragraph>
+                  <paragraph>The use of vitamin K reduces response to subsequent warfarin sodium therapy and patients may return to a pretreatment thrombotic status following the rapid reversal of a prolonged INR. Resumption of warfarin sodium administration reverses the effect of vitamin K, and a therapeutic INR can again be obtained by careful dosage adjustment. If rapid re-anticoagulation is indicated, heparin may be preferable for initial therapy.
+                            <sub>1</sub>
+                  </paragraph>
+                  <paragraph>Prothrombin complex concentrate (PCC), fresh frozen plasma, or activated Factor VII treatment may be considered if the requirement to reverse the effects of warfarin sodium is urgent. A risk of hepatitis and other viral diseases is associated with the use of blood products; PCC and activated Factor VII are also associated with an increased risk of thrombosis. Therefore, these preparations should be used only in exceptional or life-threatening bleeding episodes secondary to warfarin sodium overdosage.</paragraph>
+               </text>
+               <effectiveTime value="20111104"/>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_description_id_3b9b9576-e9c4-4c1c-aa5f-ffb7dc7a3096">
+               <id root="204cbce8-dfa5-463c-95b6-8112610af12e"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="34089-3" displayName="DESCRIPTION SECTION"/>
+               <title>11 DESCRIPTION</title>
+               <text>
+                  <paragraph>Warfarin sodium is an anticoagulant which acts by inhibiting vitamin K-dependent coagulation factors. Chemically, it is 3-(α-acetonylbenzyl)-4-hydroxycoumarin and is a racemic mixture of the - and -enantiomers. Warfarin sodium is an isopropanol clathrate. The crystallization of warfarin sodium virtually eliminates trace impurities present in amorphous warfarin. Its structural formula may be represented as follows:
+                            <content styleCode="italics">R</content>
+                     <content styleCode="italics">S</content>
+                  </paragraph>
+                  <renderMultiMedia referencedObject="id_440d76cf-1103-4efb-a16d-dafe6e515c7b"/>
+                  <paragraph>C H NaO M.W. 330.31
+                            <sub>19</sub>
+                     <sub>15</sub>
+                     <sub>4</sub>
+                  </paragraph>
+                  <paragraph>Warfarin sodium occurs as a white, odorless, crystalline powder, is discolored by light and is very soluble in water; freely soluble in alcohol; very slightly soluble in chloroform and in ether.</paragraph>
+                  <paragraph>Each tablet, for oral administration, contains 1 mg, 2 mg, 2½ mg, 3 mg, 4 mg, 5 mg, 6 mg, 7½ mg or 10 mg warfarin sodium. In addition, each tablet contains the following inactive ingredients: anhydrous lactose, hypromellose 2208 (3cPs), magnesium stearate and pregelatinized starch.</paragraph>
+                  <paragraph>The 1 mg also contains D&amp;C red no. 6 barium lake.</paragraph>
+                  <paragraph>The 2 mg also contains FD&amp;C blue no. 2 aluminum lake and FD&amp;C red no. 40 aluminum lake.</paragraph>
+                  <paragraph>The 2½ mg also contains D&amp;C yellow no. 10 aluminum lake and FD&amp;C blue no. 1 aluminum lake.</paragraph>
+                  <paragraph>The 3 mg also contains FD&amp;C blue no. 2 aluminum lake and FD&amp;C red no. 40 aluminum lake.</paragraph>
+                  <paragraph>The 4 mg also contains FD&amp;C blue no. 1 aluminum lake.</paragraph>
+                  <paragraph>The 5 mg also contains FD&amp;C yellow no. 6 aluminum lake.</paragraph>
+                  <paragraph>The 6 mg also contains FD&amp;C blue no. 1 aluminum lake and FD&amp;C yellow no. 6 aluminum lake.</paragraph>
+                  <paragraph>The 7½ mg also contains D&amp;C yellow no. 10 aluminum lake and FD&amp;C yellow no. 6 aluminum lake.</paragraph>
+                  <paragraph>The 10 mg does not contain any dyes.</paragraph>
+               </text>
+               <effectiveTime value="20111104"/>
+               <component>
+                  <observationMedia ID="id_440d76cf-1103-4efb-a16d-dafe6e515c7b">
+                     <text>Warfarin Structural Formula</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="5c275080-0a7d-40cb-9c7c-2b04e830a1e1-01.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_clinical_pharmacology_id_67c1a78d-ea12-4f8e-a911-cfb0866d77fd">
+               <id root="e2be68e2-2f74-4b47-bf9e-21cba49a742a"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="34090-1" displayName="CLINICAL PHARMACOLOGY SECTION"/>
+               <title>12 CLINICAL PHARMACOLOGY</title>
+               <effectiveTime value="20111104"/>
+               <component>
+                  <section ID="i4i_mechanism_action_id_608cdf27-89c4-43f3-b418-3a27b64adb51">
+                     <id root="71ccbb80-66c8-4528-be5c-97a1d0c11b19"/>
+                     <code codeSystem="2.16.840.1.113883.6.1" code="43679-0" displayName="MECHANISM OF ACTION SECTION"/>
+                     <title>12.1 Mechanism of Action</title>
+                     <text>
+                        <paragraph>Warfarin acts by inhibiting the synthesis of vitamin K-dependent clotting factors, which include Factors II, VII, IX, and X, and the anticoagulant proteins C and S. Vitamin K is an essential cofactor for the post ribosomal synthesis of the vitamin K-dependent clotting factors. Vitamin K promotes the biosynthesis of γ-carboxyglutamic acid residues in the proteins that are essential for biological activity. Warfarin is thought to interfere with clotting factor synthesis by inhibition of the C1 subunit of vitamin K epoxide reductase (VKORC1) enzyme complex, thereby reducing the regeneration of vitamin K epoxide [ ].
+                                    <sub>1</sub>
+                           <content styleCode="italics">see</content>
+                           <content styleCode="italics">Clinical Pharmacology (12.5)</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20111104"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="i4i_pharmacodynamics_id_10834d23-9512-4f7f-95d5-7a08f06c85cd">
+                     <id root="7feaa5cd-3469-4fa1-aae1-626140b1135f"/>
+                     <code codeSystem="2.16.840.1.113883.6.1" code="43681-6" displayName="PHARMACODYNAMICS SECTION"/>
+                     <title>12.2 Pharmacodynamics</title>
+                     <text>
+                        <paragraph>An anticoagulation effect generally occurs within 24 hours after warfarin administration. However, peak anticoagulant effect may be delayed 72 to 96 hours. The duration of action of a single dose of racemic warfarin is 2 to 5 days. The effects of warfarin sodium may become more pronounced as effects of daily maintenance doses overlap. This is consistent with the half-lives of the affected vitamin K-dependent clotting factors and anticoagulation proteins:  Factor II - 60 hours, VII - 4 to 6 hours, IX - 24 hours, X - 48 to 72 hours, and proteins C and S are approximately 8 hours and 30 hours, respectively.</paragraph>
+                     </text>
+                     <effectiveTime value="20111104"/>
+                  </section>
+               </component>
+               <component>
+                  <section ID="i4i_pharmacokinetics_id_6bc23205-214b-42ed-bb12-96352de37511">
+                     <id root="ef1169ba-5f7d-44e3-8569-283ce3269607"/>
+                     <code codeSystem="2.16.840.1.113883.6.1" code="43682-4" displayName="PHARMACOKINETICS SECTION"/>
+                     <title>12.3 Pharmacokinetics</title>
+                     <text>
+                        <paragraph>Warfarin sodium is a racemic mixture of the - and -enantiomers of warfarin. The -enantiomer exhibits 2 to 5 times more anticoagulant activity than the -enantiomer in humans, but generally has a more rapid clearance.
+                                    <content styleCode="italics">R</content>
+                           <content styleCode="italics">S</content>
+                           <content styleCode="italics">S</content>
+                           <content styleCode="italics">R</content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="bold">Absorption</content>
+                        </paragraph>
+                        <paragraph>Warfarin is essentially completely absorbed after oral administration, with peak concentration generally attained within the first 4 hours.</paragraph>
+                        <paragraph>
+                           <content styleCode="bold">Distribution</content>
+                        </paragraph>
+                        <paragraph>Warfarin distributes into a relatively small apparent volume of distribution of about 0.14 L/kg. A distribution phase lasting 6 to 12 hours is distinguishable after rapid intravenous or oral administration of an aqueous solution. Approximately 99% of the drug is bound to plasma proteins.</paragraph>
+                        <paragraph>
+                           <content styleCode="bold">Metabolism</content>
+                        </paragraph>
+                        <paragraph>The elimination of warfarin is almost entirely by metabolism. Warfarin is stereoselectively metabolized by hepatic cytochrome P-450 (CYP450) microsomal enzymes to inactive hydroxylated metabolites (predominant route) and by reductases to reduced metabolites (warfarin alcohols) with minimal anticoagulant activity. Identified metabolites of warfarin include dehydrowarfarin, two diastereoisomer alcohols, and 4′-, 6-, 7-, 8-, and 10- hydroxywarfarin. The CYP450 isozymes involved in the metabolism of warfarin include CYP2C9, 2C19, 2C8, 2C18, 1A2, and 3A4. CYP2C9, a polymorphic enzyme, is likely to be the principal form of human liver CYP450 that modulates the anticoagulant activity of warfarin. Patients with one or more variant CYP2C9 alleles have decreased S-warfarin clearance [ ].
+                                    <content styleCode="italics">in vivo</content>
+                           <content styleCode="italics">see</content>
+                           <content styleCode="italics">Clinical Pharmacology (12.5)</content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="bold">Excretion</content>
+                        </paragraph>
+                        <paragraph>The terminal half-life of warfarin after a single dose is approximately 1 week; however, the effective half-life ranges from 20 to 60 hours, with a mean of about 40 hours. The clearance of R-warfarin is generally half that of S-warfarin, thus as the volumes of distribution are similar, the half-life of R-warfarin is longer than that of S-warfarin. The half-life of R-warfarin ranges from 37 to 89 hours, while that of S-warfarin ranges from 21 to 43 hours. Studies with radiolabeled drug have demonstrated that up to 92% of the orally administered dose is recovered in urine. Very little warfarin is excreted unchanged in urine. Urinary excretion is in the form of metabolites.</paragraph>
+                        <paragraph>
+                           <content styleCode="bold">Geriatric Patients</content>
+                        </paragraph>
+                        <paragraph>Patients 60 years or older appear to exhibit greater than expected INR response to the anticoagulant effects of warfarin. The cause of the increased sensitivity to the anticoagulant effects of warfarin in this age group is unknown but may be due to a combination of pharmacokinetic and pharmacodynamic factors. Limited information suggests there is no difference in the clearance of S-warfarin; however, there may be a slight decrease in the clearance of R-warfarin in the elderly as compared to the young. Therefore, as patient age increases, a lower dose of warfarin is usually required to produce a therapeutic level of anticoagulation [
+                                    <content styleCode="italics">see</content>
+                           <content styleCode="italics">Dosage and Administration (2.3, 2.4)].</content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="bold">Asian Patients</content>
+                        </paragraph>
+                        <paragraph>Asian patients may require lower initiation and maintenance doses of warfarin. A non-controlled study of 151 Chinese outpatients stabilized on warfarin for various indications reported a mean daily warfarin requirement of 3.3 ± 1.4 mg to achieve an INR of 2 to 2.5. Patient age was the most important determinant of warfarin requirement in these patients, with a progressively lower warfarin requirement with increasing age.</paragraph>
+                        <paragraph>
+                           <content styleCode="bold">12.5  Pharmacogenomics</content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="bold">CYP2C9 and VKORC1 Polymorphisms</content>
+                        </paragraph>
+                        <paragraph>The -enantiomer of warfarin is mainly metabolized to 7-hydroxywarfarin by CYP2C9, a polymorphic enzyme. The variant alleles, CYP2C9*2 and CYP2C9*3, result in decreased CYP2C9 enzymatic 7-hydroxylation of S-warfarin. The frequencies of these alleles in Caucasians are approximately 11% and 7% for CYP2C9*2 and CYP2C9*3, respectively.
+                                    <content styleCode="italics">S</content>
+                           <content styleCode="italics">in vitro</content>
+                        </paragraph>
+                        <paragraph>Other CYP2C9 alleles associated with reduced enzymatic activity occur at lower frequencies, including *5, *6, and *11 alleles in populations of African ancestry and *5, *9, and *11 alleles in Caucasians.</paragraph>
+                        <paragraph>Warfarin reduces the regeneration of vitamin K from vitamin K epoxide in the vitamin K cycle through inhibition of VKOR, a multiprotein enzyme complex. Certain single nucleotide polymorphisms in the VKORC1 gene (e.g., –1639G &gt; A) have been associated with variable warfarin dose requirements. VKORC1 and CYP2C9 gene variants generally explain the largest proportion of known variability in warfarin dose requirements.</paragraph>
+                        <paragraph>CYP2C9 and VKORC1 genotype information, when available, can assist in selection of the initial dose of warfarin [ ].
+                                    <content styleCode="italics">see</content>
+                           <content styleCode="italics">Dosage and Administration (2.3)</content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20111104"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_nonclinical_toxicology_id_c3c844e1-e1dc-4612-8f2c-91598f9087fb">
+               <id root="40b9ae0f-d061-429a-a7d2-466449c15394"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="43680-8" displayName="NONCLINICAL TOXICOLOGY SECTION"/>
+               <title>13 NONCLINICAL TOXICOLOGY</title>
+               <effectiveTime value="20111104"/>
+               <component>
+                  <section ID="i4i_carcinogenesis_mutagenesis_fertility_id_decc9649-bb0a-4628-bd5a-5c10fef52875">
+                     <id root="dff1183e-4418-4b01-bf0d-55f1f1301224"/>
+                     <code codeSystem="2.16.840.1.113883.6.1" code="34083-6" displayName="CARCINOGENESIS &amp; MUTAGENESIS &amp; IMPAIRMENT OF FERTILITY SECTION"/>
+                     <title>13.1 Carcinogenesis, Mutagenesis, Impairment of Fertility</title>
+                     <text>
+                        <paragraph>Carcinogenicity, mutagenicity, or fertility studies have not been performed with warfarin.</paragraph>
+                     </text>
+                     <effectiveTime value="20111104"/>
+                  </section>
+               </component>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_clinical_studies_id_0099421f-e197-4661-a60b-ea9d86050b05">
+               <id root="c6b54a1e-7481-4c5c-81b5-833aa938bfd2"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="34092-7" displayName="CLINICAL STUDIES SECTION"/>
+               <title>14 CLINICAL STUDIES</title>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">14.1  Atrial Fibrillation</content>
+                  </paragraph>
+                  <paragraph>In five prospective, randomized, controlled clinical trials involving 3711 patients with non-rheumatic AF, warfarin significantly reduced the risk of systemic thromboembolism including stroke (see ). The risk reduction ranged from 60% to 86% in all except one trial (CAFA: 45%), which was stopped early due to published positive results from two of these trials. The incidence of major bleeding in these trials ranged from 0.6% to 2.7% (see ).
+                            <content styleCode="bold">Table 4</content>
+                     <content styleCode="bold">Table 4</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Table 4: Clinical Studies of Warfarin in Non-Rheumatic AF Patients*</content>
+                  </paragraph>
+                  <table border="single" width="577" ID="id_fcf3e80d-cdb6-4825-b80d-65f2d7147a80">
+                     <col width="9.4%"/>
+                     <col width="11.3%"/>
+                     <col width="10.4%"/>
+                     <col width="10.4%"/>
+                     <col width="10.0%"/>
+                     <col width="13.3%"/>
+                     <col width="11.5%"/>
+                     <col width="12.4%"/>
+                     <col width="11.2%"/>
+                     <tbody>
+                        <tr ID="id_69f976a9-e7d4-41c3-9820-22450ca664b5">
+                           <td align="left" valign="bottom" styleCode="Toprule"/>
+                           <td align="center" valign="top" colspan="2" styleCode="Toprule">n</td>
+                           <td align="center" valign="bottom" styleCode="Toprule"/>
+                           <td align="center" valign="bottom" styleCode="Toprule"/>
+                           <td align="center" valign="top" colspan="2" styleCode="Toprule">Thromboembolism</td>
+                           <td align="center" valign="top" colspan="2">% Major Bleeding</td>
+                        </tr>
+                        <tr ID="id_73044c6b-b424-48b5-b26a-b97b738fa7e2">
+                           <td align="center" valign="bottom" styleCode="Botrule">Study</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">Warfarin-Treated Patients</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">Control Patients</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">PT Ratio</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">INR</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">% Risk Reduction</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">-value
+                                        <content styleCode="italics">p</content>
+                           </td>
+                           <td align="center" valign="bottom" styleCode="Botrule">Warfarin-Treated Patients</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">Control Patients</td>
+                        </tr>
+                        <tr ID="id_2e5b3b3a-2ecb-4ba7-9228-3f5345b6fd37">
+                           <td align="left" valign="middle">AFASAK</td>
+                           <td align="center" valign="middle">335</td>
+                           <td align="center" valign="middle">336</td>
+                           <td align="center" valign="middle">1.5 to 2</td>
+                           <td align="center" valign="middle">2.8 to 4.2</td>
+                           <td align="center" valign="middle">60</td>
+                           <td align="center" valign="middle">0.027</td>
+                           <td align="center" valign="middle">0.6</td>
+                           <td align="center" valign="middle">0</td>
+                        </tr>
+                        <tr ID="id_868f87fe-9f0a-419c-a10d-67198e37f29e">
+                           <td align="left" valign="middle">SPAF</td>
+                           <td align="center" valign="middle">210</td>
+                           <td align="center" valign="middle">211</td>
+                           <td align="center" valign="middle">1.3 to 1.8</td>
+                           <td align="center" valign="middle">2 to 4.5</td>
+                           <td align="center" valign="middle">67</td>
+                           <td align="center" valign="middle">0.01</td>
+                           <td align="center" valign="middle">1.9</td>
+                           <td align="center" valign="middle">1.9</td>
+                        </tr>
+                        <tr ID="id_5994c891-052d-46e9-b8d5-ca8e18835491">
+                           <td align="left" valign="middle">BAATAF</td>
+                           <td align="center" valign="middle">212</td>
+                           <td align="center" valign="middle">208</td>
+                           <td align="center" valign="middle">1.2 to 1.5</td>
+                           <td align="center" valign="middle">1.5 to 2.7</td>
+                           <td align="center" valign="middle">86</td>
+                           <td align="center" valign="middle">&lt; 0.05</td>
+                           <td align="center" valign="middle">0.9</td>
+                           <td align="center" valign="middle">0.5</td>
+                        </tr>
+                        <tr ID="id_92c0370c-f5c9-4532-b141-7f743f72bc7f">
+                           <td align="left" valign="middle">CAFA</td>
+                           <td align="center" valign="middle">187</td>
+                           <td align="center" valign="middle">191</td>
+                           <td align="center" valign="middle">1.3 to 1.6</td>
+                           <td align="center" valign="middle">2 to 3</td>
+                           <td align="center" valign="middle">45</td>
+                           <td align="center" valign="middle">0.25</td>
+                           <td align="center" valign="middle">2.7</td>
+                           <td align="center" valign="middle">0.5</td>
+                        </tr>
+                        <tr ID="id_87cf6245-4189-4706-9e6e-f47ebff7ee3b">
+                           <td align="left" valign="bottom" styleCode="Botrule">SPINAF</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">260</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">265</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">1.2 to 1.5</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">1.4 to 2.8</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">79</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">0.001</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">2.3</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">1.5</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph>*All study results of warfarin vs. control are based on intention-to-treat analysis and include ischemic stroke and systemic thromboembolism, excluding hemorrhagic stroke and transient ischemic attacks.</paragraph>
+                  <paragraph>Trials in patients with both AF and mitral stenosis suggest a benefit from anticoagulation with warfarin sodium [ ].
+                            <content styleCode="italics">see</content>
+                     <content styleCode="italics">Dosage and Administration (2.2)</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">14.2  Mechanical and Bioprosthetic Heart Valves</content>
+                  </paragraph>
+                  <paragraph>In a prospective, randomized, open-label, positive-controlled study in 254 patients with mechanical prosthetic heart valves, the thromboembolic-free interval was found to be significantly greater in patients treated with warfarin alone compared with dipyridamole/aspirin-treated patients (p &lt; 0.005) and pentoxifylline/aspirin-treated patients (p &lt; 0.05). The results of this study are presented in .
+                            <content styleCode="bold">Table 5</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Table 5:  Prospective, Randomized, Open-Label, Positive-Controlled Clinical</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Study of Warfarin in Patients with Mechanical Prosthetic Heart</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Valves</content>
+                  </paragraph>
+                  <table border="single" width="443" ID="id_454ee8eb-a4fa-4515-aee5-a90fc109781a">
+                     <col width="25.0%"/>
+                     <col width="21.4%"/>
+                     <col width="28.2%"/>
+                     <col width="25.3%"/>
+                     <tbody>
+                        <tr ID="id_16fa8ddf-a450-43e4-93ca-fb911611d899">
+                           <td align="center" valign="top" styleCode="Toprule"/>
+                           <td align="center" valign="top" colspan="3" styleCode="Botrule">Patients Treated With</td>
+                        </tr>
+                        <tr ID="id_ff33e927-411f-405f-a2ae-37ef0ce72669">
+                           <td align="left" valign="bottom"/>
+                           <td align="center" valign="top">Warfarin</td>
+                           <td align="center" valign="top">Dipyridamole/Aspirin</td>
+                           <td align="center" valign="top">Pentoxifylline/Aspirin</td>
+                        </tr>
+                        <tr ID="id_c37f0250-26e7-4d08-9bbd-74a3123eaf25">
+                           <td align="left" valign="bottom" styleCode="Botrule">Event</td>
+                           <td align="center" valign="top" styleCode="Botrule"/>
+                           <td align="center" valign="top" styleCode="Botrule"/>
+                           <td align="center" valign="top" styleCode="Botrule"/>
+                        </tr>
+                        <tr ID="id_d2a0de76-8a64-47e9-a7b4-597231819501">
+                           <td align="left" valign="middle" styleCode="Botrule">Thromboembolism</td>
+                           <td align="center" valign="middle" styleCode="Botrule">2.2/100 py</td>
+                           <td align="center" valign="middle" styleCode="Botrule">8.6/100 py</td>
+                           <td align="center" valign="middle" styleCode="Botrule">7.9/100 py</td>
+                        </tr>
+                        <tr ID="id_578f20b5-9688-4ee2-a8fe-798f0fb77425">
+                           <td align="left" valign="middle" styleCode="Botrule">Major bleeding</td>
+                           <td align="center" valign="middle" styleCode="Botrule">2.5/100 py</td>
+                           <td align="center" valign="middle" styleCode="Botrule">0/100 py</td>
+                           <td align="center" valign="middle" styleCode="Botrule">0.9/100 py</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph>py = patient years</paragraph>
+                  <paragraph>In a prospective, open-label, clinical study comparing moderate (INR 2.65) vs. high intensity (INR 9) warfarin therapies in 258 patients with mechanical prosthetic heart valves, thromboembolism occurred with similar frequency in the two groups (4 and 3.7 events per 100 patient years, respectively). Major bleeding was more common in the high intensity group. The results of this study are presented in .
+                            <content styleCode="bold">Table 6</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Table 6:</content>
+                     <content styleCode="bold">Prospective, Open-Label Clinical Study of Warfarin in Patients with Mechanical Prosthetic Heart Valves</content>
+                  </paragraph>
+                  <table border="single" width="513" ID="id_85f1e08e-d90f-46f0-8440-dcc17920a386">
+                     <col width="27.7%"/>
+                     <col width="39.4%"/>
+                     <col width="33.0%"/>
+                     <tbody>
+                        <tr ID="id_a0ba848d-c75d-4af2-b5cf-2f2d3e92b96b">
+                           <td align="left" valign="bottom" styleCode="Toprule Botrule">Event</td>
+                           <td align="center" valign="top" styleCode="Botrule">INR 2.65
+                                        <paragraph>Moderate Warfarin Therapy</paragraph>
+                           </td>
+                           <td align="center" valign="top" styleCode="Botrule">INR 9
+                                        <paragraph>High Intensity Warfarin Therapy</paragraph>
+                           </td>
+                        </tr>
+                        <tr ID="id_f235b0de-fbdb-4f03-9df8-9d6f3a670201">
+                           <td align="left" valign="middle" styleCode="Botrule">Thromboembolism</td>
+                           <td align="center" valign="middle" styleCode="Botrule">4/100 py</td>
+                           <td align="center" valign="middle" styleCode="Botrule">3.7/100 py</td>
+                        </tr>
+                        <tr ID="id_200d04c5-bb59-4117-9c01-5d0039cec0fd">
+                           <td align="left" valign="middle" styleCode="Botrule">Major bleeding</td>
+                           <td align="center" valign="middle" styleCode="Botrule">0.95/100 py</td>
+                           <td align="center" valign="middle" styleCode="Botrule">2.1/100 py</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph>py = patient years</paragraph>
+                  <paragraph>In a randomized trial in 210 patients comparing two intensities of warfarin therapy (INR 2 to 2.25 vs. INR 2.5 to 4) for a three month period following tissue heart valve replacement, thromboembolism occurred with similar frequency in the two groups (major embolic events 2% vs. 1.9%, respectively, and minor embolic events 10.8% vs. 10.2%, respectively). Major hemorrhages occurred in 4.6% of patients in the higher intensity INR group compared to zero in the lower intensity INR group.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">14.3  Myocardial Infarction</content>
+                  </paragraph>
+                  <paragraph>WARIS (The Warfarin Re-Infarction Study) was a double-blind, randomized study of 1214 patients 2 to 4 weeks post-infarction treated with warfarin to a target INR of 2.8 to 4.8. The primary endpoint was a composite of total mortality and recurrent infarction. A secondary endpoint of cerebrovascular events was assessed. Mean follow-up of the patients was 37 months. The results for each endpoint separately, including an analysis of vascular death, are provided in :
+                            <content styleCode="bold">Table 7</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Table 7:</content>
+                     <content styleCode="bold">WARIS – Endpoint Analysis of Separate Events</content>
+                  </paragraph>
+                  <table border="single" width="565" ID="id_13cba553-4754-4258-8866-652d959e3575">
+                     <col width="25.5%"/>
+                     <col width="21.1%"/>
+                     <col width="19.1%"/>
+                     <col width="19.8%"/>
+                     <col width="14.5%"/>
+                     <tbody>
+                        <tr ID="id_3db6e69f-4364-414c-9b1d-50970872630f">
+                           <td align="left" valign="top" styleCode="Toprule"/>
+                           <td align="center" valign="top" colspan="2" styleCode="Toprule"/>
+                           <td align="center" valign="top" styleCode="Toprule"/>
+                           <td align="center" valign="top">% Risk</td>
+                        </tr>
+                        <tr ID="id_e01a31d9-bc3c-47f4-8588-03743cb6df2e">
+                           <td align="left" valign="middle"/>
+                           <td align="center" valign="middle">Warfarin</td>
+                           <td align="center" valign="middle">Placebo</td>
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="middle">Reduction</td>
+                        </tr>
+                        <tr ID="id_0ae803ca-1bd8-4ec9-9dbb-877a928c0459">
+                           <td align="left" valign="top" styleCode="Botrule">Event</td>
+                           <td align="center" valign="top" styleCode="Botrule">(n = 607)</td>
+                           <td align="center" valign="top" styleCode="Botrule">(n = 607)</td>
+                           <td align="center" valign="top" styleCode="Botrule">RR (95% CI)</td>
+                           <td align="center" valign="top" styleCode="Botrule">( -value)
+                                        <content styleCode="italics">p</content>
+                           </td>
+                        </tr>
+                        <tr ID="id_f3a57cb3-1615-4900-8cb5-5958a1914f00">
+                           <td align="left" valign="bottom" styleCode="Botrule">Total Patient Years of Follow-up</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">2018</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">1944</td>
+                           <td align="center" valign="top" styleCode="Botrule"/>
+                           <td align="center" valign="top" styleCode="Botrule"/>
+                        </tr>
+                        <tr ID="id_64d4918a-a573-4c53-8978-3e391008baf6">
+                           <td align="left" valign="middle">Total mortality</td>
+                           <td align="center" valign="middle">94 (4.7/100 py)</td>
+                           <td align="center" valign="middle">123 (6.3/100 py)</td>
+                           <td align="center" valign="middle">0.76 (0.6, 0.97)</td>
+                           <td align="center" valign="middle">24 (p = 0.03)</td>
+                        </tr>
+                        <tr ID="id_4f2135a1-0d12-45bb-9ab8-dbab2de88d81">
+                           <td align="left" valign="middle" styleCode="Botrule">Vascular death</td>
+                           <td align="center" valign="middle" styleCode="Botrule">82 (4.1/100 py)</td>
+                           <td align="center" valign="middle" styleCode="Botrule">105 (5.4/100 py)</td>
+                           <td align="center" valign="middle" styleCode="Botrule">0.78 (0.6, 1.02)</td>
+                           <td align="center" valign="middle" styleCode="Botrule">22 (p = 0.068)</td>
+                        </tr>
+                        <tr ID="id_57d3d8bb-adef-4bd7-bbe9-a5cdd45db31e">
+                           <td align="left" valign="middle" styleCode="Botrule">Recurrent MI</td>
+                           <td align="center" valign="middle" styleCode="Botrule">82 (4.1/100 py)</td>
+                           <td align="center" valign="middle" styleCode="Botrule">124 (6.4/100 py)</td>
+                           <td align="center" valign="middle" styleCode="Botrule">0.66 (0.51, 0.85)</td>
+                           <td align="center" valign="middle" styleCode="Botrule">34 (p = 0.001)</td>
+                        </tr>
+                        <tr ID="id_d598a795-13ee-414c-85c1-6508861f702c">
+                           <td align="left" valign="middle" styleCode="Botrule">Cerebrovascular event</td>
+                           <td align="center" valign="middle" styleCode="Botrule">20 (1/100 py)</td>
+                           <td align="center" valign="middle" styleCode="Botrule">44 (2.3/100 py)</td>
+                           <td align="center" valign="middle" styleCode="Botrule">0.46 (0.28, 0.75)</td>
+                           <td align="center" valign="middle" styleCode="Botrule">54 (p = 0.002)</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph>RR = Relative risk; Risk reduction = (1 - RR); CI = Confidence interval; MI = Myocardial infarction; py = patient years</paragraph>
+                  <paragraph>WARIS II (The Warfarin, Aspirin, Re-Infarction Study) was an open-label, randomized study of 3630 patients hospitalized for acute myocardial infarction treated with warfarin to a target INR 2.8 to 4.2, aspirin 160 mg per day, or warfarin to a target INR 2 to 2.5 plus aspirin 75 mg per day prior to hospital discharge. The primary endpoint was a composite of death, nonfatal reinfarction, or thromboembolic stroke. The mean duration of observation was approximately 4 years. The results for WARIS II are provided in the .
+                            <content styleCode="bold">Table 8</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Table 8:  WARIS II – Distribution of Events According to Treatment Group</content>
+                  </paragraph>
+                  <table border="single" width="560" ID="id_905b310e-ade2-43fa-bd95-57d263c66b81">
+                     <col width="21.3%"/>
+                     <col width="13.9%"/>
+                     <col width="17.1%"/>
+                     <col width="15.0%"/>
+                     <col width="18.9%"/>
+                     <col width="13.6%"/>
+                     <tbody>
+                        <tr ID="id_0f483dff-4893-4776-9180-7e6444945ef0">
+                           <td align="left" valign="bottom" styleCode="Toprule Botrule">Event</td>
+                           <td align="center" valign="bottom" styleCode="Botrule">(n = 1206)
+                                        <paragraph>Aspirin</paragraph>
+                           </td>
+                           <td align="center" valign="bottom" styleCode="Botrule">(n = 1216)
+                                        <paragraph>Warfarin</paragraph>
+                           </td>
+                           <td align="center" valign="top" styleCode="Botrule">(n = 1208)
+                                        <paragraph>Aspirin plus Warfarin</paragraph>
+                           </td>
+                           <td align="center" valign="bottom" styleCode="Botrule">(95% CI)
+                                        <paragraph>Rate Ratio</paragraph>
+                           </td>
+                           <td align="center" valign="bottom" styleCode="Botrule">-value
+                                        <content styleCode="italics">p</content>
+                           </td>
+                        </tr>
+                        <tr ID="id_383af431-408b-43b2-a6d9-9995a36aa283">
+                           <td align="left" valign="top"/>
+                           <td align="center" valign="top" colspan="3" styleCode="Botrule">No. of Events</td>
+                           <td align="center" valign="top" colspan="2"/>
+                        </tr>
+                        <tr ID="id_7875b9d6-4f37-4435-84af-4f04744255a6">
+                           <td align="left" valign="top" rowspan="2">Major bleeding
+                                        <sup>a</sup>
+                           </td>
+                           <td align="center" valign="top">8</td>
+                           <td align="center" valign="top">33</td>
+                           <td align="center" valign="top">28</td>
+                           <td align="center" valign="top">3.35 (ND)
+                                        <sup>b</sup>
+                           </td>
+                           <td align="center" valign="top">ND</td>
+                        </tr>
+                        <tr ID="id_cb973883-24c3-4fdd-acc2-87407ccbafd7">
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="top">4 (ND)
+                                        <sup>c</sup>
+                           </td>
+                           <td align="center" valign="top">ND</td>
+                        </tr>
+                        <tr ID="id_65496274-2781-4b2b-b817-07719ba3c203">
+                           <td align="left" valign="top" rowspan="2">Minor bleeding
+                                        <sup>d</sup>
+                           </td>
+                           <td align="center" valign="top">39</td>
+                           <td align="center" valign="top">103</td>
+                           <td align="center" valign="top">133</td>
+                           <td align="center" valign="top">3.21 (ND)
+                                        <sup>b</sup>
+                           </td>
+                           <td align="center" valign="top">ND</td>
+                        </tr>
+                        <tr ID="id_84253912-2e37-4762-9971-801b7175a800">
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="top">2.55 (ND)
+                                        <sup>c</sup>
+                           </td>
+                           <td align="center" valign="top">ND</td>
+                        </tr>
+                        <tr ID="id_f1ac1085-c8b1-487b-8cdb-898d281dcc68">
+                           <td align="left" valign="top" rowspan="2">Composite endpoints
+                                        <sup>e</sup>
+                           </td>
+                           <td align="center" valign="top">241</td>
+                           <td align="center" valign="top">203</td>
+                           <td align="center" valign="top">181</td>
+                           <td align="center" valign="top">0.81 (0.69 to 0.95)
+                                        <sup>b</sup>
+                           </td>
+                           <td align="center" valign="top">0.03</td>
+                        </tr>
+                        <tr ID="id_cebf8d5f-a854-4e4f-aa32-266cadb728bf">
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="top">0.71 (0.6 to 0.83)
+                                        <sup>c</sup>
+                           </td>
+                           <td align="center" valign="top">0.001</td>
+                        </tr>
+                        <tr ID="id_149407cb-e23f-4137-a1d0-e6512596bc57">
+                           <td align="left" valign="top" rowspan="2">Reinfarction</td>
+                           <td align="center" valign="top">117</td>
+                           <td align="center" valign="top">90</td>
+                           <td align="center" valign="top">69</td>
+                           <td align="center" valign="top">
+                              <paragraph>0.56 (0.41 to 0.78)
+                                            <sup>b</sup>
+                              </paragraph>
+                           </td>
+                           <td align="center" valign="top">&lt; 0.001</td>
+                        </tr>
+                        <tr ID="id_ad631eb3-92e8-4b94-b704-15ded9f7e07a">
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="top">0.74 (0.55 to 0.98)
+                                        <sup>c</sup>
+                           </td>
+                           <td align="center" valign="top">0.03</td>
+                        </tr>
+                        <tr ID="id_86dfa59b-5a72-45c3-901a-bbdb5998f565">
+                           <td align="left" valign="top" rowspan="2">stroke
+                                        <paragraph>Thromboembolic</paragraph>
+                           </td>
+                           <td align="center" valign="top">32</td>
+                           <td align="center" valign="top">17</td>
+                           <td align="center" valign="top">17</td>
+                           <td align="center" valign="top">0.52 (0.28 to 0.98)
+                                        <sup>b</sup>
+                           </td>
+                           <td align="center" valign="top">0.03</td>
+                        </tr>
+                        <tr ID="id_4b47261d-58d8-479b-b742-e56da11070b6">
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="top"/>
+                           <td align="center" valign="top">0.52 (0.28 to 0.97)
+                                        <sup>c</sup>
+                           </td>
+                           <td align="center" valign="top">0.03</td>
+                        </tr>
+                        <tr ID="id_75908139-93c6-4d3d-80c8-f075294fe269">
+                           <td align="left" valign="top" styleCode="Botrule">Death</td>
+                           <td align="center" valign="top" styleCode="Botrule">92</td>
+                           <td align="center" valign="top" styleCode="Botrule">96</td>
+                           <td align="center" valign="top" styleCode="Botrule">95</td>
+                           <td align="center" valign="top" styleCode="Botrule"/>
+                           <td align="center" valign="top" styleCode="Botrule">0.82</td>
+                        </tr>
+                     </tbody>
+                  </table>
+                  <paragraph>Major bleeding episodes were defined as nonfatal cerebral hemorrhage or bleeding necessitating surgical intervention or blood transfusion.
+                            <sup>a</sup>
+                  </paragraph>
+                  <paragraph>The rate ratio is for aspirin plus warfarin as compared with aspirin.
+                            <sup>b</sup>
+                  </paragraph>
+                  <paragraph>The rate ratio is for warfarin as compared with aspirin.
+                            <sup>c</sup>
+                  </paragraph>
+                  <paragraph>Minor bleeding episodes were defined as non-cerebral hemorrhage not necessitating surgical intervention or blood transfusion.
+                            <sup>d</sup>
+                  </paragraph>
+                  <paragraph>Includes death, nonfatal reinfarction, and thromboembolic cerebral stroke.
+                            <sup>e</sup>
+                  </paragraph>
+                  <paragraph>CI = confidence interval</paragraph>
+                  <paragraph>ND = not determined</paragraph>
+                  <paragraph>There were approximately four times as many major bleeding episodes in the two groups receiving warfarin than in the group receiving aspirin alone. Major bleeding episodes were not more frequent among patients receiving aspirin plus warfarin than among those receiving warfarin alone, but the incidence of minor bleeding episodes was higher in the combined therapy group.</paragraph>
+               </text>
+               <effectiveTime value="20111104"/>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_references_id_eb36bde0-3713-4da9-881a-23891a296270">
+               <id root="967a3915-da91-4ded-b4ad-15fbd4836800"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="34093-5" displayName="REFERENCES SECTION"/>
+               <title>15 REFERENCES</title>
+               <text>
+                  <list listType="unordered">
+                     <item>Ansell J, Hirsh J, Hylek E, Jacobson A, Crowther M, Palareti G. Pharmacology and management of the vitamin K antagonists. American College of Chest Physicians Evidence-Based Clinical Practice Guidelines. 8th Ed. . 2008;133:160S-198S.
+                                <content styleCode="italics">Chest</content>
+                     </item>
+                     <item>Kearon C, Kahn SR, Agnelli G, Goldhaber S, Raskob GE, Comerota AJ. Antithrombotic therapy for venous thromboembolic disease. American College of Chest Physicians Evidence-Based Clinical Practice Guidelines. 8th Ed. . 2008;133:454S-545S.
+                                <content styleCode="italics">Chest</content>
+                     </item>
+                     <item>Singer DE, Albers GW, Dalen JE, et al. Antithrombotic therapy in atrial fibrillation. American College of Chest Physicians Evidence-Based Clinical Practice Guidelines. 8th Ed. . 2008;133:546S-592S.
+                                <content styleCode="italics">Chest</content>
+                     </item>
+                     <item>Becker RC, Meade TW, Berger PB, et al. The primary and secondary prevention of coronary artery disease. American College of Chest Physicians Evidence-Based Clinical Practice Guidelines. 8th Ed. . 2008;133:776S-814S.
+                                <content styleCode="italics">Chest</content>
+                     </item>
+                     <item>Salem DN, O’Gara PT, Madias C, Pauker SG. Valvular and structural heart disease. American College of Chest Physicians Evidence-Based Clinical Practice Guidelines. 8th Ed. . 2008;133:593S-629S.
+                                <content styleCode="italics">Chest</content>
+                     </item>
+                     <item>Monagle P, Chalmers E, Chan A, et al. Antithrombotic therapy in neonates and children. American College of Chest Physicians Evidence-Based Clinical Practice Guidelines. 8th Ed. . 2008;133:887S-968S.
+                                <content styleCode="italics">Chest</content>
+                     </item>
+                  </list>
+               </text>
+               <effectiveTime value="20111104"/>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_how_supplied_id_eec49acb-2c26-4871-8d7d-ea0cdb77aea2">
+               <id root="f4b042b2-8449-4fd4-b229-54442a94270a"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="34069-5" displayName="HOW SUPPLIED SECTION"/>
+               <title>16 HOW SUPPLIED/STORAGE AND HANDLING</title>
+               <text>
+                  <paragraph>NDC:64725-0833-1 in a BOTTLE of 100 TABLETS</paragraph>
+               </text>
+               <effectiveTime value="20141027"/>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_info_patients_id_1589157f-7ae6-466d-a803-9485d0d827c4">
+               <id root="36b1828f-272d-4162-b9fa-3da33d3fca7b"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="34076-0" displayName="INFORMATION FOR PATIENTS SECTION"/>
+               <title>17 PATIENT COUNSELING INFORMATION</title>
+               <text>
+                  <paragraph>See FDA-approved patient labeling (Medication Guide).</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Advise patients to:</content>
+                  </paragraph>
+                  <list listType="unordered">
+                     <item>Tell their physician if they fall often as this may increase their risk for complications.</item>
+                     <item>Strictly adhere to the prescribed dosage schedule. Do not take or discontinue any other drug, including salicylates (e.g., aspirin and topical analgesics), other over-the-counter drugs, and botanical (herbal) products except on advice of your physician.</item>
+                     <item>Notify their physician immediately if any unusual bleeding or symptoms occur. Signs and symptoms of bleeding include: pain, swelling or discomfort, prolonged bleeding from cuts, increased menstrual flow or vaginal bleeding, nosebleeds, bleeding of gums from brushing, unusual bleeding or bruising, red or dark brown urine, red or tar black stools, headache, dizziness, or weakness.</item>
+                     <item>Contact their doctor</item>
+                  </list>
+                  <paragraph>− immediately if they think they are pregnant</paragraph>
+                  <paragraph>− to discuss pregnancy planning</paragraph>
+                  <paragraph>− if they are considering breastfeeding</paragraph>
+                  <list listType="unordered">
+                     <item>Avoid any activity or sport that may result in traumatic injury.</item>
+                     <item>Obtain prothrombin time tests and make regular visits to their physician or clinic to monitor therapy.</item>
+                     <item>Carry identification stating that they are taking warfarin sodium.</item>
+                     <item>If the prescribed dose of warfarin sodium is missed, take the dose as soon as possible on the same day but do not take a double dose of warfarin sodium the next day to make up for missed doses.</item>
+                     <item>Eat a normal, balanced diet to maintain a consistent intake of vitamin K. Avoid drastic changes in dietary habits, such as eating large amounts of leafy, green vegetables.</item>
+                     <item>Contact their physician to report any serious illness, such as severe diarrhea, infection, or fever.</item>
+                     <item>Be aware that if therapy with warfarin sodium is discontinued, the anticoagulant effects of warfarin sodium may persist for about 2 to 5 days.</item>
+                  </list>
+                  <paragraph>
+                     <content styleCode="bold">BARR LABORATORIES, INC.</content>
+                  </paragraph>
+                  <paragraph>Pomona, NY 10970</paragraph>
+               </text>
+               <effectiveTime value="20111104"/>
+            </section>
+         </component>
+         <component>
+            <section ID="i4i_medguide_id_6aad68b6-4503-4407-b0d4-c1180dc60461">
+               <id root="85c2a8d2-2aed-411f-ab2b-624c082ffb6a"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="42231-1" displayName="SPL MEDGUIDE SECTION"/>
+               <title>MEDICATION GUIDE</title>
+               <text>
+                  <paragraph>
+                     <content styleCode="bold">Warfarin sodium</content>
+                  </paragraph>
+                  <paragraph>Read this Medication Guide before you start taking warfarin sodium and each time you get a refill. There may be new information. This Medication Guide does not take the place of talking to your healthcare provider about your medical condition or treatment. You and your healthcare provider should talk about warfarin sodium when you start taking it and at regular checkups.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">What is the most important information I should know about warfarin sodium?</content>
+                  </paragraph>
+                  <paragraph>Warfarin sodium can cause bleeding which can be serious and sometimes lead to death. This is because warfarin sodium is a blood thinner medicine that lowers the chance of blood clots forming in your body.</paragraph>
+                  <list listType="unordered">
+                     <item>You may have a higher risk of bleeding if you take warfarin sodium and:
+                                <list listType="unordered">
+                           <item>are 65 years of age or older</item>
+                           <item>have a history of stomach or intestinal bleeding</item>
+                           <item>have high blood pressure (hypertension)</item>
+                           <item>have a history of stroke, or “mini-stroke” (transient ischemic attack or TIA)</item>
+                           <item>have serious heart disease</item>
+                           <item>have a low blood count or cancer</item>
+                           <item>have had trauma, such as an accident or surgery</item>
+                           <item>have kidney problems</item>
+                           <item>take other medicines that increase your risk of bleeding, including:
+                                        <list listType="unordered">
+                                 <item>a medicine that contains heparin</item>
+                                 <item>other medicines to prevent or treat blood clots</item>
+                                 <item>nonsteroidal anti-inflammatory drugs (NSAIDs)</item>
+                              </list>
+                           </item>
+                           <item>take warfarin sodium for a long time. Warfarin sodium is the active ingredient in warfarin sodium.</item>
+                        </list>
+                     </item>
+                  </list>
+                  <paragraph>
+                     <content styleCode="bold">Tell your healthcare provider if you take any of these medicines. Ask your healthcare provider if you are not sure if your medicine is one listed above.</content>
+                  </paragraph>
+                  <paragraph>Many other medicines can interact with warfarin sodium and affect the dose you need or increase warfarin sodium side effects. Do not change or stop any of your medicines or start any new medicines before you talk to your healthcare provider.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Do not take other medicines that contain warfarin sodium while taking warfarin sodium.</content>
+                  </paragraph>
+                  <paragraph> </paragraph>
+                  <list listType="unordered">
+                     <item>
+                        <content styleCode="bold">Get your regular blood test to check for your response to warfarin sodium.</content>
+                     </item>
+                  </list>
+                  <paragraph>This blood test is called an INR test. The INR test checks to see how fast your blood clots. Your healthcare provider will decide what INR numbers are best for you. Your dose of warfarin sodium will be adjusted to keep your INR in a target range for you.</paragraph>
+                  <list listType="unordered">
+                     <item>
+                        <content styleCode="bold">Call your healthcare provider right away if you get any of the following signs or symptoms of bleeding problems:</content>
+                     </item>
+                     <item>pain, swelling, or discomfort</item>
+                     <item>headaches, dizziness, or weakness</item>
+                     <item>unusual bruising (bruises that develop without known cause or grow in size)</item>
+                     <item>nosebleeds</item>
+                     <item>bleeding gums</item>
+                     <item>bleeding from cuts takes a long time to stop</item>
+                     <item>menstrual bleeding or vaginal bleeding that is heavier than normal</item>
+                     <item>pink or brown urine</item>
+                     <item>red or black stools</item>
+                     <item>coughing up blood</item>
+                     <item>vomiting blood or material that looks like coffee grounds</item>
+                  </list>
+                  <list listType="unordered">
+                     <item>
+                        <content styleCode="bold">Some foods and beverages can interact with warfarin sodium and affect your treatment and dose.</content>
+                     </item>
+                  </list>
+                  <list listType="unordered">
+                     <item>Eat a normal, balanced diet. Talk to your healthcare provider before you make any diet changes. Do not eat large amounts of leafy, green vegetables. Leafy, green vegetables contain vitamin K. Certain vegetable oils also contain large amounts of vitamin K. Too much vitamin K can lower the effect of warfarin sodium.</item>
+                     <item>Always tell all of your healthcare providers that you take warfarin sodium.</item>
+                     <item>Wear or carry information that you take warfarin sodium.</item>
+                  </list>
+                  <paragraph>
+                     <content styleCode="bold">See “What are the possible side effects of warfarin sodium?” for more information about side effects.</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">What is warfarin sodium?</content>
+                  </paragraph>
+                  <paragraph>Warfarin sodium is prescription medicine used to treat blood clots and to lower the chance of blood clots forming in your body. Blood clots can cause a stroke, heart attack, or other serious conditions if they form in the legs or lungs.</paragraph>
+                  <paragraph>It is not known if warfarin sodium is safe and effective in children.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Who should not take warfarin sodium?</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Do not take warfarin sodium if:</content>
+                  </paragraph>
+                  <list listType="unordered">
+                     <item>Your healthcare provider will decide if warfarin sodium is right for you. Talk to your healthcare provider about all of your health conditions.
+                                <content styleCode="bold">your chance of having bleeding problems is higher than the possible benefit of treatment.</content>
+                     </item>
+                     <item>Warfarin sodium may cause birth defects, miscarriage, or death of your unborn baby.
+                                <content styleCode="bold">you are pregnant unless you have a mechanical heart valve.</content>
+                     </item>
+                     <item>
+                        <content styleCode="bold">you are allergic to warfarin or any of the other ingredients in warfarin sodium. See the end of this leaflet for a complete list of ingredients in warfarin sodium.</content>
+                     </item>
+                  </list>
+                  <paragraph>
+                     <content styleCode="bold">What should I tell my healthcare provider before taking warfarin sodium?</content>
+                  </paragraph>
+                  <paragraph>Before you take warfarin sodium, tell your healthcare provider if you:</paragraph>
+                  <list listType="unordered">
+                     <item>have bleeding problems</item>
+                     <item>fall often</item>
+                     <item>have liver or kidney problems</item>
+                     <item>have high blood pressure</item>
+                     <item>have a heart problem called congestive heart failure</item>
+                     <item>have diabetes</item>
+                     <item>plan to have any surgery or a dental procedure</item>
+                     <item>have any other medical conditions</item>
+                     <item>are pregnant or plan to become pregnant. See “ ”
+                                <content styleCode="bold">Who should not take warfarin sodium?</content>
+                     </item>
+                     <item>are breastfeeding. You and your healthcare provider should decide if you will take warfarin sodium and breastfeed.</item>
+                  </list>
+                  <paragraph>Tell all of your healthcare providers and dentists that you are taking warfarin sodium. They should talk to the healthcare provider who prescribed warfarin sodium for you before you have surgery or dental procedure. Your warfarin sodium may need to be stopped for a short time or you may need your dose adjusted.
+                            <content styleCode="bold">any</content>
+                  </paragraph>
+                  <paragraph>including prescription and non-prescription medicines, vitamins, and herbal supplements. Some of your other medicines may affect the way warfarin sodium works. Certain medicines may increase your risk of bleeding. See “ ”
+                            <content styleCode="bold">Tell your healthcare provider about all the medicines you take,</content>
+                     <content styleCode="bold">What is the most important information I should know about warfarin sodium?</content>
+                  </paragraph>
+                  <paragraph>Know the medicines you take. Keep a list of them to show your healthcare provider and pharmacist when you get a new medicine.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">How should I take warfarin sodium?</content>
+                  </paragraph>
+                  <paragraph> </paragraph>
+                  <list listType="unordered">
+                     <item>Your healthcare provider will adjust your dose from time to time depending on your response to warfarin sodium.
+                                <content styleCode="bold">Take warfarin sodium exactly as prescribed.</content>
+                     </item>
+                     <item>
+                        <content styleCode="bold">You must have regular blood tests and visits with your healthcare provider to monitor your condition.</content>
+                     </item>
+                     <item>Take the dose as soon as possible on the same day. take a double dose of warfarin sodium the next day to make up for a missed dose.
+                                <content styleCode="bold">If you miss a dose of warfarin sodium, call your healthcare provider.</content>
+                        <content styleCode="bold">Do not</content>
+                     </item>
+                     <item>Call your healthcare provider right away if you:</item>
+                     <item>take too much warfarin sodium</item>
+                     <item>are sick with diarrhea, an infection, or have a fever</item>
+                     <item>fall or injure yourself, especially if you hit your head. Your healthcare provider may need to check you</item>
+                  </list>
+                  <paragraph>
+                     <content styleCode="bold">What should I avoid while taking warfarin sodium
+                                <content styleCode="italics">?</content>
+                     </content>
+                  </paragraph>
+                  <list listType="unordered">
+                     <item>Do not do any activity or sport that may cause a serious injury.</item>
+                  </list>
+                  <paragraph>
+                     <content styleCode="bold">What are the possible side effects of warfarin sodium?</content>
+                  </paragraph>
+                  <paragraph> </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">Warfarin sodium may cause serious side effects including:</content>
+                  </paragraph>
+                  <list listType="unordered">
+                     <item>See “ ”
+                                <content styleCode="bold">What is the most important information I should know about warfarin sodium?</content>
+                     </item>
+                     <item>This can happen soon after starting warfarin sodium. It happens because blood clots form and block blood flow to an area of your body. Call your healthcare provider right away if you have pain, color, or temperature change to any area of your body. You may need medical care right away to prevent death or loss (amputation) of your affected body part.
+                                <content styleCode="bold">Death of skin tissue (skin necrosis or gangrene).</content>
+                     </item>
+                     <item>Call your healthcare provider right away if you have pain in your toes and they look purple in color or dark in color.
+                                <content styleCode="bold">“Purple toes syndrome.”</content>
+                     </item>
+                  </list>
+                  <paragraph>Tell your healthcare provider if you have any side effect that bothers you or does not go away.</paragraph>
+                  <paragraph>These are not all of the side effects of warfarin sodium. For more information, ask your healthcare provider or pharmacist.</paragraph>
+                  <paragraph>Call your doctor for medical advice about side effects. You may report side effects to FDA at 1-800-FDA-1088.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">How should I store warfarin sodium?</content>
+                  </paragraph>
+                  <list listType="unordered">
+                     <item>Store warfarin sodium at 20° to 25°C (68° to 77°F).</item>
+                     <item>Keep warfarin sodium in a tightly closed container, and keep warfarin sodium out of the light.</item>
+                  </list>
+                  <paragraph>
+                     <content styleCode="bold">Keep warfarin sodium and all medicines out of the reach of children.</content>
+                  </paragraph>
+                  <paragraph>
+                     <content styleCode="bold">General information about warfarin sodium.</content>
+                  </paragraph>
+                  <paragraph>Medicines are sometimes prescribed for purposes other than those listed in a Medication Guide. Do not use warfarin sodium for a condition for which it was not prescribed. Do not give warfarin sodium to other people, even if they have the same symptoms that you have. It may harm them.</paragraph>
+                  <paragraph>This Medication Guide summarizes the most important information about warfarin sodium. If you would like more information, talk with your healthcare provider. You can ask your healthcare provider or pharmacist for information about warfarin sodium that is written for healthcare professionals.</paragraph>
+                  <paragraph>If you would like more information, call 1-888-838-2872, x6351.</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">What are the ingredients in warfarin sodium?</content>
+                  </paragraph>
+                  <paragraph>Active ingredient: Warfarin Sodium</paragraph>
+                  <paragraph>Inactive ingredients: anhydrous lactose , hypromellose 2208 (3cPs), magnesium stearate and pregelatinized starch.</paragraph>
+                  <paragraph>The 1 mg also contains D&amp;C red no. 6 barium lake.</paragraph>
+                  <paragraph>The 2 mg also contains FD&amp;C blue no. 2 aluminum lake and FD&amp;C red no. 40 aluminum lake.</paragraph>
+                  <paragraph>The 2½ mg also contains D&amp;C yellow no. 10 aluminum lake and FD&amp;C blue no. 1 aluminum lake.</paragraph>
+                  <paragraph>The 3 mg also contains FD&amp;C blue no. 2 aluminum lake and FD&amp;C red no. 40 aluminum lake.</paragraph>
+                  <paragraph>The 4 mg also contains FD&amp;C blue no. 1 aluminum lake.</paragraph>
+                  <paragraph>The 5 mg also contains FD&amp;C yellow no. 6 aluminum lake.</paragraph>
+                  <paragraph>The 6 mg also contains FD&amp;C blue no. 1 aluminum lake and FD&amp;C yellow no. 6 aluminum lake.</paragraph>
+                  <paragraph>The 7½ mg also contains D&amp;C yellow no. 10 aluminum lake and FD&amp;C yellow no. 6 aluminum lake.</paragraph>
+                  <paragraph>The 10 mg does not contain any dyes.</paragraph>
+                  <paragraph>This Medication Guide has been approved by the U.S. Food and Drug Administration.</paragraph>
+                  <paragraph>All trademarks are the property of their respective owners.</paragraph>
+                  <paragraph>Rev. A 10/2011</paragraph>
+                  <paragraph>
+                     <content styleCode="bold">BARR LABORATORIES, INC.</content>
+                  </paragraph>
+                  <paragraph>Pomona, NY 10970</paragraph>
+               </text>
+               <effectiveTime value="20111104"/>
+            </section>
+         </component>
+         <component>
+            <section>
+               <id root="b5ff558f-4f4e-426e-885f-604778b35529"/>
+               <code codeSystem="2.16.840.1.113883.6.1" code="51945-4" displayName="PACKAGE LABEL.PRINCIPAL DISPLAY PANEL"/>
+               <title>WARFARIN SODIUM TABLET</title>
+               <text>
+                  <renderMultiMedia referencedObject="lbl647250833"/>
+               </text>
+               <effectiveTime value="20120904"/>
+               <component>
+                  <section ID="i4i_section_id_26d5bb7f-d5bc-437c-bdff-40dfb5053d8c">
+                     <id root="cb9cee4b-d680-4ce2-8eef-4b8bf3adf2f5"/>
+                     <code codeSystem="2.16.840.1.113883.6.1" code="42229-5" displayName="SPL UNCLASSIFIED SECTION"/>
+                     <title>Warfarin Sodium Tablets USP 1 mg, 100s Label Text</title>
+                     <text>
+                        <paragraph>Laboratories, Inc. 0555- -02
+                                    <content styleCode="bold">barr</content>
+                           <br/>
+                           <content styleCode="bold">NDC</content>
+                           <content styleCode="bold">0831</content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="bold">Warfarin Sodium Tablets, USP
+                                        <br/>
+                           </content>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="bold">1 mg</content>
+                        </paragraph>
+                        <paragraph>: Serious bleeding results from overdosage. Do not use or dispense before reading directions and warnings in package brochure.
+                                    <content styleCode="bold">HIGHLY POTENT ANTICOAGULANT
+                                        <br/>
+                           </content>
+                           <content styleCode="bold">WARNING</content>
+                           <br/>
+                           <br/>
+                           <br/>
+                        </paragraph>
+                        <paragraph>
+                           <content styleCode="bold">Rx only 100 Tablets
+                                        <br/>
+                           </content>
+                        </paragraph>
+                     </text>
+                     <effectiveTime value="20111104"/>
+                  </section>
+               </component>
+               <component>
+                  <observationMedia ID="lbl647250833">
+                     <text>Label Image</text>
+                     <value xsi:type="ED" mediaType="image/jpeg">
+                        <reference value="64725-0833.jpg"/>
+                     </value>
+                  </observationMedia>
+               </component>
+            </section>
+         </component>
+      </structuredBody>
+   </component>
+</document>

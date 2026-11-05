@@ -1,0 +1,52 @@
+{% from "_macros.html" import sev, segments, docmeta, summary_panel %}
+<section class="card">
+  <div class="row">
+    <h1 style="margin:0">{{ diff.new.title }}</h1>
+    <span class="spacer"></span>
+    {{ sev(diff.severity.label) }}
+  </div>
+  <p class="muted small">{% if diff.same_set %}Version {{ diff.old.version }} → {{ diff.new.version }}{% else %}Cross-label comparison (different set IDs){% endif %}
+  · {{ diff.changes | length }} section change(s)</p>
+  <div class="row">
+    {% for name, n in diff.counts.items() if n %}<span class="chip sev-{{ name }}"><b>{{ n }}</b> {{ name }}</span>{% endfor %}
+  </div>
+  <div class="grid" style="margin-top:1rem">
+    <div>{{ docmeta(diff.old, "Before") }}</div>
+    <div>{{ docmeta(diff.new, "After") }}</div>
+  </div>
+  {% if not diff.same_set %}<div class="notice">These are different labels. For a reference-versus-generic check, a drift report is usually the better tool.</div>{% endif %}
+</section>
+
+{{ summary_panel(summary) }}
+
+{% if diff.recent_major_changes %}
+<section class="card flat">
+  <h3>Recent Major Changes declared in the new label</h3>
+  <ul class="small">{% for r in diff.recent_major_changes %}<li>{{ r }}</li>{% endfor %}</ul>
+</section>
+{% endif %}
+
+<h2>Section-by-section redline</h2>
+{% for c in diff.changes %}
+<article class="card change sev-{{ c.severity.label }}" id="{{ c.cid }}">
+  <div class="row">
+    {{ sev(c.severity.label) }}
+    <span class="path">{{ c.heading }}</span>
+    <span class="spacer"></span>
+    <span class="small muted">{{ c.status }} · {{ c.family_label }} · <span class="mono">{{ c.cid }}</span></span>
+  </div>
+  {% if c.reasons %}<ul class="reasons">{% for r in c.reasons %}<li>{{ r }}</li>{% endfor %}</ul>{% endif %}
+  {% if c.old_title and c.new_title and c.old_title != c.new_title %}
+    <div class="hunk"><span class="hid">heading</span><del>{{ c.old_title }}</del> <ins>{{ c.new_title }}</ins></div>
+  {% endif %}
+  {% for h in c.hunks %}
+    <div class="hunk{% if h.editorial %} editorial{% endif %}" id="{{ h.hid }}">
+      <span class="hid">{{ h.hid }}{% if h.editorial %} · editorial{% endif %}</span>
+      {{ segments(h.segments) }}
+      {% if h.signals %}<div class="signals">{{ h.signals | join(" · ") }}</div>{% endif %}
+    </div>
+  {% endfor %}
+</article>
+{% else %}
+<div class="card empty">No differences in label text.</div>
+{% endfor %}

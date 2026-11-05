@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Archive · LabelLedger{% endblock %}
+{% block content %}
+<section class="card">
+  <form class="row" action="/labels" method="get">
+    <input type="search" name="q" value="{{ q }}" placeholder="Search by drug, labeler, set ID or application number" style="flex:1" aria-label="Search">
+    <button type="submit">Search</button>
+  </form>
+</section>
+<section class="card">
+  <div class="table-wrap"><table>
+    <thead><tr><th>Label</th><th>Labeler</th><th>Application</th><th class="num">Latest</th><th>Effective</th></tr></thead>
+    <tbody>
+    {% for l in labels %}
+      <tr><td><a href="/labels/{{ l.set_id }}">{{ l.title }}</a></td><td>{{ l.labeler or "—" }}</td><td class="small">{{ l.application_numbers | join(", ") }}</td><td class="num">v{{ l.latest_version }}</td><td class="small">{{ l.latest_effective or "—" }}</td></tr>
+    {% else %}
+      <tr><td colspan="5" class="empty">No labels in your archive{% if q %} match “{{ q }}”{% endif %}.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table></div>
+</section>
+{% endblock %}

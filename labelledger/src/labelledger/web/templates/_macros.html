@@ -1,0 +1,57 @@
+{% macro sev(s) -%}<span class="badge sev-{{ s }}">{{ s }}</span>{%- endmacro %}
+
+{% macro segments(segs) -%}
+{%- for seg in segs -%}
+{%- if seg.op == "eq" -%}{{ seg.text }}{%- elif seg.op == "ins" -%}<ins>{{ seg.text }}</ins>{%- else -%}<del>{{ seg.text }}</del>{%- endif -%}
+{%- endfor -%}
+{%- endmacro %}
+
+{% macro docmeta(ref, label) -%}
+<dl class="meta">
+  <dt>{{ label }}</dt><dd><strong>{{ ref.title }}</strong></dd>
+  <dt>Labeler</dt><dd>{{ ref.labeler or "—" }}</dd>
+  <dt>Set ID</dt><dd class="mono">{{ ref.set_id }}</dd>
+  <dt>Version</dt><dd>{{ ref.version }}{% if ref.effective_date %} · effective {{ ref.effective_date }}{% endif %}</dd>
+  <dt>Application</dt><dd>{{ ref.application_numbers | join(", ") or "—" }}</dd>
+  <dt>Format</dt><dd>{{ ref.format_kind }}</dd>
+</dl>
+{%- endmacro %}
+
+{% macro summary_panel(summary) -%}
+{% if summary %}
+<section class="card" aria-labelledby="summary-h">
+  <div class="row">
+    <h2 id="summary-h" style="margin:0">{{ summary.headline }}</h2>
+    <span class="spacer"></span>
+    {% if summary.source == "ai" %}
+      <span class="badge {{ 'ok' if summary.verification_rate == 1.0 else 'warn' }}">AI · {{ (summary.verification_rate * 100) | round | int }}% verified</span>
+    {% else %}
+      <span class="badge sev-none">rules-based summary</span>
+    {% endif %}
+  </div>
+  <p>{{ summary.overview }}</p>
+  {% if summary.notice %}<div class="notice">{{ summary.notice }}</div>{% endif %}
+  {% if summary.claims %}
+  <h3>What changed</h3>
+  {% for c in summary.claims %}
+    <div class="hunk">
+      <span class="hid">{{ c.change_id }}{% if c.hunk_ids %} · {{ c.hunk_ids | join(", ") }}{% endif %}</span>
+      {{ sev(c.significance) }} {% if not c.verified %}<span class="badge warn">unverified</span>{% endif %}
+      <div>{{ c.summary }}</div>
+      {% for q in c.evidence_quotes %}<div class="quote">“{{ q }}”</div>{% endfor %}
+      {% if c.problems %}<div class="signals">{{ c.problems | join("; ") }}</div>{% endif %}
+    </div>
+  {% endfor %}
+  {% endif %}
+  {% if summary.actions %}
+  <h3>Considerations for your labeling</h3>
+  <ul>{% for a in summary.actions %}<li>{{ a }}</li>{% endfor %}</ul>
+  {% endif %}
+  {% if summary.open_questions %}
+  <h3>Open questions</h3>
+  <ul>{% for q in summary.open_questions %}<li>{{ q }}</li>{% endfor %}</ul>
+  {% endif %}
+  {% if summary.model %}<p class="small muted">Model: {{ summary.model }}. Severity ratings are rules-based and never set by the model.</p>{% endif %}
+</section>
+{% endif %}
+{%- endmacro %}
