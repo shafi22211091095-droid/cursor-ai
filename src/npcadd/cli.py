@@ -676,6 +676,13 @@ def _read_screen_and_admet(out_dir: Path) -> tuple[list[Any], list[Any]]:
                 n_contacts=int(row.get("n_contacts") or 0),
                 contact_residues=str(row.get("contact_residues", "")),
                 contacts=str(row.get("contacts", "")),
+                placement_ok=_optional_bool(row.get("placement_ok")),
+                placement_note=str(row.get("placement_note", "")),
+                frac_atoms_in_box=_optional_float(row.get("frac_atoms_in_box")),
+                n_atoms_in_box=_optional_int(row.get("n_atoms_in_box")),
+                pose_centroid_offset_a=_optional_float(row.get("pose_centroid_offset_a")),
+                pose_centroid_offset_frac=_optional_float(row.get("pose_centroid_offset_frac")),
+                pose_max_atom_offset_frac=_optional_float(row.get("pose_max_atom_offset_frac")),
                 pose_path=str(row.get("pose_path", "")),
                 error=str(row.get("error", "")),
             )
@@ -725,6 +732,24 @@ def _optional_float(value: Any) -> float | None:
         return float(value)
     except (TypeError, ValueError):
         return None
+
+
+def _optional_int(value: Any) -> int | None:
+    parsed = _optional_float(value)
+    return None if parsed is None else int(parsed)
+
+
+def _optional_bool(value: Any) -> bool | None:
+    if value in ("", None):
+        return None
+    if isinstance(value, bool):
+        return value
+    text = str(value).strip().lower()
+    if text in ("true", "1", "1.0", "yes"):
+        return True
+    if text in ("false", "0", "0.0", "no"):
+        return False
+    return None
 
 
 def _rehydrate(cfg: Config, out_dir: Path) -> tuple[list[Any], list[Any], Any]:

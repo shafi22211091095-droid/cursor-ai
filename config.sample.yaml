@@ -108,6 +108,16 @@ docking:
     - Anionic
     - Cationic
 
+  # Screened-pose placement check (DECISIONS.md D-021): flags any screened
+  # ligand whose best pose sits outside the search box or hugs its wall -- the
+  # reference-free half of the exhaustiveness lesson above. Report-only: it adds
+  # placement_* columns to docking_results.csv and a warning count to the log,
+  # and never changes the ranking. Defaults shown.
+  placement_check: true
+  placement_min_fraction_in_box: 0.90
+  placement_max_centroid_offset_frac: 0.90
+  placement_box_tolerance_a: 0.0
+
 validation:
   enabled: true
   redock_rmsd_threshold: 2.0

@@ -264,6 +264,35 @@ class DockingConfig(Strict):
             "PiCation",
         ]
     )
+    placement_check: bool = Field(
+        default=True,
+        description=(
+            "Diagnose each screened ligand's best pose for search-box containment. "
+            "Vina's ranking can look healthy while the top pose is pinned against a "
+            "wall or protruding from the box - a sign its energy minimum lies outside "
+            "the defined pocket and the score is untrustworthy (Agboola et al. 2026; "
+            "DECISIONS.md D-021). Report-only: it adds columns and a warning count, and "
+            "never changes the ranking."
+        ),
+    )
+    placement_min_fraction_in_box: UnitFloat = Field(
+        default=0.90,
+        description=(
+            "Flag a pose when fewer than this fraction of its heavy atoms lie inside "
+            "the search box."
+        ),
+    )
+    placement_max_centroid_offset_frac: PositiveFloat = Field(
+        default=0.90,
+        description=(
+            "Flag a pose when its centroid lies beyond this fraction of the box "
+            "half-width on any axis (wall-hugging); 1.0 places the centroid on a face."
+        ),
+    )
+    placement_box_tolerance_a: Annotated[float, Field(ge=0.0)] = Field(
+        default=0.0,
+        description="Angstroms added to each box half-width when testing atom containment.",
+    )
 
 
 class ValidationConfig(Strict):

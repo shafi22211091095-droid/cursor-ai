@@ -617,3 +617,53 @@ circular and the number meaningless. The honest output is an explicit statement
 that the control was not performed, together with instructions for supplying
 actives (for example from ChEMBL or BindingDB) to obtain it. The redocking gate
 and the null distribution still run, since neither needs known actives.
+
+---
+
+## D-021 — Screened poses are checked for search-box containment, not only scored
+
+**Date:** 2026-11-05 · **Status:** Decided · **Enforced:** `npcadd.docking.grid.assess_placement`; `run_docking` writes the `placement_*` columns of `docking_results.csv` and logs `n_placement_flagged`; thresholds under `docking.placement_*`
+
+**Decision.** Every screened ligand's best pose is checked for *where it sits in
+the search box*: the fraction of its heavy atoms inside the box, and how close
+the pose centroid is to a box wall. A pose with atoms outside the box, or a
+centroid hugging a wall, is flagged (`placement_ok = False`) with a
+human-readable `placement_note`. The check is **report-only**: it adds columns
+and a warning count and does **not** change the ranking or drop the compound.
+Thresholds live in config; the check is disabled with
+`docking.placement_check = false`, which is recorded in the config hash.
+
+**Reasoning.** A docking run's ranking signal and its placement correctness are
+largely independent, so a good score is not evidence of a correct pose. Agboola
+et al. (2026, *Results in Engineering*) docked AutoDock Vina across eleven
+targets and found that enrichment and ROC-AUC barely moved between a
+site-directed box and a blind whole-protein box (mean ROC-AUC 0.69 → 0.62) while
+the fraction of actives placed within 8 Å of the true site collapsed from 96% to
+48%; the two quantities were essentially uncorrelated across targets
+(r = −0.03), and doubling exhaustiveness left six of eight gross misplacements
+unresolved. A score- or enrichment-based check therefore cannot detect a
+placement failure. The bundled system shows the same thing in miniature: at
+exhaustiveness 8 imatinib lands in the right pocket (centroid offset 1.8 Å) but
+the wrong orientation (12.3 Å RMSD) with a *better* raw score than the correct
+pose (see D-008, `poses.py`).
+
+The redocking gate (D-007) catches this for the one ligand that has a
+crystallographic reference. A screened natural product has none, so the only
+reference-free question left is geometric: did the engine keep the pose inside
+the region it was told to search? A boundary-hugging pose is the standard
+signature that the true energy minimum lies outside the box, in which case the
+reported affinity reflects where the box was drawn rather than a property of the
+pocket. That the best-scoring position is not reliably the correct one, and must
+be cross-checked against structural context rather than trusted on score alone,
+is long established (Ramírez & Caballero 2018, *Molecules*; Pantsar & Poso 2018,
+*Molecules*).
+
+**Why report-only, not a hard exclusion.** Unlike an out-of-domain ADMET value,
+which is excluded from ranking (LIMITATIONS §3.1), a near-wall pose is not always
+wrong: the box is sized from the co-crystal ligand plus padding (D-013), so a
+legitimately large ligand can sit close to the wall by construction.
+Auto-dropping such a compound would trade one silent error for another.
+Surfacing the flag, the offending fraction and the centroid offset lets the
+reader judge, and keeps both the decision and any future config switch to exclude
+flagged poses explicit. Enforced exclusion is recorded as a candidate in the R&D
+roadmap rather than imposed here.

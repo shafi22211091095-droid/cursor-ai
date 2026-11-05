@@ -12,9 +12,12 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+import numpy as np
 import pandas as pd
+from rdkit import Chem
 
 from ..config import Config
+from ..docking.grid import PosePlacement, assess_placement
 from ..docking.interactions import (
     InteractionError,
     InteractionProfile,
@@ -54,6 +57,13 @@ class ScreenRow:
     n_contacts: int = 0
     contact_residues: str = ""
     contacts: str = ""
+    placement_ok: bool | None = None
+    placement_note: str = ""
+    frac_atoms_in_box: float | None = None
+    n_atoms_in_box: int | None = None
+    pose_centroid_offset_a: float | None = None
+    pose_centroid_offset_frac: float | None = None
+    pose_max_atom_offset_frac: float | None = None
     pose_path: str = ""
     error: str = ""
 
@@ -75,6 +85,13 @@ class ScreenRow:
             "n_contacts": self.n_contacts,
             "contact_residues": self.contact_residues,
             "contacts": self.contacts,
+            "placement_ok": self.placement_ok,
+            "placement_note": self.placement_note,
+            "frac_atoms_in_box": self.frac_atoms_in_box,
+            "n_atoms_in_box": self.n_atoms_in_box,
+            "pose_centroid_offset_a": self.pose_centroid_offset_a,
+            "pose_centroid_offset_frac": self.pose_centroid_offset_frac,
+            "pose_max_atom_offset_frac": self.pose_max_atom_offset_frac,
             "pose_path": self.pose_path,
             "error": self.error,
         }
@@ -89,6 +106,7 @@ class DockingSummary:
     n_failed: int
     n_from_cache: int
     n_interaction_profiles: int
+    n_placement_flagged: int = 0
     interaction_matrix_path: str = ""
     results_path: str = ""
 
@@ -99,6 +117,7 @@ class DockingSummary:
             "n_failed": self.n_failed,
             "n_from_cache": self.n_from_cache,
             "n_interaction_profiles": self.n_interaction_profiles,
+            "n_placement_flagged": self.n_placement_flagged,
         }
 
 
@@ -170,6 +189,54 @@ def _fingerprint_receptor(
     return profiles
 
 
+def _best_pose_heavy_coords(out_pdbqt: str) -> np.ndarray:
+    """Heavy-atom coordinates of a ligand's best (rank-1) docked pose."""
+    mol = Chem.RemoveHs(load_poses(out_pdbqt))
+    if mol.GetNumConformers() == 0:  # pragma: no cover - load_poses guarantees >=1
+        raise PoseLoadError(f"No conformers parsed from {out_pdbqt}")
+    return np.asarray(mol.GetConformer(0).GetPositions(), dtype=np.float64)
+
+
+def _assess_placements(
+    cfg: Config,
+    receptors: dict[str, PreparedReceptor],
+    results: list[DockingResult],
+) -> dict[tuple[str, str], PosePlacement]:
+    """Placement verdict for the best pose of every successful docking.
+
+    Independent of interaction fingerprinting so the check still runs when
+    fingerprints are disabled. Returns an empty mapping when the check is off.
+    """
+    if not cfg.docking.placement_check:
+        return {}
+    placements: dict[tuple[str, str], PosePlacement] = {}
+    for result in results:
+        if not result.ok or not result.out_pdbqt:
+            continue
+        receptor = receptors.get(result.receptor_id)
+        if receptor is None:  # pragma: no cover - results are built from receptors
+            continue
+        try:
+            coords = _best_pose_heavy_coords(result.out_pdbqt)
+            placements[(result.ligand_id, result.receptor_id)] = assess_placement(
+                coords,
+                receptor.box,
+                tolerance=cfg.docking.placement_box_tolerance_a,
+                min_fraction_inside=cfg.docking.placement_min_fraction_in_box,
+                max_centroid_offset_frac=cfg.docking.placement_max_centroid_offset_frac,
+            )
+        except (PoseLoadError, ValueError) as exc:
+            log.warning(
+                "Could not assess pose placement",
+                extra={
+                    "ligand": result.ligand_id,
+                    "receptor": result.receptor_id,
+                    "error": str(exc),
+                },
+            )
+    return placements
+
+
 def run_docking(
     cfg: Config,
     ligands: list[LigandRecord],
@@ -212,6 +279,7 @@ def run_docking(
     for receptor_id, receptor_results in results_by_receptor.items():
         profiles.extend(_fingerprint_receptor(cfg, by_receptor[receptor_id], receptor_results))
     profile_index = {(p.ligand_id, p.receptor_id): p for p in profiles if p.pose_rank == 1}
+    placements = _assess_placements(cfg, by_receptor, results)
 
     rows: list[ScreenRow] = []
     for result in results:
@@ -243,6 +311,16 @@ def run_docking(
             row.n_contacts = profile.n_contacts
             row.contact_residues = ";".join(profile.residues)
             row.contacts = ";".join(f"{r}:{k}" for r, k in sorted(profile.contacts))
+
+        placement = placements.get((ligand.ligand_id, receptor.receptor_id))
+        if placement is not None:
+            row.placement_ok = placement.in_box
+            row.placement_note = placement.note
+            row.frac_atoms_in_box = round(placement.fraction_inside, 4)
+            row.n_atoms_in_box = placement.n_inside
+            row.pose_centroid_offset_a = round(placement.centroid_offset_a, 3)
+            row.pose_centroid_offset_frac = round(placement.centroid_offset_frac, 4)
+            row.pose_max_atom_offset_frac = round(placement.max_atom_offset_frac, 4)
         rows.append(row)
 
     results_path = out_dir / "docking_results.csv"
@@ -257,14 +335,23 @@ def run_docking(
         matrix.to_csv(path, lineterminator="\n")
         matrix_path = path.as_posix()
 
+    n_placement_flagged = sum(1 for r in rows if r.placement_ok is False)
     summary = DockingSummary(
         n_jobs=len(results),
         n_ok=sum(1 for r in results if r.ok),
         n_failed=sum(1 for r in results if not r.ok),
         n_from_cache=sum(1 for r in results if r.from_cache),
         n_interaction_profiles=len(profiles),
+        n_placement_flagged=n_placement_flagged,
         interaction_matrix_path=matrix_path,
         results_path=results_path.as_posix(),
     )
+    if n_placement_flagged:
+        log.warning(
+            "%d screened pose(s) are placement-suspect (outside or hugging the search "
+            "box); their affinities may reflect where the box was drawn rather than the "
+            "pocket, and should not be trusted for ranking. See the placement_note column.",
+            n_placement_flagged,
+        )
     log.info("Screening complete", extra=summary.as_metrics())
     return rows, summary

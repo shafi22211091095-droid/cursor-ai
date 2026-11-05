@@ -27,6 +27,7 @@ impossible or loudly reported.
 | Docking with no validation | **Refuses to screen** until a co-crystal ligand is redocked and reproduces its crystallographic pose. `npcadd dock` exits with an error otherwise. |
 | Ranking by raw docking score | **Refuses to rank by raw affinity.** Vina's score scales with molecular size, so ranking a C6→C30 set by it ranks largely by molecular weight. Ranking is on ligand efficiency. |
 | Validating at one setting, screening at another | One `docking:` config block drives both. On the bundled system this is the difference between a pose at **0.24 Å** and one at **12.3 Å**. |
+| A good ranking hiding a wrong pose | Every screened pose is checked for **search-box containment**: a pose with heavy atoms outside the box, or a centroid hugging a wall, is flagged in `docking_results.csv` and counted in the run log. Vina's ranking can stay healthy while correct placement collapses (Agboola et al. 2026, *Results in Engineering*), so the score alone is never trusted to confirm placement. |
 | Affinities quoted without context | Every affinity carries a z-score and an empirical p-value against a random-ligand null distribution. |
 | Scraped, unversioned ADMET numbers | HTML-form tools get a paste-ready batch and a validated paste-back schema, with tool version and retrieval date in provenance. |
 | ML predictions on out-of-domain molecules | Every QSPR value carries an applicability-domain verdict; out-of-domain values are flagged and excluded from ranking. |

@@ -203,6 +203,29 @@ perturb results at the last decimal. Worker counts are therefore recorded in
 provenance. For a byte-reproducible docking run, fix the worker and CPU counts
 and use the container.
 
+### 4.6 Screened-pose placement is checked, but the check is a heuristic and is not enforced
+
+Every screened ligand's best pose now carries a **box-containment** verdict
+(`placement_ok`, `frac_atoms_in_box`, `pose_centroid_offset_frac` and a
+`placement_note` in `docking_results.csv`; see `DECISIONS.md` D-021). It catches
+the pose that scores well while sitting outside or against the wall of the search
+box — the reference-free half of the exhaustiveness-8 failure that the redocking
+gate catches only for the co-crystal ligand. Its limits:
+
+- **It is report-only.** A flagged pose is not dropped and does not change the
+  ranking. The box is sized from the co-crystal ligand plus padding, so a
+  genuinely large ligand can hug the wall by construction; auto-excluding it
+  would trade one silent error for another. Read the flag; do not outsource the
+  judgement to it.
+- **The thresholds are heuristics**, not a validated cut-off. `placement_ok =
+  FALSE` means "look at this pose", not "this pose is wrong"; and an unflagged
+  pose is not thereby correct — containment is necessary for a trustworthy pose,
+  not sufficient.
+- **It measures the box, not the pocket.** Containment is tested against the
+  search box, not the binding-site residues, so a pose inside the box but in a
+  shallow surface groove is not flagged by this check. A pocket-aware placement
+  score is a candidate in the roadmap, not something claimed here.
+
 ---
 
 ## 5. Limits specific to this repository right now

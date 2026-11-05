@@ -12,7 +12,7 @@ import pytest
 import yaml
 
 from npcadd.config import Config, GridBox, load_config
-from npcadd.docking.grid import derive_box, point_in_box
+from npcadd.docking.grid import assess_placement, derive_box, point_in_box
 from npcadd.hashing import canonical_json, hash_bytes, hash_file, hash_obj, short
 from npcadd.provenance import Provenance, git_state, package_versions, platform_state
 
@@ -234,6 +234,77 @@ class TestGridBox:
         record = box.as_record()
         assert record["box_size_y"] == 20.0
         assert record["box_mode"] == "explicit"
+
+
+class TestPosePlacement:
+    """The screened-pose box-containment check (DECISIONS.md D-021)."""
+
+    @staticmethod
+    def _box() -> Any:
+        # 20 A cube centred at the origin: half-width 10 A on every axis.
+        return derive_box(GridBox(mode="explicit", center=(0.0, 0.0, 0.0), size=(20.0, 20.0, 20.0)))
+
+    def test_a_centred_compact_pose_is_in_box(self) -> None:
+        coords = np.array([[0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1], [-1, -1, -1]], float)
+        placement = assess_placement(coords, self._box())
+        assert placement.in_box
+        assert placement.fraction_inside == 1.0
+        assert placement.n_inside == placement.n_atoms == 5
+        assert placement.centroid_offset_frac < 0.1
+        assert "well inside" in placement.note
+
+    def test_atoms_outside_the_box_are_flagged(self) -> None:
+        # Two of five heavy atoms sit beyond the +x face (|x| > 10).
+        coords = np.array([[0, 0, 0], [1, 0, 0], [15, 0, 0], [15, 1, 0], [0, 1, 0]], float)
+        placement = assess_placement(coords, self._box())
+        assert not placement.in_box
+        assert placement.fraction_inside == pytest.approx(0.6)
+        assert placement.max_atom_offset_frac > 1.0
+        assert "outside the search box" in placement.note
+
+    def test_a_wall_hugging_centroid_is_flagged_even_when_all_atoms_fit(self) -> None:
+        # Every atom is inside (x <= 10) but the centroid sits at 0.95 of the half-width.
+        coords = np.array([[9.5, 0, 0], [9.4, 0, 0], [9.6, 0, 0], [9.5, 1, 0], [9.5, -1, 0]], float)
+        placement = assess_placement(coords, self._box())
+        assert placement.fraction_inside == 1.0
+        assert not placement.in_box
+        assert placement.centroid_offset_frac == pytest.approx(0.95)
+        assert "hugging" in placement.note
+
+    def test_tolerance_relaxes_containment(self) -> None:
+        # One atom grazes just past the +x face at x = 10.5.
+        coords = np.array([[0, 0, 0], [10.5, 0, 0], [0, 0, 0], [0, 1, 0], [0, -1, 0]], float)
+        box = self._box()
+        assert not assess_placement(coords, box).in_box
+        assert assess_placement(coords, box, tolerance=1.0).in_box
+
+    def test_thresholds_are_honoured(self) -> None:
+        coords = np.array([[0, 0, 0], [1, 0, 0], [15, 0, 0], [15, 1, 0], [0, 1, 0]], float)
+        # Loosening the fraction threshold to accept 60%% inside clears the flag.
+        assert assess_placement(coords, self._box(), min_fraction_inside=0.5).in_box
+
+    def test_as_record_exposes_the_report_columns(self) -> None:
+        coords = np.array([[0, 0, 0], [1, 0, 0], [0, 1, 0]], float)
+        record = assess_placement(coords, self._box()).as_record()
+        for key in (
+            "frac_atoms_in_box",
+            "n_atoms_in_box",
+            "pose_centroid_offset_a",
+            "pose_centroid_offset_frac",
+            "placement_ok",
+            "placement_note",
+        ):
+            assert key in record
+        assert record["placement_ok"] is True
+
+    def test_bad_input_raises(self) -> None:
+        box = self._box()
+        with pytest.raises(ValueError, match="shape"):
+            assess_placement(np.zeros((0, 3)), box)
+        with pytest.raises(ValueError, match="shape"):
+            assess_placement(np.array([[0.0, 0.0]]), box)
+        with pytest.raises(ValueError, match="non-finite"):
+            assess_placement(np.array([[0.0, 0.0, np.nan]]), box)
 
 
 class TestProvenance:
