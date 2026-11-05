@@ -113,6 +113,13 @@ def _fail(message: str, code: int = 1) -> None:
     raise typer.Exit(code=code)
 
 
+def _resolve_run_dir(config: Path, run_id: str | None) -> tuple[Config, str, Path]:
+    """Load config and locate its run directory, with no side effects."""
+    cfg = load_config(config)
+    resolved = run_id or f"cfg-{cfg.config_hash()[:12]}"
+    return cfg, resolved, cfg.run_dir(resolved)
+
+
 @app.callback()
 def main() -> None:
     """npcadd command-line interface."""
@@ -131,6 +138,258 @@ def version() -> None:
     typer.echo(f"npcadd {__version__}")
     for name, value in package_versions().items():
         typer.echo(f"  {name}: {value}")
+
+
+_ACTIVES_GUIDE = """# Known actives for the enrichment control
+
+`npcadd` reports ROC-AUC, BEDROC and enrichment factors only when you supply a
+set of experimentally confirmed actives for a target (DECISIONS.md D-020); it
+never fabricates one. Fill in `known_actives_template.csv` in this directory.
+
+## Columns
+
+Only `name` and `smiles` are read; the rest are recorded for your own provenance
+and ignored by the pipeline.
+
+| column | required | meaning |
+|---|---|---|
+| `name` | yes | your label for the active |
+| `smiles` | yes | its structure (standardised on load) |
+| `chembl_id` | no | source identifier, for traceability |
+| `pchembl_value` | no | -log10(IC50/Ki/Kd in M); 7 = 100 nM |
+| `source` | no | database / publication the value came from |
+
+## How to populate it (example: ABL1, the bundled target)
+
+ABL1 is ChEMBL target **CHEMBL1862** (UniProt P00519). Pull confirmed actives,
+for example `standard_type = IC50`, `pchembl_value >= 7`, no data-validity flag,
+de-duplicated by parent molecule, and **excluding the redocking reference
+(imatinib)** to avoid leakage. Two real example rows:
+
+```csv
+name,smiles,chembl_id,pchembl_value,source
+Imatinib,Cc1ccc(NC(=O)c2ccc(CN3CCN(C)CC3)cc2)cc1Nc1nccc(-c2cccnc2)n1,CHEMBL941,7.42,ChEMBL
+CHEMBL29197,COc1cc2ncnc(Nc3cccc(Br)c3)c2cc1OC,CHEMBL29197,7.52,ChEMBL
+```
+
+Then set in your config:
+
+```yaml
+validation:
+  known_actives_csv: reports/known_actives.csv   # your filled-in file
+```
+
+and re-run `npcadd validate-docking`. See `docs/RESEARCH_ROADMAP.md` (project A1)
+for the full dossier, and LIMITATIONS.md 4.1 for what an enrichment number
+against the bundled decoy pool does and does not establish.
+"""
+
+
+@app.command()
+def doctor(config: ConfigOption) -> None:
+    """Preflight: check config, environment and inputs before a long run."""
+    import importlib.util
+    import shutil
+
+    from .chem.np_likeness import np_model_available
+    from .provenance import package_versions
+
+    try:
+        cfg = load_config(config)
+    except (FileNotFoundError, ValueError) as exc:
+        _fail(f"Configuration error: {exc}", code=2)
+        return
+
+    checks: list[tuple[str, str, str]] = []
+
+    def add(status: str, label: str, detail: str = "") -> None:
+        checks.append((status, label, detail))
+
+    add("PASS", "config loads", f"{len(cfg.receptors)} receptor(s), study '{cfg.study}'")
+    add(
+        "PASS" if cfg.ligands.input_csv.is_file() else "FAIL",
+        "ligand input CSV",
+        str(cfg.ligands.input_csv),
+    )
+    if importlib.util.find_spec("vina") is not None:
+        import vina
+
+        add("PASS", "AutoDock Vina", str(getattr(vina, "__version__", "present")))
+    else:
+        add("FAIL", "AutoDock Vina", "not importable")
+    np_ok = np_model_available()
+    add(
+        "PASS" if np_ok else "WARN",
+        "NP-likeness model",
+        "available" if np_ok else "NP_Score model not found; np-likeness will be skipped",
+    )
+    for rc in cfg.receptors:
+        if rc.local_structure is not None:
+            if rc.local_structure.is_file():
+                add("PASS", f"receptor {rc.id} structure", str(rc.local_structure))
+            else:
+                add(
+                    "WARN" if cfg.allow_network else "FAIL",
+                    f"receptor {rc.id} structure",
+                    "will fetch from RCSB" if cfg.allow_network else "missing, network disabled",
+                )
+        else:
+            add(
+                "PASS" if cfg.allow_network else "FAIL",
+                f"receptor {rc.id} structure",
+                f"will fetch {rc.pdb_id} from RCSB"
+                if cfg.allow_network
+                else "no local_structure, network disabled",
+            )
+        if rc.cocrystal_ligand is None:
+            add(
+                "WARN",
+                f"receptor {rc.id} redocking gate",
+                "no cocrystal_ligand: the mandatory gate cannot run",
+            )
+        if rc.directionality_conflict:
+            add(
+                "WARN",
+                f"receptor {rc.id} directionality",
+                "activation phenotype vs inhibitor-bound structure",
+            )
+    if cfg.validation.known_actives_csv is None:
+        add(
+            "WARN",
+            "enrichment control",
+            "no known_actives_csv; run 'npcadd actives-template' to populate it",
+        )
+    else:
+        add(
+            "PASS" if cfg.validation.known_actives_csv.is_file() else "FAIL",
+            "known actives CSV",
+            str(cfg.validation.known_actives_csv),
+        )
+    cfg.paths.runs.mkdir(parents=True, exist_ok=True)
+    free_gb = shutil.disk_usage(cfg.paths.runs).free / 1e9
+    add(
+        "PASS" if free_gb > 1.0 else "WARN",
+        "disk headroom",
+        f"{free_gb:.1f} GB free under {cfg.paths.runs}",
+    )
+    versions = list(package_versions().items())
+    add("PASS", "scientific stack", ", ".join(f"{k} {v}" for k, v in versions[:4]))
+
+    colour = {"PASS": typer.colors.GREEN, "WARN": typer.colors.YELLOW, "FAIL": typer.colors.RED}
+    for status, label, detail in checks:
+        typer.secho(f"  {status:4} {label}" + (f" - {detail}" if detail else ""), fg=colour[status])
+    n_fail = sum(1 for status, _, _ in checks if status == "FAIL")
+    n_warn = sum(1 for status, _, _ in checks if status == "WARN")
+    typer.echo(f"\n{len(checks)} checks: {n_fail} FAIL, {n_warn} WARN.")
+    if n_fail:
+        raise typer.Exit(code=1)
+
+
+@app.command("actives-template")
+def actives_template_cmd(config: ConfigOption) -> None:
+    """Write a known-actives CSV template and guide to populate the enrichment control."""
+    try:
+        cfg = load_config(config)
+    except (FileNotFoundError, ValueError) as exc:
+        _fail(f"Configuration error: {exc}", code=2)
+        return
+    cfg.paths.reports.mkdir(parents=True, exist_ok=True)
+    template = cfg.paths.reports / "known_actives_template.csv"
+    template.write_text("name,smiles,chembl_id,pchembl_value,source\n", encoding="utf-8")
+    guide = cfg.paths.reports / "known_actives_README.md"
+    guide.write_text(_ACTIVES_GUIDE, encoding="utf-8")
+    typer.secho("Wrote known-actives template.", fg=typer.colors.GREEN)
+    typer.echo(f"  Template: {template}")
+    typer.echo(f"  Guide:    {guide}")
+    typer.echo("  Fill it, set validation.known_actives_csv in your config, then re-validate.")
+
+
+@app.command()
+def scaffolds(
+    config: ConfigOption,
+    run_id: RunIdOption = None,
+    cutoff: Annotated[float, typer.Option(help="Butina Tanimoto-distance cutoff.")] = 0.35,
+) -> None:
+    """Report Murcko-scaffold and Butina-cluster diversity of the ranked shortlist."""
+    import pandas as pd
+
+    from .chem.scaffolds import analyse_scaffolds
+
+    try:
+        cfg, _resolved, out_dir = _resolve_run_dir(config, run_id)
+    except (FileNotFoundError, ValueError) as exc:
+        _fail(f"Configuration error: {exc}", code=2)
+        return
+    ranked_path = out_dir / "ranked_compounds.csv"
+    admet_path = out_dir / "admet_results.csv"
+    if not ranked_path.is_file() or not admet_path.is_file():
+        _fail("Need ranked_compounds.csv and admet_results.csv; run 'npcadd rank' first.", code=3)
+        return
+    ranked = pd.read_csv(ranked_path, keep_default_na=False)
+    admet = pd.read_csv(admet_path, keep_default_na=False)
+    smiles_by = {str(r["ligand_id"]): str(r["smiles"]) for _, r in admet.iterrows()}
+    smiles = [smiles_by[str(lid)] for lid in ranked.get("ligand_id", []) if str(lid) in smiles_by]
+    analysis = analyse_scaffolds(smiles, cluster_cutoff=cutoff)
+    typer.secho(
+        f"Scaffold diversity of {analysis.n_parsed} ranked compound(s):", fg=typer.colors.GREEN
+    )
+    for key, value in analysis.as_record().items():
+        typer.echo(f"  {key}: {value}")
+    cfg.paths.reports.mkdir(parents=True, exist_ok=True)
+    out = cfg.paths.reports / "scaffold_diversity.csv"
+    counts = analysis.scaffold_counts
+    ordered = sorted(counts, key=lambda name: -counts[name])
+    pd.DataFrame(
+        [(name, counts[name]) for name in ordered],
+        columns=["murcko_scaffold", "count"],
+    ).to_csv(out, index=False, lineterminator="\n")
+    typer.echo(f"  Scaffold counts: {out}")
+
+
+@app.command("html-report")
+def html_report_cmd(
+    config: ConfigOption,
+    run_id: RunIdOption = None,
+    top: Annotated[int, typer.Option(help="How many top-ranked rows to table.")] = 10,
+) -> None:
+    """Render a single self-contained HTML summary of a finished run."""
+    from .report.html import render_html_summary
+
+    try:
+        cfg, resolved, out_dir = _resolve_run_dir(config, run_id)
+    except (FileNotFoundError, ValueError) as exc:
+        _fail(f"Configuration error: {exc}", code=2)
+        return
+    try:
+        path = render_html_summary(cfg, resolved, out_dir, cfg.paths.reports, top_n=top)
+    except FileNotFoundError as exc:
+        _fail(str(exc), code=3)
+        return
+    typer.secho(f"Wrote HTML summary: {path}", fg=typer.colors.GREEN)
+
+
+@app.command()
+def dossiers(
+    config: ConfigOption,
+    run_id: RunIdOption = None,
+    top: Annotated[int, typer.Option(help="How many top-ranked compounds to card.")] = 5,
+) -> None:
+    """Write a per-compound markdown evidence card for the top-ranked hits."""
+    from .report.dossier import write_dossiers
+
+    try:
+        cfg, _resolved, out_dir = _resolve_run_dir(config, run_id)
+    except (FileNotFoundError, ValueError) as exc:
+        _fail(f"Configuration error: {exc}", code=2)
+        return
+    try:
+        paths = write_dossiers(cfg, out_dir, cfg.paths.reports, top_n=top)
+    except FileNotFoundError as exc:
+        _fail(str(exc), code=3)
+        return
+    typer.secho(f"Wrote {len(paths)} dossier card(s).", fg=typer.colors.GREEN)
+    for path in paths:
+        typer.echo(f"  {path}")
 
 
 @app.command("prepare-ligands")
@@ -683,6 +942,12 @@ def _read_screen_and_admet(out_dir: Path) -> tuple[list[Any], list[Any]]:
                 pose_centroid_offset_a=_optional_float(row.get("pose_centroid_offset_a")),
                 pose_centroid_offset_frac=_optional_float(row.get("pose_centroid_offset_frac")),
                 pose_max_atom_offset_frac=_optional_float(row.get("pose_max_atom_offset_frac")),
+                n_poses_returned=_optional_int(row.get("n_poses_returned")),
+                mean_top_affinity_kcal_mol=_optional_float(row.get("mean_top_affinity_kcal_mol")),
+                affinity_spread_kcal_mol=_optional_float(row.get("affinity_spread_kcal_mol")),
+                affinity_std_kcal_mol=_optional_float(row.get("affinity_std_kcal_mol")),
+                consensus_ok=_optional_bool(row.get("consensus_ok")),
+                top2_pose_rmsd_a=_optional_float(row.get("top2_pose_rmsd_a")),
                 pose_path=str(row.get("pose_path", "")),
                 error=str(row.get("error", "")),
             )
@@ -708,6 +973,7 @@ def _read_screen_and_admet(out_dir: Path) -> tuple[list[Any], list[Any]]:
             for k, v in row.items()
             if "_pred" in k or "_in_domain" in k or k.startswith("n_ml")
         }
+        np_like = {k: v for k, v in row.items() if k.startswith("np_likeness")}
         admet_rows.append(
             AdmetRow(
                 ligand_id=str(row["ligand_id"]),
@@ -720,6 +986,7 @@ def _read_screen_and_admet(out_dir: Path) -> tuple[list[Any], list[Any]]:
                 admet_pass_rate=float(row.get("admet_pass_rate") or 0.0),
                 alerts=alerts,
                 ml_predictions=ml,
+                np_likeness=np_like,
             )
         )
     return screen_rows, admet_rows
