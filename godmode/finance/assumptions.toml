@@ -1,0 +1,101 @@
+# PROJECT GODMODE — LabelLedger financial model assumptions
+#
+# EVERY NUMBER IN THIS FILE IS AN ASSUMPTION, not a measurement or a forecast.
+# They exist so the model is explicit and arguable. Replace each with evidence
+# as it arrives (interview pricing, pilot conversion, real churn) and re-run:
+#
+#     python3 godmode/finance/model.py
+#
+# Currency: USD. Time step: one month. Horizon: 36 months.
+# The model is an expected-value model: customer counts are fractional
+# expectations, rounded only for display.
+
+[meta]
+months = 36
+starting_cash = 2000.0          # founder savings put into the venture (assumption)
+
+[founder_time]
+hour_value = 12.0               # opportunity cost of one founder hour (assumption; Dhaka professional rate)
+hours_per_prospect = 0.4        # generate + review a drift snapshot and send a personal note
+hours_per_demo = 1.5            # prep, demo, follow-up
+
+[plans]
+# List prices (monthly). Enterprise is an annual contract expressed monthly.
+pro = 199.0
+team = 599.0
+enterprise = 1500.0
+
+[costs]
+merchant_of_record_pct = 0.05   # Paddle-style MoR fee (secondary source E24; verify)
+merchant_fixed_per_invoice = 0.50
+llm_cost_per_customer = 1.20    # ~30 summarised label changes x ~$0.04 (Claude Opus 5.5 list pricing)
+llm_fixed = 20.0                # digest + public pages generation
+hosting_base = 25.0             # single small VM / container host
+hosting_per_customer = 1.0
+tools = 135.0                   # AI coding assistant, domain, email, monitoring free tiers
+accounting_legal_monthly = 40.0
+# One-off: month -> amount
+one_off = { 2 = 300.0, 3 = 600.0, 4 = 350.0 }   # terms/DPA templates, US LLC formation, trademark filing
+
+[scenario.conservative]
+sales_start_month = 3         # outbound begins once the drift snapshot is usable
+sales_cycle_months = 3          # months from first contact to paid conversion
+outbound_ramp_months = 4       # months to reach full outbound capacity
+digest_start_month = 3
+label = "Conservative"
+outbound_prospects = 80         # personalised drift snapshots sent per month
+reply_to_demo = 0.04
+demo_to_paid = 0.15
+digest_subscribers_per_month = 30
+digest_monthly_conversion = 0.0015
+mix = { pro = 0.75, team = 0.22, enterprise = 0.03 }
+pilot_price_factor = 0.6        # realised price for customers won in months 1-6
+monthly_churn = 0.03
+monthly_expansion = 0.0
+services_packages = { months = 6, per_month = 1.0, price = 300.0 }
+marketing = { from_month = 4, amount = 100.0 }
+founder_draw = 600.0
+hires = []
+
+[scenario.base]
+sales_start_month = 2         # outbound begins once the drift snapshot is usable
+sales_cycle_months = 2          # months from first contact to paid conversion
+outbound_ramp_months = 3       # months to reach full outbound capacity
+digest_start_month = 2
+label = "Base"
+outbound_prospects = 120
+reply_to_demo = 0.05
+demo_to_paid = 0.20
+digest_subscribers_per_month = 60
+digest_monthly_conversion = 0.002
+mix = { pro = 0.60, team = 0.32, enterprise = 0.08 }
+pilot_price_factor = 0.7
+monthly_churn = 0.02
+monthly_expansion = 0.005
+services_packages = { months = 9, per_month = 2.0, price = 350.0 }
+marketing = { from_month = 4, amount = 200.0 }
+founder_draw = 900.0
+hires = [{ from_month = 15, monthly = 700.0, role = "Part-time regulatory specialist (Bangladesh)" }]
+
+[scenario.aggressive]
+sales_start_month = 1         # outbound begins once the drift snapshot is usable
+sales_cycle_months = 1          # months from first contact to paid conversion
+outbound_ramp_months = 2       # months to reach full outbound capacity
+digest_start_month = 1
+label = "Aggressive"
+outbound_prospects = 200
+reply_to_demo = 0.07
+demo_to_paid = 0.25
+digest_subscribers_per_month = 150
+digest_monthly_conversion = 0.003
+mix = { pro = 0.50, team = 0.38, enterprise = 0.12 }
+pilot_price_factor = 0.8
+monthly_churn = 0.015
+monthly_expansion = 0.01
+services_packages = { months = 12, per_month = 3.0, price = 400.0 }
+marketing = { from_month = 3, amount = 600.0 }
+founder_draw = 1200.0
+hires = [
+  { from_month = 9, monthly = 700.0, role = "Part-time regulatory specialist (Bangladesh)" },
+  { from_month = 15, monthly = 1500.0, role = "Full-stack engineer (Bangladesh)" },
+]
