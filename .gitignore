@@ -27,8 +27,13 @@ data/processed/*
 reports/figures/*
 !reports/figures/.gitkeep
 reports/*.xlsx
+reports/*.html
 reports/VALIDATION.md
 reports/SUPPLEMENTARY_INFORMATION.md
+reports/scaffold_diversity.csv
+reports/known_actives_template.csv
+reports/known_actives_README.md
+reports/dossiers/
 
 # Fetched structures are cached, checksummed and regenerable.
 data/raw/pdb_cache/*

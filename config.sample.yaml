@@ -117,6 +117,13 @@ docking:
   placement_min_fraction_in_box: 0.90
   placement_max_centroid_offset_frac: 0.90
   placement_box_tolerance_a: 0.0
+  # Pose-consensus and sampling-stability diagnostics (report-only, never rank):
+  # mean of the best N pose scores, the spread across returned poses, and the
+  # RMSD between the top two poses. A wide spread or large top-2 RMSD means the
+  # top pose is one of several comparable solutions.
+  pose_consensus_top_n: 3
+  consensus_spread_warn_kcal: 3.0
+  pose_stability_check: true
 
 validation:
   enabled: true
@@ -150,6 +157,9 @@ admet:
       ad_neighbours: 5
   external_tools: [swissadme, pkcsm, protox_iii]
   external_batch_size: 100
+  # Natural-product-likeness (Ertl-Schuffenhauer, offline RDKit NP_Score model).
+  # A descriptor on an NP-trained scale; it never filters or ranks.
+  np_likeness: true
 
 ranking:
   weights:

@@ -104,6 +104,26 @@ Then verify nothing has drifted:
 npcadd verify-provenance runs/<run-id>/provenance.json
 ```
 
+### Further analysis commands
+
+These run against a finished run directory (or, for `doctor`, before a run) and
+need no re-docking:
+
+| Command | What it produces |
+|---|---|
+| `npcadd doctor -c config.yaml` | Pre-flight checklist: config, AutoDock Vina, receptors, inputs, disk headroom, and whether the enrichment control can run. |
+| `npcadd html-report -c config.yaml` | A single self-contained `reports/<run-id>_summary.html` — top hits, caveats and provenance in one portable page. |
+| `npcadd dossiers -c config.yaml --top 5` | One markdown evidence card per top compound in `reports/dossiers/`, aggregating docking, efficiency, ADMET and every caveat. |
+| `npcadd scaffolds -c config.yaml` | Bemis-Murcko scaffold and Butina-cluster diversity of the shortlist (`reports/scaffold_diversity.csv`). |
+| `npcadd actives-template -c config.yaml` | A known-actives CSV template plus a guide for populating the enrichment control from ChEMBL/BindingDB. |
+
+Additional per-compound columns now flow through the tables, all **diagnostic**
+— none changes the ranking:
+
+- **Natural-product-likeness** (Ertl & Schuffenhauer): `np_likeness_*` in the ADMET table — the NP-trained complement to the synthetic-drug rule sets.
+- **Efficiency indices** `binding_efficiency_index_bei`, `surface_efficiency_index_sei`, `size_independent_le_sile` in the ranked table (the metrics ChEMBL curates).
+- **Pose consensus and sampling stability** `affinity_spread_kcal_mol`, `consensus_ok`, `top2_pose_rmsd_a` in the docking table — reference-free confidence signals beside the single best score.
+
 ---
 
 ## Worked example: the bundled sample run
