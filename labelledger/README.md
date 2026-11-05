@@ -23,7 +23,7 @@ Labeling (SPL) into a version-controlled archive and answers three questions in 
 | Capability | Where |
 |---|---|
 | Hardened SPL parser (no DTD/entities/network, size-capped): metadata, ANDA/NDA numbers, products, LOINC section tree, tables, lists, Highlights kept separate | `spl.py` |
-| Section catalogue: 49 LOINC codes → 23 clinical families → 3 risk tiers; unclassified subsections inherit their parent | `sections.py` |
+| Section catalogue: 48 LOINC codes → 23 clinical families → 3 risk tiers; unclassified subsections inherit their parent | `sections.py` |
 | Version redline: recursive section alignment (exact → fuzzy title → content, moves detected), line pairing, word-level diff with exact reconstruction (property-tested) | `diff.py` |
 | Severity triage: CRITICAL / MAJOR / MODERATE / MINOR / EDITORIAL from explicit rules (boxed warning, contraindications, numeric dosing changes, risk vocabulary, negations); every rating carries its reasons | `severity.py` |
 | Drift detection: reference vs. follower label, sentence coverage with fuzzy pre-filter, missing / changed / extra findings, parity per family, Recent Major Changes after the follower's date | `drift.py` |

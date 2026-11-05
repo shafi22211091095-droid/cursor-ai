@@ -210,3 +210,12 @@ source = "Rework / Dodo Payments comparisons"
 url = "https://resources.rework.com/tools/billing-revenue/paddle-vs-lemon-squeezy"
 strength = "secondary"
 retrieved = "2026-11-05"
+
+[[evidence]]
+id = "E25"
+claim = "Several Bangladeshi manufacturers already supply the US market: Beximco was the first Bangladeshi company cleared by FDA to supply US prescriptions; Eskayef reports three US FDA-approved manufacturing units and exports injectables to the USA; ACI announced direct shipments to the US market."
+source = "Scrip (Citeline); The Daily Star; Prothom Alo"
+url = "https://www.thedailystar.net/business/news/eskayefs-3rd-manufacturing-unit-achieves-us-fda-approval-3421061"
+strength = "secondary"
+retrieved = "2026-11-05"
+note = "These companies hold US marketing applications and therefore carry US generic-labeling obligations — the warmest first prospects for a Bangladesh-based founder."

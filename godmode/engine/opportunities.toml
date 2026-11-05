@@ -76,7 +76,7 @@ defensibility_note = "Accumulated version archive (captured from day one), gener
 regulatory = "Decision support on public data; no PHI. Accuracy liability managed by deterministic diffs, provenance and human review; never auto-submits."
 main_risk = "Target buyers already satisfied by incumbents or by manual process; willingness to pay for 'monitoring' alone proves low."
 evidence_needed = "10 interviews confirming manual effort and missed updates; 3 paid pilots >= $200/mo within 60 days; drift snapshots that prospects call accurate."
-evidence = ["E01", "E02", "E03", "E04", "E05", "E06", "E22", "E23"]
+evidence = ["E01", "E02", "E03", "E04", "E05", "E06", "E22", "E23", "E25"]
 tags = ["solo_friendly", "ai_native", "low_capital", "fast_to_market", "enterprise", "infrastructure"]
 scores = { severity = 7, willingness_to_pay = 7, market = 6, solo_feasibility = 9, ai_leverage = 8, speed_to_mvp = 9, distribution = 7, defensibility = 5, capital_efficiency = 9, expansion = 8 }
 penalties = { weak_differentiation = 0.5, unproven_demand = 0.25 }
@@ -103,7 +103,7 @@ defensibility_note = "System of record with switching costs; registration data a
 regulatory = "Holds confidential registration data; GxP validation not required for tracking but requested by some buyers."
 main_risk = "Excel is 'good enough'; low budgets; slow relationship-based sales; onboarding effort."
 evidence_needed = "5 Bangladeshi exporters share their trackers and agree to a paid pilot; measured hours saved per month."
-evidence = ["E07", "E10", "E11", "E12"]
+evidence = ["E07", "E10", "E11", "E12", "E25"]
 tags = ["solo_friendly", "low_capital", "fast_to_market", "enterprise", "defensible"]
 scores = { severity = 7, willingness_to_pay = 5, market = 6, solo_feasibility = 8, ai_leverage = 6, speed_to_mvp = 8, distribution = 6, defensibility = 7, capital_efficiency = 9, expansion = 9 }
 penalties = { hard_acquisition = 0.5, high_support = 0.4, weak_differentiation = 0.25 }
