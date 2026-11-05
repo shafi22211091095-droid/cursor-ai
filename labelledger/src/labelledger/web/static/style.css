@@ -117,7 +117,7 @@ main { padding-top: 1.25rem; padding-bottom: 3rem; }
 }
 .chip b { font-variant-numeric: tabular-nums; }
 
-.change { border-left: 4px solid var(--border); }
+.change { border-left: 4px solid var(--border); color: var(--text); }
 .change.sev-critical { border-left-color: var(--sev-critical); }
 .change.sev-major { border-left-color: var(--sev-major); }
 .change.sev-moderate { border-left-color: var(--sev-moderate); }
